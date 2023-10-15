@@ -1,0 +1,9 @@
+BasedOnStyle: LLVM
+BreakBeforeBraces: Allman
+IndentWidth: 2
+ColumnLimit: 63
+
+Language: Cpp
+NamespaceIndentation: All
+DerivePointerAlignment: false
+PointerAlignment: Right
