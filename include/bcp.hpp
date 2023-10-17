@@ -33,12 +33,20 @@
 class bcp_loader
 {
   public:
-    bcp_loader(const std::string &filename);
+    bcp_loader(const std::string& filename);
 
-    template <typename T> T read(const std::string &key);
+    template <typename T> T read(const std::string& key);
 
   private:
     std::ifstream file;
+
+    // Cannot simply have a different return type:
+    // overload by return type alone does not work
+    void convert(const std::string& val, bool& res);
+    void convert(const std::string& val, int& res);
+    void convert(const std::string& val, size_t& res);
+    void convert(const std::string& val, double& res);
+    void convert(const std::string& val, std::string& res);
 
     inline void reset_stream() { file.seekg(0, file.beg); }
 };
