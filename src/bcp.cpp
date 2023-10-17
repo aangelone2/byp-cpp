@@ -23,24 +23,50 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#ifndef BCP_HPP
-#define BCP_HPP
+#include <bcp-cpp>
 
-#include <fstream>
-#include <regex>
-#include <string>
+using std::string;
+using iva = std::invalid_argument;
 
-class bcp_loader
+bcp_loader::bcp_loader(const string &filename)
 {
-  public:
-    bcp_loader(const string &filename);
+  file.open(filename.c_str());
+  if (!file)
+    throw iva("error :: file '" + filename.c_str() +
+              "' not found");
+}
 
-    template <typename T> T read(const std::string &key);
+template <typename T> T bcp_loader::read(const string &key)
+{
+  string buffer;
 
-  private:
-    std::ifstream file;
+  while (!file.eof())
+  {
+    std::getline(file, buffer);
 
-    inline void reset_stream() { file.seekg(0, file.beg); }
-};
+    smatch pieces_match;
+    const regex pattern = regex("^([^\\s:]*):\\s+(.*)$");
 
-#endif
+    if (!regex_match(buffer, pieces_match, pattern))
+      continue;
+
+    if (pieces_match[1] == key)
+    {
+      reset_stream();
+
+      T res;
+      //      convert(pieces_match[2], res, log);
+      return res;
+    }
+    else
+      continue;
+  }
+
+  throw iva("error :: key '" + key + "' not found");
+}
+
+// Specializations
+template bool bcp_loader::read<bool>(const string &key);
+template int bcp_loader::read<int>(const string &key);
+template size_t bcp_loader::read<size_t>(const string &key);
+template double bcp_loader::read<double>(const string &key);
