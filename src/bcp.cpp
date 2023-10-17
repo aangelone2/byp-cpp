@@ -23,8 +23,9 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#include <bcp-cpp>
+#include "bcp.hpp"
 
+using std::regex;
 using std::string;
 using iva = std::invalid_argument;
 
@@ -32,8 +33,7 @@ bcp_loader::bcp_loader(const string &filename)
 {
   file.open(filename.c_str());
   if (!file)
-    throw iva("error :: file '" + filename.c_str() +
-              "' not found");
+    throw iva("error :: file '" + filename + "' not found");
 }
 
 template <typename T> T bcp_loader::read(const string &key)
@@ -44,7 +44,7 @@ template <typename T> T bcp_loader::read(const string &key)
   {
     std::getline(file, buffer);
 
-    smatch pieces_match;
+    std::smatch pieces_match;
     const regex pattern = regex("^([^\\s:]*):\\s+(.*)$");
 
     if (!regex_match(buffer, pieces_match, pattern))
@@ -54,7 +54,8 @@ template <typename T> T bcp_loader::read(const string &key)
     {
       reset_stream();
 
-      T res;
+      // FIXME remove default init once added convert()
+      T res = T();
       //      convert(pieces_match[2], res, log);
       return res;
     }

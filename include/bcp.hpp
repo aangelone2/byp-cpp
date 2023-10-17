@@ -33,7 +33,7 @@
 class bcp_loader
 {
   public:
-    bcp_loader(const string &filename);
+    bcp_loader(const std::string &filename);
 
     template <typename T> T read(const std::string &key);
 
