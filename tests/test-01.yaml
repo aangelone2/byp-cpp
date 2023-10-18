@@ -1,0 +1,12 @@
+bool_p:  true
+int_p: -12
+uint_p: 123
+double_p: 45.82
+string_p: abc
+
+i1t_p1: [1]
+i1t_p: [1,-2, 3]
+
+d1t_p: [1.0, -2.45, 77]
+
+d2t_p: [[1.0, 2.0], [3.0, 4.0]]

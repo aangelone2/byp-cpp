@@ -39,7 +39,7 @@ bcp_loader::bcp_loader(const string& filename)
 {
   file.open(filename.c_str());
   if (!file)
-    throw iva("error :: file '" + filename + "' not found");
+    throw iva("file '" + filename + "' not found");
 }
 
 template <typename T> T bcp_loader::read(const string& key)
@@ -68,15 +68,21 @@ template <typename T> T bcp_loader::read(const string& key)
       continue;
   }
 
-  throw iva("error :: key '" + key + "' not found");
+  throw iva("key '" + key + "' not found");
 }
 
-// Specializations
+// Specializations (vector<bool> and vector<string> disallowed)
 template bool bcp_loader::read<bool>(const string& key);
 template int bcp_loader::read<int>(const string& key);
 template size_t bcp_loader::read<size_t>(const string& key);
 template double bcp_loader::read<double>(const string& key);
 template string bcp_loader::read<string>(const string& key);
+template vector<int>
+bcp_loader::read<vector<int>>(const string& key);
+template vector<size_t>
+bcp_loader::read<vector<size_t>>(const string& key);
+template vector<double>
+bcp_loader::read<vector<double>>(const string& key);
 
 void bcp_loader::convert(const string& val, bool& res) const
 {
@@ -85,8 +91,7 @@ void bcp_loader::convert(const string& val, bool& res) const
   else if (val == "false")
     res = false;
   else
-    throw iva("error :: value '" + val
-              + "' while expecting bool");
+    throw iva("read '" + val + "' while expecting bool");
 }
 
 void bcp_loader::convert(const string& val, int& res) const
@@ -97,8 +102,7 @@ void bcp_loader::convert(const string& val, int& res) const
   }
   catch (const iva& err)
   {
-    throw iva("error :: value '" + val
-              + "' while expecting int");
+    throw iva("read '" + val + "' while expecting int");
   }
 }
 
@@ -110,8 +114,7 @@ void bcp_loader::convert(const string& val, size_t& res) const
   }
   catch (const iva& err)
   {
-    throw iva("error :: value '" + val
-              + "' while expecting size_t");
+    throw iva("read '" + val + "' while expecting size_t");
   }
 }
 
@@ -123,8 +126,7 @@ void bcp_loader::convert(const string& val, double& res) const
   }
   catch (const iva& err)
   {
-    throw iva("error :: value '" + val
-              + "' while expecting double");
+    throw iva("read '" + val + "' while expecting double");
   }
 }
 
@@ -144,12 +146,6 @@ void bcp_loader::convert(const string& val,
 
   if (regex_match(val, pieces_match, pattern))
   {
-#ifdef DEBUG
-    cout << "in convert_vector" << endl;
-    cout << "pieces_match = " << pieces_match[0]
-         << " :: " << pieces_match[1] << endl;
-#endif
-
     std::stringstream ss(pieces_match[1]);
     string token;
 
@@ -160,16 +156,13 @@ void bcp_loader::convert(const string& val,
     }
   }
   else
-    throw iva("error :: value '" + val
-              + "' while expecting vector");
+    throw iva("read '" + val + "' while expecting vector");
 }
 
-// Specializations (vector bool explicitly disabled)
+// Specializations (vector<bool> and vector<string> disallowed)
 template void bcp_loader::convert(const string& val,
                                   vector<int>& res) const;
 template void bcp_loader::convert(const string& val,
                                   vector<size_t>& res) const;
 template void bcp_loader::convert(const string& val,
                                   vector<double>& res) const;
-template void bcp_loader::convert(const string& val,
-                                  vector<string>& res) const;

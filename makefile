@@ -2,14 +2,15 @@ BUILDDIR=build
 
 CPPFLAGS=-std=c++17 -O3 -Wfatal-errors
 CPPWARNINGS=-Wall -Werror -Wextra -Wshadow -Wparentheses -Wpedantic -Wconversion -pedantic
-CPPINCLUDES=-Iinclude/
 
-release:
+CPPINCLUDES=-Iinclude/
+CPPLIB=-L$(BUILDDIR)/
+
+cpp:
 	mkdir -p $(BUILDDIR)
 	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/bcp.cpp -o $(BUILDDIR)/bcp.o
-	ar rcs $(BUILDDIR)/bcp.a $(BUILDDIR)/bcp.o
+	ar rcs $(BUILDDIR)/libbcp.a $(BUILDDIR)/bcp.o
 
-debug:
-	mkdir -p $(BUILDDIR)
-	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -DDEBUG -c src/bcp.cpp -o $(BUILDDIR)/bcp.o
-	ar rcs $(BUILDDIR)/bcp.a $(BUILDDIR)/bcp.o
+test-cpp: cpp
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/test-01.cpp -o $(BUILDDIR)/test-01 -lbcp
+	cd $(BUILDDIR)/ ; ./test-01
