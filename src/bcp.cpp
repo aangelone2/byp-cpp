@@ -25,8 +25,14 @@
 
 #include "bcp.hpp"
 
+using std::cout;
+using std::endl;
+
+using std::getline;
 using std::regex;
+using std::smatch;
 using std::string;
+using std::vector;
 using iva = std::invalid_argument;
 
 bcp_loader::bcp_loader(const string& filename)
@@ -42,9 +48,9 @@ template <typename T> T bcp_loader::read(const string& key)
 
   while (!file.eof())
   {
-    std::getline(file, buffer);
+    getline(file, buffer);
 
-    std::smatch pieces_match;
+    smatch pieces_match;
     const regex pattern = regex("^([^\\s:]*):\\s+(.*)$");
 
     if (!regex_match(buffer, pieces_match, pattern))
@@ -72,18 +78,18 @@ template size_t bcp_loader::read<size_t>(const string& key);
 template double bcp_loader::read<double>(const string& key);
 template string bcp_loader::read<string>(const string& key);
 
-void bcp_loader::convert(const string& val, bool& res)
+void bcp_loader::convert(const string& val, bool& res) const
 {
   if (val == "true")
     res = true;
   else if (val == "false")
     res = false;
   else
-    throw iva("error :: value '" + val +
-              "' while expecting bool");
+    throw iva("error :: value '" + val
+              + "' while expecting bool");
 }
 
-void bcp_loader::convert(const string& val, int& res)
+void bcp_loader::convert(const string& val, int& res) const
 {
   try
   {
@@ -91,12 +97,12 @@ void bcp_loader::convert(const string& val, int& res)
   }
   catch (const iva& err)
   {
-    throw iva("error :: value '" + val +
-              "' while expecting int");
+    throw iva("error :: value '" + val
+              + "' while expecting int");
   }
 }
 
-void bcp_loader::convert(const string& val, size_t& res)
+void bcp_loader::convert(const string& val, size_t& res) const
 {
   try
   {
@@ -104,12 +110,12 @@ void bcp_loader::convert(const string& val, size_t& res)
   }
   catch (const iva& err)
   {
-    throw iva("error :: value '" + val +
-              "' while expecting size_t");
+    throw iva("error :: value '" + val
+              + "' while expecting size_t");
   }
 }
 
-void bcp_loader::convert(const string& val, double& res)
+void bcp_loader::convert(const string& val, double& res) const
 {
   try
   {
@@ -117,12 +123,53 @@ void bcp_loader::convert(const string& val, double& res)
   }
   catch (const iva& err)
   {
-    throw iva("error :: value '" + val +
-              "' while expecting double");
+    throw iva("error :: value '" + val
+              + "' while expecting double");
   }
 }
 
-void bcp_loader::convert(const string& val, string& res)
+void bcp_loader::convert(const string& val, string& res) const
 {
   res = val;
 }
+
+template <typename T>
+void bcp_loader::convert(const string& val,
+                         vector<T>& res) const
+{
+  // Exceptions need not be caught here, they may only be
+  // raised by lower-level convert() calls.
+  smatch pieces_match;
+  const regex pattern = regex("^\\s*\\[(.*)\\]\\s*$");
+
+  if (regex_match(val, pieces_match, pattern))
+  {
+#ifdef DEBUG
+    cout << "in convert_vector" << endl;
+    cout << "pieces_match = " << pieces_match[0]
+         << " :: " << pieces_match[1] << endl;
+#endif
+
+    std::stringstream ss(pieces_match[1]);
+    string token;
+
+    while (getline(ss, token, ','))
+    {
+      res.resize(res.size() + 1);
+      convert(token, res.back());
+    }
+  }
+  else
+    throw iva("error :: value '" + val
+              + "' while expecting vector");
+}
+
+// Specializations (vector bool explicitly disabled)
+template void bcp_loader::convert(const string& val,
+                                  vector<int>& res) const;
+template void bcp_loader::convert(const string& val,
+                                  vector<size_t>& res) const;
+template void bcp_loader::convert(const string& val,
+                                  vector<double>& res) const;
+template void bcp_loader::convert(const string& val,
+                                  vector<string>& res) const;

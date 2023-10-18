@@ -27,7 +27,9 @@
 #define BCP_HPP
 
 #include <fstream>
+#include <iostream>
 #include <regex>
+#include <sstream>
 #include <string>
 
 class bcp_loader
@@ -42,11 +44,16 @@ class bcp_loader
 
     // Cannot simply have a different return type:
     // overload by return type alone does not work
-    void convert(const std::string& val, bool& res);
-    void convert(const std::string& val, int& res);
-    void convert(const std::string& val, size_t& res);
-    void convert(const std::string& val, double& res);
-    void convert(const std::string& val, std::string& res);
+    void convert(const std::string& val, bool& res) const;
+    void convert(const std::string& val, int& res) const;
+    void convert(const std::string& val, size_t& res) const;
+    void convert(const std::string& val, double& res) const;
+    void convert(const std::string& val,
+                 std::string& res) const;
+
+    template <typename T>
+    void convert(const std::string& val,
+                 std::vector<T>& res) const;
 
     inline void reset_stream() { file.seekg(0, file.beg); }
 };
