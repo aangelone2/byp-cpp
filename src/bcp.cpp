@@ -24,6 +24,10 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #include "bcp.hpp"
+#include <iostream>
+#include <regex>
+#include <sstream>
+#include <string>
 
 using std::cout;
 using std::endl;
@@ -146,6 +150,7 @@ void bcp_loader::convert(const string& val,
 
   if (regex_match(val, pieces_match, pattern))
   {
+    // Code is simpler than with sregex_iterator
     std::stringstream ss(pieces_match[1]);
     string token;
 

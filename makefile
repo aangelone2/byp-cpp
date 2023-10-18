@@ -6,6 +6,8 @@ CPPWARNINGS=-Wall -Werror -Wextra -Wshadow -Wparentheses -Wpedantic -Wconversion
 CPPINCLUDES=-Iinclude/
 CPPLIB=-L$(BUILDDIR)/
 
+# preferred static library for portability concerns
+# (dynamic libraries required fixing of LD_LIBRARY_PATH)
 cpp:
 	mkdir -p $(BUILDDIR)
 	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/bcp.cpp -o $(BUILDDIR)/bcp.o
