@@ -24,50 +24,15 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #include "bcp.hpp"
-#include <regex>
-#include <string>
-#include <vector>
 
-using std::regex;
-using std::smatch;
 using std::string;
 using std::vector;
-using iva = std::invalid_argument;
-
-bcp_loader::bcp_loader(const string& filename)
-{
-  file.open(filename.c_str());
-  if (!file)
-    throw iva("file '" + filename + "' not found");
-}
 
 template <typename T> T bcp_loader::read(const string& key)
 {
-  string buffer;
-
-  while (!file.eof())
-  {
-    getline(file, buffer);
-
-    smatch pieces_match;
-    const regex pattern = regex("^([^\\s:]*):\\s+(.*)$");
-
-    if (!regex_match(buffer, pieces_match, pattern))
-      continue;
-
-    if (pieces_match[1] == key)
-    {
-      reset_stream();
-
-      T res;
-      convert(pieces_match[2], res);
-      return res;
-    }
-    else
-      continue;
-  }
-
-  throw iva("key '" + key + "' not found");
+  T res;
+  convert(get(key), res);
+  return res;
 }
 
 // Specializations

@@ -23,43 +23,36 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#ifndef BCP_HPP
-#define BCP_HPP
+#include "bcp.hpp"
+#include <regex>
 
-#include <fstream>
-#include <string>
-#include <vector>
+using std::regex;
+using std::smatch;
+using std::string;
+using iva = std::invalid_argument;
 
-class bcp_loader
+string bcp_loader::get(const string& key)
 {
-  public:
-    bcp_loader(const std::string& filename);
+  string buffer;
 
-    template <typename T> T read(const std::string& key);
+  while (!file.eof())
+  {
+    std::getline(file, buffer);
 
-  private:
-    std::ifstream file;
+    smatch pieces_match;
+    const regex pattern = regex("^([^\\s:]*):\\s+(.*)$");
 
-    std::string get(const std::string& key);
+    if (!regex_match(buffer, pieces_match, pattern))
+      continue;
 
-    // Cannot simply have a different return type:
-    // overload by return type alone does not work
-    void convert(const std::string& val, bool& res) const;
-    void convert(const std::string& val, int& res) const;
-    void convert(const std::string& val, size_t& res) const;
-    void convert(const std::string& val, double& res) const;
-    void convert(const std::string& val,
-                 std::string& res) const;
+    if (pieces_match[1] == key)
+    {
+      reset_stream();
+      return pieces_match[2];
+    }
+    else
+      continue;
+  }
 
-    template <typename T>
-    void convert(const std::string& val,
-                 std::vector<T>& res) const;
-
-    template <typename T>
-    void convert(const std::string& val,
-                 std::vector<std::vector<T>>& res) const;
-
-    inline void reset_stream() { file.seekg(0, file.beg); }
-};
-
-#endif
+  throw iva("key '" + key + "' not found");
+}

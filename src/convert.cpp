@@ -26,10 +26,7 @@
 #include "bcp.hpp"
 #include <regex>
 #include <sstream>
-#include <string>
-#include <vector>
 
-using std::getline;
 using std::regex;
 using std::smatch;
 using std::sregex_iterator;
@@ -103,7 +100,7 @@ void bcp_loader::convert(const string& val,
     std::stringstream ss(pieces_match[1]);
     string token;
 
-    while (getline(ss, token, ','))
+    while (std::getline(ss, token, ','))
     {
       res.resize(res.size() + 1);
       convert(token, res.back());
