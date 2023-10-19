@@ -10,8 +10,10 @@ CPPLIB=-L$(BUILDDIR)/
 # (dynamic libraries required fixing of LD_LIBRARY_PATH)
 cpp:
 	mkdir -p $(BUILDDIR)
-	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/bcp.cpp -o $(BUILDDIR)/bcp.o
-	ar rcs $(BUILDDIR)/libbcp.a $(BUILDDIR)/bcp.o
+	rm -fv $(BUILDDIR)/*.a $(BUILDDIR)/*.o
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/loader.cpp -o $(BUILDDIR)/loader.o
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/convert.cpp -o $(BUILDDIR)/convert.o
+	ar rcs $(BUILDDIR)/libbcp.a $(BUILDDIR)/loader.o $(BUILDDIR)/convert.o
 
 test-cpp: cpp
 	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/test-01.cpp -o $(BUILDDIR)/test-01 -lbcp
