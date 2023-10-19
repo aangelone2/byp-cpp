@@ -32,6 +32,7 @@
 using std::getline;
 using std::regex;
 using std::smatch;
+using std::sregex_iterator;
 using std::string;
 using std::vector;
 using iva = std::invalid_argument;
@@ -119,3 +120,45 @@ template void bcp_loader::convert(const string& val,
                                   vector<size_t>& res) const;
 template void bcp_loader::convert(const string& val,
                                   vector<double>& res) const;
+
+template <typename T>
+void bcp_loader::convert(const string& val,
+                         vector<vector<T>>& res) const
+{
+  // Exceptions need not be caught here, they may only be
+  // raised by lower-level convert() calls.
+  smatch pieces_match;
+  const regex pattern = regex("^\\s*\\[(.*)\\]\\s*$");
+
+  if (regex_match(val, pieces_match, pattern))
+  {
+    // pieces_match[...] are c-style strings
+    const string vec_str = pieces_match[1];
+    const regex el_pattern = regex("\\s*\\[[^\\[\\]]*\\]\\s*");
+
+    const auto begin = sregex_iterator(
+        vec_str.begin(), vec_str.end(), el_pattern);
+    const auto end = sregex_iterator();
+
+    for (auto el = begin; el != end; ++el)
+    {
+      res.resize(res.size() + 1);
+      convert(el->str(), res.back());
+    }
+  }
+  else
+    throw iva("read '" + val
+              + "' while expecting vector<vector>");
+}
+
+// Specializations (vector<vector<bool>> and
+// vector<vector<string>> disallowed)
+template void
+bcp_loader::convert(const string& val,
+                    vector<vector<int>>& res) const;
+template void
+bcp_loader::convert(const string& val,
+                    vector<vector<size_t>>& res) const;
+template void
+bcp_loader::convert(const string& val,
+                    vector<vector<double>>& res) const;

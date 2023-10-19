@@ -53,6 +53,10 @@ class bcp_loader
     void convert(const std::string& val,
                  std::vector<T>& res) const;
 
+    template <typename T>
+    void convert(const std::string& val,
+                 std::vector<std::vector<T>>& res) const;
+
     inline void reset_stream() { file.seekg(0, file.beg); }
 };
 

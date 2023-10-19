@@ -70,15 +70,25 @@ template <typename T> T bcp_loader::read(const string& key)
   throw iva("key '" + key + "' not found");
 }
 
-// Specializations (vector<bool> and vector<string> disallowed)
+// Specializations
 template bool bcp_loader::read<bool>(const string& key);
 template int bcp_loader::read<int>(const string& key);
 template size_t bcp_loader::read<size_t>(const string& key);
 template double bcp_loader::read<double>(const string& key);
 template string bcp_loader::read<string>(const string& key);
+
+// vector<bool> and vector<string> disallowed
 template vector<int>
 bcp_loader::read<vector<int>>(const string& key);
 template vector<size_t>
 bcp_loader::read<vector<size_t>>(const string& key);
 template vector<double>
 bcp_loader::read<vector<double>>(const string& key);
+
+// vector<vector<bool>> and vector<vector<string>> disallowed
+template vector<vector<int>>
+bcp_loader::read<vector<vector<int>>>(const string& key);
+template vector<vector<size_t>>
+bcp_loader::read<vector<vector<size_t>>>(const string& key);
+template vector<vector<double>>
+bcp_loader::read<vector<vector<double>>>(const string& key);

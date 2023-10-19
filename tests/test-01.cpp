@@ -4,7 +4,7 @@
 using std::string;
 using i1t = std::vector<int>;
 using d1t = std::vector<double>;
-using s1t = std::vector<string>;
+using d2t = std::vector<std::vector<double>>;
 
 int main()
 {
@@ -34,4 +34,7 @@ int main()
 
   const d1t d1t_p = loader.read<d1t>("d1t_p");
   assert(d1t_p == d1t({1.0, -2.45, 77}));
+
+  const d2t d2t_p = loader.read<d2t>("d2t_p");
+  assert(d2t_p == d2t({{1.0, 2.0}, {3.0, 4.0}}));
 }
