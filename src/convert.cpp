@@ -33,7 +33,7 @@ using std::string;
 using std::vector;
 using iva = std::invalid_argument;
 
-void bcp_loader::convert(const string& val, bool& res) const
+void bcp_loader::convert(const string& val, bool& res)
 {
   if (val == "true")
     res = true;
@@ -43,7 +43,7 @@ void bcp_loader::convert(const string& val, bool& res) const
     throw iva("read '" + val + "' while expecting bool");
 }
 
-void bcp_loader::convert(const string& val, int& res) const
+void bcp_loader::convert(const string& val, int& res)
 {
   try
   {
@@ -55,7 +55,7 @@ void bcp_loader::convert(const string& val, int& res) const
   }
 }
 
-void bcp_loader::convert(const string& val, size_t& res) const
+void bcp_loader::convert(const string& val, size_t& res)
 {
   try
   {
@@ -67,7 +67,7 @@ void bcp_loader::convert(const string& val, size_t& res) const
   }
 }
 
-void bcp_loader::convert(const string& val, double& res) const
+void bcp_loader::convert(const string& val, double& res)
 {
   try
   {
@@ -79,14 +79,13 @@ void bcp_loader::convert(const string& val, double& res) const
   }
 }
 
-void bcp_loader::convert(const string& val, string& res) const
+void bcp_loader::convert(const string& val, string& res)
 {
   res = val;
 }
 
 template <typename T>
-void bcp_loader::convert(const string& val,
-                         vector<T>& res) const
+void bcp_loader::convert(const string& val, vector<T>& res)
 {
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
@@ -110,15 +109,15 @@ void bcp_loader::convert(const string& val,
 
 // Specializations (vector<bool> and vector<string> disallowed)
 template void bcp_loader::convert(const string& val,
-                                  vector<int>& res) const;
+                                  vector<int>& res);
 template void bcp_loader::convert(const string& val,
-                                  vector<size_t>& res) const;
+                                  vector<size_t>& res);
 template void bcp_loader::convert(const string& val,
-                                  vector<double>& res) const;
+                                  vector<double>& res);
 
 template <typename T>
 void bcp_loader::convert(const string& val,
-                         vector<vector<T>>& res) const
+                         vector<vector<T>>& res)
 {
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
@@ -146,12 +145,9 @@ void bcp_loader::convert(const string& val,
 
 // Specializations (vector<vector<bool>> and
 // vector<vector<string>> disallowed)
-template void
-bcp_loader::convert(const string& val,
-                    vector<vector<int>>& res) const;
-template void
-bcp_loader::convert(const string& val,
-                    vector<vector<size_t>>& res) const;
-template void
-bcp_loader::convert(const string& val,
-                    vector<vector<double>>& res) const;
+template void bcp_loader::convert(const string& val,
+                                  vector<vector<int>>& res);
+template void bcp_loader::convert(const string& val,
+                                  vector<vector<size_t>>& res);
+template void bcp_loader::convert(const string& val,
+                                  vector<vector<double>>& res);

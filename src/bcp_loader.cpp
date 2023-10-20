@@ -21,8 +21,7 @@ void bcp_loader::reset_stream()
 }
 
 std::optional<vector<string>>
-bcp_loader::match(const string& input,
-                  const string& pattern) const
+bcp_loader::match(const string& input, const string& pattern)
 {
   const regex r = regex(pattern);
   smatch pieces_match;

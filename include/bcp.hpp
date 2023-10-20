@@ -44,27 +44,27 @@ class bcp_loader
     // Is guaranteed to trim spaces before and after value
     std::string get(const std::string& key);
 
+    void reset_stream();
+
     // Cannot simply have a different return type:
     // overload by return type alone does not work
     // Not required to be robust against spaces
-    void convert(const std::string& val, bool& res) const;
-    void convert(const std::string& val, int& res) const;
-    void convert(const std::string& val, size_t& res) const;
-    void convert(const std::string& val, double& res) const;
-    void convert(const std::string& val,
-                 std::string& res) const;
+    static void convert(const std::string& val, bool& res);
+    static void convert(const std::string& val, int& res);
+    static void convert(const std::string& val, size_t& res);
+    static void convert(const std::string& val, double& res);
+    static void convert(const std::string& val,
+                        std::string& res);
     template <typename T>
-    void convert(const std::string& val,
-                 std::vector<T>& res) const;
+    static void convert(const std::string& val,
+                        std::vector<T>& res);
     template <typename T>
-    void convert(const std::string& val,
-                 std::vector<std::vector<T>>& res) const;
+    static void convert(const std::string& val,
+                        std::vector<std::vector<T>>& res);
 
-    std::optional<std::vector<std::string>>
+    static std::optional<std::vector<std::string>>
     match(const std::string& input,
-          const std::string& pattern) const;
-
-    void reset_stream();
+          const std::string& pattern);
 };
 
 #endif
