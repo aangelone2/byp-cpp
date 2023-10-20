@@ -36,9 +36,9 @@ using iva = std::invalid_argument;
 
 void bcp_loader::convert(const string& val, bool& res) const
 {
-  if (val == "true")
+  if (regex_match(val, regex("^\\s*true\\s*$")))
     res = true;
-  else if (val == "false")
+  else if (regex_match(val, regex("^\\s*false\\s*$")))
     res = false;
   else
     throw iva("read '" + val + "' while expecting bool");

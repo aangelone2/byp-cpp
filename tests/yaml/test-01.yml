@@ -1,4 +1,4 @@
-bool_p:  true
+bool_p: true
 int_p: -12
 uint_p: 123
 double_p: 45.82

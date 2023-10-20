@@ -1,3 +1,5 @@
+.PHONY: build
+
 BUILDDIR=build
 
 CPPFLAGS=-std=c++17 -O3 -Wfatal-errors
@@ -8,7 +10,7 @@ CPPLIB=-L$(BUILDDIR)/
 
 # preferred static library for portability concerns
 # (dynamic libraries required fixing of LD_LIBRARY_PATH)
-cpp:
+build:
 	mkdir -p $(BUILDDIR)
 	rm -fv $(BUILDDIR)/*.a $(BUILDDIR)/*.o
 	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/bcp_loader.cpp -o $(BUILDDIR)/bcp_loader.o
@@ -21,6 +23,8 @@ cpp:
 		$(BUILDDIR)/convert.o\
 		$(BUILDDIR)/read.o
 
-test-cpp: cpp
-	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/test-01.cpp -o $(BUILDDIR)/test-01 -lbcp
-	cd $(BUILDDIR)/ ; ./test-01
+test: build
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/01.test-basic.cpp -o $(BUILDDIR)/01.test-basic -lbcp
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/02.test-parsing.cpp -o $(BUILDDIR)/02.test-parsing -lbcp
+	cd $(BUILDDIR)/ ; ./01.test-basic
+	cd $(BUILDDIR)/ ; ./02.test-parsing
