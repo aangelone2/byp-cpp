@@ -1,0 +1,16 @@
+invalid_bool_1: 1
+invalid_bool_2: abc
+
+float_for_int_1: 12.4
+float_for_int_2: 12.8
+invalid_int: cde
+
+float_for_sizet: 12.4
+float_for_sizet: 12.8
+invalid_for_sizet: fgh
+
+int_for_double: 7
+invalid_for_double: ilm
+
+int_for_string: 1
+spaces_in_string: a b c

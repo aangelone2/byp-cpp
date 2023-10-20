@@ -19,7 +19,9 @@ int main()
   cout << "  Testing no-space key..." << endl;
   try
   {
-    assert(loader.read<int>("no_spaces") != 1);
+    [[maybe_unused]] const int no_spaces
+        = loader.read<int>("no_spaces");
+    assert(false);
   }
   catch (const iva& err)
   {

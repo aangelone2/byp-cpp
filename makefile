@@ -24,7 +24,12 @@ build:
 		$(BUILDDIR)/read.o
 
 test: build
-	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/01.test-basic.cpp -o $(BUILDDIR)/01.test-basic -lbcp
-	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/02.test-parsing.cpp -o $(BUILDDIR)/02.test-parsing -lbcp
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB)\
+		tests/01.test-basic.cpp -o $(BUILDDIR)/01.test-basic -lbcp
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB)\
+		tests/02.test-parsing.cpp -o $(BUILDDIR)/02.test-parsing -lbcp
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB)\
+		tests/03.test-simple_types.cpp -o $(BUILDDIR)/03.test-simple_types -lbcp
 	cd $(BUILDDIR)/ ; ./01.test-basic
 	cd $(BUILDDIR)/ ; ./02.test-parsing
+	cd $(BUILDDIR)/ ; ./03.test-simple_types
