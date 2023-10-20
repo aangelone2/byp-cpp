@@ -63,5 +63,13 @@ int main()
       loader.read<i2t>("spaces_everywhere_table")
       == i2t({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}}));
 
+  cout << "  Testing spaces before string..." << endl;
+  assert(loader.read<string>("spaces_before_string") == "abc");
+
+  cout << "  Testing spaces inside and after string..."
+       << endl;
+  assert(loader.read<string>("spaces_inside_after_string")
+         == "def ghi");
+
   cout << "Test completed successfully" << endl;
 }

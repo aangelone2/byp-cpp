@@ -36,11 +36,8 @@ string bcp_loader::get(const string& key)
   string buffer;
   while (std::getline(file, buffer))
   {
-    // We cannot properly filter spaces *after* the value:
-    // we'd need (.*) -> ([^\\s]*) => problems with vectors.
-    // Only 1st ' ' is hard-coded, the rest goes in the block.
     const auto matches
-        = match(buffer, "^\\s*([^\\s]*)\\s*: (.*)$");
+        = match(buffer, "^\\s*([^\\s]*)\\s*:\\s+(.*?)\\s*$");
 
     // Skipping non-key-value-pair lines
     if (!matches.has_value())

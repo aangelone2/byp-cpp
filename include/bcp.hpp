@@ -41,11 +41,12 @@ class bcp_loader
   private:
     std::ifstream file;
 
+    // Is guaranteed to trim spaces before and after value
     std::string get(const std::string& key);
 
     // Cannot simply have a different return type:
     // overload by return type alone does not work
-    // All robust against beginning and trailing spaces
+    // Not required to be robust against spaces
     void convert(const std::string& val, bool& res) const;
     void convert(const std::string& val, int& res) const;
     void convert(const std::string& val, size_t& res) const;

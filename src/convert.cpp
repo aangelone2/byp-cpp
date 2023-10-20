@@ -35,9 +35,9 @@ using iva = std::invalid_argument;
 
 void bcp_loader::convert(const string& val, bool& res) const
 {
-  if (match(val, "^\\s*true\\s*$").has_value())
+  if (val == "true")
     res = true;
-  else if (match(val, "^\\s*false\\s*$").has_value())
+  else if (val == "false")
     res = false;
   else
     throw iva("read '" + val + "' while expecting bool");
@@ -90,7 +90,7 @@ void bcp_loader::convert(const string& val,
 {
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
-  const auto vec_string = match(val, "^\\s*\\[(.*)\\]\\s*$");
+  const auto vec_string = match(val, "^\\[([^\\[\\]]*)\\]$");
 
   if (vec_string.has_value())
   {
@@ -122,13 +122,12 @@ void bcp_loader::convert(const string& val,
 {
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
-  const auto table_string = match(val, "^\\s*\\[(.*)\\]\\s*$");
+  const auto table_string = match(val, "^\\[(.*)\\]$");
 
   if (table_string.has_value())
   {
-    // pieces_match[...] are c-style strings
     const string vec_str = table_string.value()[0];
-    const regex el_pattern = regex("\\s*\\[[^\\[\\]]*\\]\\s*");
+    const regex el_pattern = regex("\\[[^\\[\\]]*\\]");
 
     const auto begin = sregex_iterator(
         vec_str.begin(), vec_str.end(), el_pattern);
