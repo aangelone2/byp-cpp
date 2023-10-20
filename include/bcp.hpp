@@ -27,6 +27,7 @@
 #define BCP_HPP
 
 #include <fstream>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -57,6 +58,10 @@ class bcp_loader
     template <typename T>
     void convert(const std::string& val,
                  std::vector<std::vector<T>>& res) const;
+
+    std::optional<std::vector<std::string>>
+    match(const std::string& input,
+          const std::string& pattern) const;
 
     void reset_stream();
 };

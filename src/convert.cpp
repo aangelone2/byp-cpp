@@ -28,7 +28,6 @@
 #include <sstream>
 
 using std::regex;
-using std::smatch;
 using std::sregex_iterator;
 using std::string;
 using std::vector;
@@ -36,9 +35,9 @@ using iva = std::invalid_argument;
 
 void bcp_loader::convert(const string& val, bool& res) const
 {
-  if (regex_match(val, regex("^\\s*true\\s*$")))
+  if (match(val, "^\\s*true\\s*$").has_value())
     res = true;
-  else if (regex_match(val, regex("^\\s*false\\s*$")))
+  else if (match(val, "^\\s*false\\s*$").has_value())
     res = false;
   else
     throw iva("read '" + val + "' while expecting bool");
@@ -91,13 +90,12 @@ void bcp_loader::convert(const string& val,
 {
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
-  smatch pieces_match;
-  const regex pattern = regex("^\\s*\\[(.*)\\]\\s*$");
+  const auto vec_string = match(val, "^\\s*\\[(.*)\\]\\s*$");
 
-  if (regex_match(val, pieces_match, pattern))
+  if (vec_string.has_value())
   {
     // Code is simpler than with sregex_iterator
-    std::stringstream ss(pieces_match[1]);
+    std::stringstream ss(vec_string.value()[0]);
     string token;
 
     while (std::getline(ss, token, ','))
@@ -124,13 +122,12 @@ void bcp_loader::convert(const string& val,
 {
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
-  smatch pieces_match;
-  const regex pattern = regex("^\\s*\\[(.*)\\]\\s*$");
+  const auto table_string = match(val, "^\\s*\\[(.*)\\]\\s*$");
 
-  if (regex_match(val, pieces_match, pattern))
+  if (table_string.has_value())
   {
     // pieces_match[...] are c-style strings
-    const string vec_str = pieces_match[1];
+    const string vec_str = table_string.value()[0];
     const regex el_pattern = regex("\\s*\\[[^\\[\\]]*\\]\\s*");
 
     const auto begin = sregex_iterator(

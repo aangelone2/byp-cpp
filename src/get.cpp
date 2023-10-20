@@ -26,16 +26,8 @@
 #include "bcp.hpp"
 #include <regex>
 
-using std::regex;
-using std::smatch;
 using std::string;
 using iva = std::invalid_argument;
-
-void bcp_loader::reset_stream()
-{
-  file.clear();
-  file.seekg(0);
-}
 
 string bcp_loader::get(const string& key)
 {
@@ -47,15 +39,15 @@ string bcp_loader::get(const string& key)
     // We cannot properly filter spaces *after* the value:
     // we'd need (.*) -> ([^\\s]*) => problems with vectors.
     // Only 1st ' ' is hard-coded, the rest goes in the block.
-    const regex pattern = regex("^\\s*([^\\s]*)\\s*: (.*)$");
-    smatch pieces_match;
+    const auto matches
+        = match(buffer, "^\\s*([^\\s]*)\\s*: (.*)$");
 
     // Skipping non-key-value-pair lines
-    if (!regex_match(buffer, pieces_match, pattern))
+    if (!matches.has_value())
       continue;
 
-    if (pieces_match[1] == key)
-      return pieces_match[2];
+    if (matches.value()[0] == key)
+      return matches.value()[1];
   }
 
   throw iva("key '" + key + "' invalid or missing");
