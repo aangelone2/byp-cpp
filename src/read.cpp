@@ -49,6 +49,8 @@ template vector<size_t>
 byp_loader::read<vector<size_t>>(const string& key);
 template vector<double>
 byp_loader::read<vector<double>>(const string& key);
+template vector<string>
+byp_loader::read<vector<string>>(const string& key);
 
 // vector<vector<bool>> and vector<vector<string>> disallowed
 template vector<vector<int>>
@@ -57,3 +59,5 @@ template vector<vector<size_t>>
 byp_loader::read<vector<vector<size_t>>>(const string& key);
 template vector<vector<double>>
 byp_loader::read<vector<vector<double>>>(const string& key);
+template vector<vector<string>>
+byp_loader::read<vector<vector<string>>>(const string& key);

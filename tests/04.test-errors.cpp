@@ -7,8 +7,6 @@ using std::endl;
 using std::string;
 using std::vector;
 
-using i1t = vector<int>;
-using i2t = vector<vector<int>>;
 using iva = std::invalid_argument;
 
 int main()

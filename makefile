@@ -24,18 +24,16 @@ build:
 		$(BUILDDIR)/read.o
 
 test: build
-	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB)\
-		tests/01.test-basic.cpp -o $(BUILDDIR)/01.test-basic -lbyp-cpp
-	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB)\
-		tests/02.test-parsing.cpp -o $(BUILDDIR)/02.test-parsing -lbyp-cpp
-	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB)\
-		tests/03.test-simple_types.cpp -o $(BUILDDIR)/03.test-simple_types -lbyp-cpp
-	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB)\
-		tests/04.test-errors.cpp -o $(BUILDDIR)/04.test-errors -lbyp-cpp
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/01.test-basic.cpp -o $(BUILDDIR)/01.test-basic -lbyp-cpp
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/02.test-parsing.cpp -o $(BUILDDIR)/02.test-parsing -lbyp-cpp
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/03.test-simple_types.cpp -o $(BUILDDIR)/03.test-simple_types -lbyp-cpp
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/04.test-errors.cpp -o $(BUILDDIR)/04.test-errors -lbyp-cpp
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/05.test-vectors.cpp -o $(BUILDDIR)/05.test-vectors -lbyp-cpp
 	cd $(BUILDDIR)/ ; ./01.test-basic
 	cd $(BUILDDIR)/ ; ./02.test-parsing
 	cd $(BUILDDIR)/ ; ./03.test-simple_types
 	cd $(BUILDDIR)/ ; ./04.test-errors
+	cd $(BUILDDIR)/ ; ./05.test-vectors
 
 docs:
 	rm -rf html/

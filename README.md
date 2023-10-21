@@ -59,12 +59,12 @@ byp_loader loader(<file path>);
 
 Parsable types are:
 
-1. Several basic numerical C++ types (`int`, `size_t`, `double`).
-2. `bool` and `std::string`.
-3. 1D vectors, `std::vector<T>`, where `T` is one of the types
-   in (1).
-4. 2D vectors, `std::vector<std::vector<T>>`, where `T` is one
-   of the types in (1).
+- Several builtin C++ types (`bool`, `int`, `size_t`, `double`,
+  `std::string`).
+- 1D vectors, `std::vector<T>`, where `T` is one of the types
+  above (except `bool`).
+- 2D vectors, `std::vector<std::vector<T>>`, where `T` is one
+  of the types above (except `bool`).
 
 
 
