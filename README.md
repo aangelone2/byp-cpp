@@ -80,3 +80,11 @@ $ make docs
 re-generates the documentation in html format in the `html/`
 directory. [index.html](html/index.html) is the corresponding
 main page.
+
+
+
+
+## Todo
+- [ ] Manage duplicate keys
+- [ ] Replace inout parameters in `convert()` with return-type
+  templates

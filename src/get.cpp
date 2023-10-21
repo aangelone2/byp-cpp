@@ -49,8 +49,10 @@ string byp_loader::get(const string& key)
     if (is_comment || buffer.empty())
       continue;
 
+    // Leading and trailing spaces for val not removed,
+    // managed by convert() (1st, "dialect" space kept)
     const auto key_val = get_groups(
-        buffer, "^\\s*([^\\s]*)\\s*:\\s+(.*?)\\s*$");
+        buffer, "^\\s*([^\\s]*)\\s*: (.*)$");
 
     // Skipping non-key-value-pair lines
     if (!key_val.has_value())

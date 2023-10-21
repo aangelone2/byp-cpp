@@ -60,7 +60,7 @@ class byp_loader
     // Value parsing function.
     /*
      * Returns the value associated to a key as a string.
-     * Guaranteed to trim spaces before and after value.
+     * Does not trim spaces before and after value.
      *
      * \param key The key associated to the value.
      *
@@ -70,14 +70,13 @@ class byp_loader
 
     // Conversion functions, string -> specified type
     /*
-     * The converted value cannot be the return value since
-     * overloads on the return parameter are not possible.
+     * Required to trim leading and trailing spaces from value
+     * before conversion, or at least to ignore them. This is
+     * simpler than letting get() deal with it, since convert()
+     * can be called by other convert() calls.
      *
      * The templated vector<> and vector<vector<>> functions
      * are explicitly instantiated in the source files.
-     *
-     * These functions are not required to be, and in general
-     * are not, robust against spaces surrounding the value.
      *
      * \param val The string to convert.
      * \param res The inout parameter in which the return value

@@ -35,9 +35,9 @@ using iva = std::invalid_argument;
 
 void byp_loader::convert(const string& val, bool& res)
 {
-  if (val == "true")
+  if (match(val, "^\\s*true\\s*$"))
     res = true;
-  else if (val == "false")
+  else if (match(val, "^\\s*false\\s*$"))
     res = false;
   else
     throw iva("read '" + val + "' while expecting bool");
@@ -47,6 +47,7 @@ void byp_loader::convert(const string& val, int& res)
 {
   try
   {
+    // Can natively deal with spaces
     res = std::stoi(val, nullptr, 10);
   }
   catch (const iva& err)
@@ -59,6 +60,7 @@ void byp_loader::convert(const string& val, size_t& res)
 {
   try
   {
+    // Can natively deal with spaces
     res = std::stoul(val, nullptr, 10);
   }
   catch (const iva& err)
@@ -71,6 +73,7 @@ void byp_loader::convert(const string& val, double& res)
 {
   try
   {
+    // Can natively deal with spaces
     res = std::stod(val, nullptr);
   }
   catch (const iva& err)
@@ -81,7 +84,11 @@ void byp_loader::convert(const string& val, double& res)
 
 void byp_loader::convert(const string& val, string& res)
 {
-  res = val;
+  const auto trimmed = get_groups(val, "^\\s*(.*?)\\s*");
+  if (!trimmed.has_value())
+    throw iva("read '" + val + "' while expecting string");
+
+  res = trimmed.value()[0];
 }
 
 template <typename T>
@@ -91,7 +98,7 @@ void byp_loader::convert(const string& val, vector<T>& res)
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
   const auto vec_string
-      = get_groups(val, "^\\[([^\\[\\]]*)\\]$");
+      = get_groups(val, "^\\s*\\[([^\\[\\]]*)\\]\\s*$");
 
   if (vec_string.has_value())
   {
@@ -109,13 +116,15 @@ void byp_loader::convert(const string& val, vector<T>& res)
     throw iva("read '" + val + "' while expecting vector");
 }
 
-// Specializations (vector<bool> and vector<string> disallowed)
+// Specializations (vector<bool> disallowed)
 template void byp_loader::convert(const string& val,
                                   vector<int>& res);
 template void byp_loader::convert(const string& val,
                                   vector<size_t>& res);
 template void byp_loader::convert(const string& val,
                                   vector<double>& res);
+template void byp_loader::convert(const string& val,
+                                  vector<string>& res);
 
 template <typename T>
 void byp_loader::convert(const string& val,
@@ -124,12 +133,13 @@ void byp_loader::convert(const string& val,
   // Filtering bounding [], allowed in content (vectors)
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
-  const auto table_string = get_groups(val, "^\\[(.*)\\]$");
+  const auto table_string = get_groups(val, "^\\s*\\[(.*)\\]\\s*$");
 
   if (table_string.has_value())
   {
     const string vec_str = table_string.value()[0];
     // Filtering bounding [] in subvectors, not allowed within
+    // Not catching leading/trailing spaces within subvectors
     const regex el_pattern = regex("\\[[^\\[\\]]*\\]");
 
     const auto begin = sregex_iterator(
@@ -148,11 +158,12 @@ void byp_loader::convert(const string& val,
               + "' while expecting vector<vector>");
 }
 
-// Specializations (vector<vector<bool>> and
-// vector<vector<string>> disallowed)
+// Specializations (vector<vector<bool>> disallowed)
 template void byp_loader::convert(const string& val,
                                   vector<vector<int>>& res);
 template void byp_loader::convert(const string& val,
                                   vector<vector<size_t>>& res);
 template void byp_loader::convert(const string& val,
                                   vector<vector<double>>& res);
+template void byp_loader::convert(const string& val,
+                                  vector<vector<string>>& res);
