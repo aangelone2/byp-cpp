@@ -1,4 +1,4 @@
-#include "bcp.hpp"
+#include "byp.hpp"
 #include <cassert>
 #include <iostream>
 
@@ -13,7 +13,7 @@ using d2t = std::vector<std::vector<double>>;
 int main()
 {
   const string filename = "../tests/yaml/test-01.yml";
-  auto loader = bcp_loader(filename);
+  auto loader = byp_loader(filename);
 
   cout << "  Testing bool parsing..." << endl;
   assert(loader.read<bool>("bool_p"));

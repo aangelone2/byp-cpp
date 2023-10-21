@@ -1,4 +1,4 @@
-.PHONY: build, docs
+.PHONY: build docs
 
 BUILDDIR=build
 

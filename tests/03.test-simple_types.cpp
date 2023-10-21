@@ -1,4 +1,4 @@
-#include "bcp.hpp"
+#include "byp.hpp"
 #include <cassert>
 #include <iostream>
 #include <limits>
@@ -12,7 +12,7 @@ using iva = std::invalid_argument;
 int main()
 {
   const string filename = "../tests/yaml/test-03.yml";
-  auto loader = bcp_loader(filename);
+  auto loader = byp_loader(filename);
 
   cout << "  Testing invalid bool..." << endl;
   try

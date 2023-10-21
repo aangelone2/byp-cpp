@@ -24,7 +24,7 @@ dialect.
 ## Dependencies and Setup
 
 The library itself does not have any dependencies beyond the
-C++ standard library and g++ version 10 or higher (in general,
+C++ standard library and `g++` version 8 or higher (in general,
 C++17-compatible). The command
 
 ```
@@ -54,7 +54,7 @@ byp_loader loader(<file path>);
 
 // Assuming <key>: <value>, where <value>
 // is compatible with <type>, is present in the parsed file
-const <type> val = loader.read<<type>>(<key>);
+<type> val = loader.read<<type>>(<key>);
 ```
 
 Parsable types are:
