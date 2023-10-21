@@ -1,4 +1,4 @@
-.PHONY: build
+.PHONY: build, docs
 
 BUILDDIR=build
 
@@ -13,25 +13,25 @@ CPPLIB=-L$(BUILDDIR)/
 build:
 	mkdir -p $(BUILDDIR)
 	rm -fv $(BUILDDIR)/*.a $(BUILDDIR)/*.o
-	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/bcp_loader.cpp -o $(BUILDDIR)/bcp_loader.o
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/byp_loader.cpp -o $(BUILDDIR)/byp_loader.o
 	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/get.cpp -o $(BUILDDIR)/get.o
 	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/convert.cpp -o $(BUILDDIR)/convert.o
 	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/read.cpp -o $(BUILDDIR)/read.o
-	ar rcs $(BUILDDIR)/libbcp.a\
-		$(BUILDDIR)/bcp_loader.o\
+	ar rcs $(BUILDDIR)/libbyp-cpp.a\
+		$(BUILDDIR)/byp_loader.o\
 		$(BUILDDIR)/get.o\
 		$(BUILDDIR)/convert.o\
 		$(BUILDDIR)/read.o
 
 test: build
 	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB)\
-		tests/01.test-basic.cpp -o $(BUILDDIR)/01.test-basic -lbcp
+		tests/01.test-basic.cpp -o $(BUILDDIR)/01.test-basic -lbyp-cpp
 	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB)\
-		tests/02.test-parsing.cpp -o $(BUILDDIR)/02.test-parsing -lbcp
+		tests/02.test-parsing.cpp -o $(BUILDDIR)/02.test-parsing -lbyp-cpp
 	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB)\
-		tests/03.test-simple_types.cpp -o $(BUILDDIR)/03.test-simple_types -lbcp
+		tests/03.test-simple_types.cpp -o $(BUILDDIR)/03.test-simple_types -lbyp-cpp
 	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB)\
-		tests/04.test-errors.cpp -o $(BUILDDIR)/04.test-errors -lbcp
+		tests/04.test-errors.cpp -o $(BUILDDIR)/04.test-errors -lbyp-cpp
 	cd $(BUILDDIR)/ ; ./01.test-basic
 	cd $(BUILDDIR)/ ; ./02.test-parsing
 	cd $(BUILDDIR)/ ; ./03.test-simple_types

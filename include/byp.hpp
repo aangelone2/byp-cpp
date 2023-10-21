@@ -4,7 +4,7 @@
  * be included in all copies or substantial portions of the
  * Software.
  *
- * This file is part of bcp-cpp.
+ * This file is part of byp-cpp.
  *
  * This file may be used under the terms of the GNU General
  * Public License version 3.0 as published by the Free Software
@@ -32,14 +32,14 @@
 #include <vector>
 
 //! Basic loader class.
-class bcp_loader
+class byp_loader
 {
   public:
     //! Public constructor.
     /*!
      * \param filename The path to the filename to parse.
      */
-    bcp_loader(const std::string& filename);
+    byp_loader(const std::string& filename);
 
     //! Main parsing function.
     /*!

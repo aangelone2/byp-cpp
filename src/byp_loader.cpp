@@ -4,7 +4,7 @@
  * be included in all copies or substantial portions of the
  * Software.
  *
- * This file is part of bcp-cpp.
+ * This file is part of byp-cpp.
  *
  * This file may be used under the terms of the GNU General
  * Public License version 3.0 as published by the Free Software
@@ -23,7 +23,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#include "bcp.hpp"
+#include "byp.hpp"
 #include <regex>
 
 using std::regex;
@@ -32,21 +32,21 @@ using std::string;
 using std::vector;
 using iva = std::invalid_argument;
 
-bcp_loader::bcp_loader(const string& filename)
+byp_loader::byp_loader(const string& filename)
 {
   file.open(filename.c_str());
   if (!file)
     throw iva("file '" + filename + "' not found");
 }
 
-bool bcp_loader::match(const string& input,
+bool byp_loader::match(const string& input,
                        const string& pattern)
 {
   return regex_match(input, regex(pattern));
 }
 
 std::optional<vector<string>>
-bcp_loader::get_groups(const string& input,
+byp_loader::get_groups(const string& input,
                        const string& pattern)
 {
   const regex r = regex(pattern);

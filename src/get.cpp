@@ -4,7 +4,7 @@
  * be included in all copies or substantial portions of the
  * Software.
  *
- * This file is part of bcp-cpp.
+ * This file is part of byp-cpp.
  *
  * This file may be used under the terms of the GNU General
  * Public License version 3.0 as published by the Free Software
@@ -23,7 +23,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#include "bcp.hpp"
+#include "byp.hpp"
 
 using std::string;
 using iva = std::invalid_argument;
@@ -35,7 +35,7 @@ void reset_stream(std::ifstream& file)
   file.seekg(0);
 }
 
-string bcp_loader::get(const string& key)
+string byp_loader::get(const string& key)
 {
   reset_stream(file);
 

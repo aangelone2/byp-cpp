@@ -4,7 +4,7 @@
  * be included in all copies or substantial portions of the
  * Software.
  *
- * This file is part of bcp-cpp.
+ * This file is part of byp-cpp.
  *
  * This file may be used under the terms of the GNU General
  * Public License version 3.0 as published by the Free Software
@@ -23,7 +23,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#include "bcp.hpp"
+#include "byp.hpp"
 #include <regex>
 #include <sstream>
 
@@ -33,7 +33,7 @@ using std::string;
 using std::vector;
 using iva = std::invalid_argument;
 
-void bcp_loader::convert(const string& val, bool& res)
+void byp_loader::convert(const string& val, bool& res)
 {
   if (val == "true")
     res = true;
@@ -43,7 +43,7 @@ void bcp_loader::convert(const string& val, bool& res)
     throw iva("read '" + val + "' while expecting bool");
 }
 
-void bcp_loader::convert(const string& val, int& res)
+void byp_loader::convert(const string& val, int& res)
 {
   try
   {
@@ -55,7 +55,7 @@ void bcp_loader::convert(const string& val, int& res)
   }
 }
 
-void bcp_loader::convert(const string& val, size_t& res)
+void byp_loader::convert(const string& val, size_t& res)
 {
   try
   {
@@ -67,7 +67,7 @@ void bcp_loader::convert(const string& val, size_t& res)
   }
 }
 
-void bcp_loader::convert(const string& val, double& res)
+void byp_loader::convert(const string& val, double& res)
 {
   try
   {
@@ -79,13 +79,13 @@ void bcp_loader::convert(const string& val, double& res)
   }
 }
 
-void bcp_loader::convert(const string& val, string& res)
+void byp_loader::convert(const string& val, string& res)
 {
   res = val;
 }
 
 template <typename T>
-void bcp_loader::convert(const string& val, vector<T>& res)
+void byp_loader::convert(const string& val, vector<T>& res)
 {
   // Filtering bounding [], not allowed in content
   // Exceptions need not be caught here, they may only be
@@ -110,15 +110,15 @@ void bcp_loader::convert(const string& val, vector<T>& res)
 }
 
 // Specializations (vector<bool> and vector<string> disallowed)
-template void bcp_loader::convert(const string& val,
+template void byp_loader::convert(const string& val,
                                   vector<int>& res);
-template void bcp_loader::convert(const string& val,
+template void byp_loader::convert(const string& val,
                                   vector<size_t>& res);
-template void bcp_loader::convert(const string& val,
+template void byp_loader::convert(const string& val,
                                   vector<double>& res);
 
 template <typename T>
-void bcp_loader::convert(const string& val,
+void byp_loader::convert(const string& val,
                          vector<vector<T>>& res)
 {
   // Filtering bounding [], allowed in content (vectors)
@@ -150,9 +150,9 @@ void bcp_loader::convert(const string& val,
 
 // Specializations (vector<vector<bool>> and
 // vector<vector<string>> disallowed)
-template void bcp_loader::convert(const string& val,
+template void byp_loader::convert(const string& val,
                                   vector<vector<int>>& res);
-template void bcp_loader::convert(const string& val,
+template void byp_loader::convert(const string& val,
                                   vector<vector<size_t>>& res);
-template void bcp_loader::convert(const string& val,
+template void byp_loader::convert(const string& val,
                                   vector<vector<double>>& res);
