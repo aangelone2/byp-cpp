@@ -87,6 +87,7 @@ void bcp_loader::convert(const string& val, string& res)
 template <typename T>
 void bcp_loader::convert(const string& val, vector<T>& res)
 {
+  // Filtering bounding [], not allowed in content
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
   const auto vec_string
@@ -120,6 +121,7 @@ template <typename T>
 void bcp_loader::convert(const string& val,
                          vector<vector<T>>& res)
 {
+  // Filtering bounding [], allowed in content (vectors)
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
   const auto table_string = get_groups(val, "^\\[(.*)\\]$");
@@ -127,12 +129,14 @@ void bcp_loader::convert(const string& val,
   if (table_string.has_value())
   {
     const string vec_str = table_string.value()[0];
+    // Filtering bounding [] in subvectors, not allowed within
     const regex el_pattern = regex("\\[[^\\[\\]]*\\]");
 
     const auto begin = sregex_iterator(
         vec_str.begin(), vec_str.end(), el_pattern);
     const auto end = sregex_iterator();
 
+    // Iterating over matches (subvectors)
     for (auto el = begin; el != end; ++el)
     {
       res.resize(res.size() + 1);

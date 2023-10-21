@@ -28,9 +28,16 @@
 using std::string;
 using iva = std::invalid_argument;
 
+// Helper function, resets stream to the beginning
+void reset_stream(std::ifstream& file)
+{
+  file.clear();
+  file.seekg(0);
+}
+
 string bcp_loader::get(const string& key)
 {
-  reset_stream();
+  reset_stream(file);
 
   int counter = 0;
   string buffer;

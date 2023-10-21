@@ -39,12 +39,6 @@ bcp_loader::bcp_loader(const string& filename)
     throw iva("file '" + filename + "' not found");
 }
 
-void bcp_loader::reset_stream()
-{
-  file.clear();
-  file.seekg(0);
-}
-
 bool bcp_loader::match(const string& input,
                        const string& pattern)
 {
@@ -58,9 +52,11 @@ bcp_loader::get_groups(const string& input,
   const regex r = regex(pattern);
   smatch pieces_match;
 
+  // Match failed
   if (!regex_match(input, pieces_match, r))
     return {};
 
+  // Removing 0th element (complete string)
   return vector<string>(pieces_match.begin() + 1,
                         pieces_match.end());
 }

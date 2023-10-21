@@ -36,3 +36,7 @@ test: build
 	cd $(BUILDDIR)/ ; ./02.test-parsing
 	cd $(BUILDDIR)/ ; ./03.test-simple_types
 	cd $(BUILDDIR)/ ; ./04.test-errors
+
+docs:
+	rm -rf html/
+	doxygen doxygen.cnf

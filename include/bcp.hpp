@@ -31,24 +31,58 @@
 #include <string>
 #include <vector>
 
+//! Basic loader class.
 class bcp_loader
 {
   public:
+    //! Public constructor.
+    /*!
+     * \param filename The path to the filename to parse.
+     */
     bcp_loader(const std::string& filename);
 
+    //! Main parsing function.
+    /*!
+     * Call to parse a value of the specified type.
+     *
+     * Explicitly instantiated in the source files.
+     *
+     * \param key The key associated to the value.
+     *
+     * \return The parsed value of the specified type.
+     */
     template <typename T> T read(const std::string& key);
 
   private:
+    // File object to be parsed for key-value pairs.
     std::ifstream file;
 
-    // Is guaranteed to trim spaces before and after value
+    // Value parsing function.
+    /*
+     * Returns the value associated to a key as a string.
+     * Guaranteed to trim spaces before and after value.
+     *
+     * \param key The key associated to the value.
+     *
+     * \return The parsed value as a string.
+     */
     std::string get(const std::string& key);
 
-    void reset_stream();
-
-    // Cannot simply have a different return type:
-    // overload by return type alone does not work
-    // Not required to be robust against spaces
+    // Conversion functions, string -> specified type
+    /*
+     * The converted value cannot be the return value since
+     * overloads on the return parameter are not possible.
+     *
+     * The templated vector<> and vector<vector<>> functions
+     * are explicitly instantiated in the source files.
+     *
+     * These functions are not required to be, and in general
+     * are not, robust against spaces surrounding the value.
+     *
+     * \param val The string to convert.
+     * \param res The inout parameter in which the return value
+     *            will be stored.
+     */
     static void convert(const std::string& val, bool& res);
     static void convert(const std::string& val, int& res);
     static void convert(const std::string& val, size_t& res);
@@ -62,9 +96,27 @@ class bcp_loader
     static void convert(const std::string& val,
                         std::vector<std::vector<T>>& res);
 
+    // Check if a string matches a pattern.
+    /*
+     * \param input The string to analyze.
+     * \param pattern A regex pattern against which the string
+     *                will be checked.
+     *
+     * \return bool, whether or not the string matches the
+     *               pattern.
+     */
     static bool match(const std::string& input,
                       const std::string& pattern);
 
+    // Extract groups from string if regex is matched.
+    /*
+     * \param input The string to analyze.
+     * \param pattern A regexp pattern against which the string
+     *                will be checked.
+     *
+     * \return optional<vector<string>>, non-empty if the
+     *         string matches. i-th group is element `i-1`.
+     */
     static std::optional<std::vector<std::string>>
     get_groups(const std::string& input,
                const std::string& pattern);
