@@ -24,7 +24,6 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #include "bcp.hpp"
-#include <regex>
 
 using std::string;
 using iva = std::invalid_argument;
@@ -33,18 +32,26 @@ string bcp_loader::get(const string& key)
 {
   reset_stream();
 
+  int counter = 0;
   string buffer;
   while (std::getline(file, buffer))
   {
-    const auto matches
-        = match(buffer, "^\\s*([^\\s]*)\\s*:\\s+(.*?)\\s*$");
+    ++counter;
 
-    // Skipping non-key-value-pair lines
-    if (!matches.has_value())
+    const bool is_comment = match(buffer, "^\\s*#.*");
+    if (is_comment || buffer.empty())
       continue;
 
-    if (matches.value()[0] == key)
-      return matches.value()[1];
+    const auto key_val = get_groups(
+        buffer, "^\\s*([^\\s]*)\\s*:\\s+(.*?)\\s*$");
+
+    // Skipping non-key-value-pair lines
+    if (!key_val.has_value())
+      throw iva("invalid key-value pair at row "
+                + std::to_string(counter));
+
+    if (key_val.value()[0] == key)
+      return key_val.value()[1];
   }
 
   throw iva("key '" + key + "' invalid or missing");

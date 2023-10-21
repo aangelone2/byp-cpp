@@ -62,9 +62,12 @@ class bcp_loader
     static void convert(const std::string& val,
                         std::vector<std::vector<T>>& res);
 
+    static bool match(const std::string& input,
+                      const std::string& pattern);
+
     static std::optional<std::vector<std::string>>
-    match(const std::string& input,
-          const std::string& pattern);
+    get_groups(const std::string& input,
+               const std::string& pattern);
 };
 
 #endif

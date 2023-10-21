@@ -16,34 +16,8 @@ int main()
   const string filename = "../tests/yaml/test-02.yml";
   auto loader = bcp_loader(filename);
 
-  cout << "  Testing no-space key..." << endl;
-  try
-  {
-    [[maybe_unused]] const int no_spaces
-        = loader.read<int>("no_spaces");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(string(err.what())
-           == "key 'no_spaces' invalid or missing");
-  }
-
   cout << "  Testing many-spaced key..." << endl;
   assert(loader.read<int>("many_spaces") == 4);
-
-  cout << "  Testing spaces in key..." << endl;
-  try
-  {
-    [[maybe_unused]] const int spaces_in_key
-        = loader.read<int>("spaces in key");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(string(err.what())
-           == "key 'spaces in key' invalid or missing");
-  }
 
   cout << "  Testing spaces before key..." << endl;
   assert(loader.read<int>("spaces_before_key") == 8);
@@ -70,6 +44,23 @@ int main()
        << endl;
   assert(loader.read<string>("spaces_inside_after_string")
          == "def ghi");
+
+  cout << "  Testing nonexistent key..." << endl;
+  try
+  {
+    [[maybe_unused]] const int no_spaces
+        = loader.read<int>("not_existing");
+    assert(false);
+  }
+  catch (const iva& err)
+  {
+    assert(string(err.what())
+           == "key 'not_existing' invalid or missing");
+  }
+
+  // If any of the previous tests succeeded,
+  // comments and empty lines were successfully ignored
+  cout << "  Testing empty and commented lines..." << endl;
 
   cout << "Test completed successfully" << endl;
 }

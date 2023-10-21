@@ -30,6 +30,9 @@ test: build
 		tests/02.test-parsing.cpp -o $(BUILDDIR)/02.test-parsing -lbcp
 	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB)\
 		tests/03.test-simple_types.cpp -o $(BUILDDIR)/03.test-simple_types -lbcp
+	g++ $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB)\
+		tests/04.test-errors.cpp -o $(BUILDDIR)/04.test-errors -lbcp
 	cd $(BUILDDIR)/ ; ./01.test-basic
 	cd $(BUILDDIR)/ ; ./02.test-parsing
 	cd $(BUILDDIR)/ ; ./03.test-simple_types
+	cd $(BUILDDIR)/ ; ./04.test-errors

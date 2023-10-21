@@ -1,6 +1,6 @@
-no_spaces:1
+# Commented line
+
 many_spaces:    4
-spaces in key: 2
   spaces_before_key: 8
 spaces_after_key  : 3
 

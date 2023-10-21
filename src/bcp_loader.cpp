@@ -45,8 +45,15 @@ void bcp_loader::reset_stream()
   file.seekg(0);
 }
 
+bool bcp_loader::match(const string& input,
+                       const string& pattern)
+{
+  return regex_match(input, regex(pattern));
+}
+
 std::optional<vector<string>>
-bcp_loader::match(const string& input, const string& pattern)
+bcp_loader::get_groups(const string& input,
+                       const string& pattern)
 {
   const regex r = regex(pattern);
   smatch pieces_match;

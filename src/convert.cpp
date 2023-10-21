@@ -89,7 +89,8 @@ void bcp_loader::convert(const string& val, vector<T>& res)
 {
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
-  const auto vec_string = match(val, "^\\[([^\\[\\]]*)\\]$");
+  const auto vec_string
+      = get_groups(val, "^\\[([^\\[\\]]*)\\]$");
 
   if (vec_string.has_value())
   {
@@ -121,7 +122,7 @@ void bcp_loader::convert(const string& val,
 {
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
-  const auto table_string = match(val, "^\\[(.*)\\]$");
+  const auto table_string = get_groups(val, "^\\[(.*)\\]$");
 
   if (table_string.has_value())
   {
