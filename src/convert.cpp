@@ -45,28 +45,20 @@ void byp_loader::convert(const string& val, bool& res)
 
 void byp_loader::convert(const string& val, int& res)
 {
-  try
-  {
-    // Can natively deal with spaces
-    res = std::stoi(val, nullptr, 10);
-  }
-  catch (const iva& err)
-  {
+  if (!match(val, "^\\s*[0-9\\-\\+]+\\s*$"))
     throw iva("read '" + val + "' while expecting int");
-  }
+
+  // Can natively deal with spaces
+  res = std::stoi(val, nullptr, 10);
 }
 
 void byp_loader::convert(const string& val, size_t& res)
 {
-  try
-  {
-    // Can natively deal with spaces
-    res = std::stoul(val, nullptr, 10);
-  }
-  catch (const iva& err)
-  {
+  if (!match(val, "^\\s*[0-9]+\\s*$"))
     throw iva("read '" + val + "' while expecting size_t");
-  }
+
+  // Can natively deal with spaces
+  res = std::stoul(val, nullptr, 10);
 }
 
 void byp_loader::convert(const string& val, double& res)

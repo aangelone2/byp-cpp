@@ -22,7 +22,17 @@ int main()
   assert(loader.read<i1t>("i1t") == i1t({1,-2,3}));
 
   cout << "  Testing float input for vector<int>..." << endl;
-  assert(loader.read<i1t>("float_i1t") == i1t({1,-2,3}));
+  try
+  {
+    [[maybe_unused]] const i1t float_i1t
+        = loader.read<i1t>("float_i1t");
+    assert(false);
+  }
+  catch (const iva& err)
+  {
+    assert(string(err.what())
+        == "read ' -2.1' while expecting int");
+  }
 
   cout << "  Testing invalid input for vector<int>..." << endl;
   try

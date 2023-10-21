@@ -1,13 +1,11 @@
 invalid_bool_1: 1
 invalid_bool_2: abc
 
-float_for_int_1: 12.4
-float_for_int_2: 12.8
-invalid_int: cde
-
-float_for_sizet: 12.4
-float_for_sizet: 12.8
-invalid_for_sizet: fgh
+positive: +8
+negative: -12
+flt: 12.4
+scientific: 1e+6
+invalid: cde
 
 int_for_double: 7
 invalid_for_double: ilm

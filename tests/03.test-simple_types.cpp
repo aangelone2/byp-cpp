@@ -14,6 +14,8 @@ int main()
   const string filename = "../tests/yaml/test-03.yml";
   auto loader = byp_loader(filename);
 
+
+
   cout << "  Testing invalid bool..." << endl;
   try
   {
@@ -38,15 +40,42 @@ int main()
            == "read 'abc' while expecting bool");
   }
 
+
+
+  cout << "  Testing (+) parsing for int..." << endl;
+  assert(loader.read<int>("positive") == 8);
+
   cout << "  Testing float parsing for int..." << endl;
-  assert(loader.read<int>("float_for_int_1") == 12);
-  assert(loader.read<int>("float_for_int_2") == 12);
+  try
+  {
+    [[maybe_unused]] const int flt
+        = loader.read<int>("flt");
+    assert(false);
+  }
+  catch (const iva& err)
+  {
+    assert(string(err.what())
+           == "read '12.4' while expecting int");
+  }
+
+  cout << "  Testing scientific parsing for int..." << endl;
+  try
+  {
+    [[maybe_unused]] const int scientific
+        = loader.read<int>("scientific");
+    assert(false);
+  }
+  catch (const iva& err)
+  {
+    assert(string(err.what())
+           == "read '1e+6' while expecting int");
+  }
 
   cout << "  Testing invalid values for int..." << endl;
   try
   {
-    [[maybe_unused]] const int invalid_int
-        = loader.read<int>("invalid_int");
+    [[maybe_unused]] const int invalid
+        = loader.read<int>("invalid");
     assert(false);
   }
   catch (const iva& err)
@@ -55,22 +84,73 @@ int main()
            == "read 'cde' while expecting int");
   }
 
-  cout << "  Testing float parsing for size_t..." << endl;
-  assert(loader.read<size_t>("float_for_sizet") == 12);
-  assert(loader.read<size_t>("float_for_sizet") == 12);
 
-  cout << "  Testing invalid values for size_t..." << endl;
+  cout << "  Testing (+) parsing for size_t..." << endl;
   try
   {
-    [[maybe_unused]] const size_t invalid_sizet
-        = loader.read<size_t>("invalid_for_sizet");
+    [[maybe_unused]] const size_t positive
+        = loader.read<size_t>("positive");
     assert(false);
   }
   catch (const iva& err)
   {
     assert(string(err.what())
-           == "read 'fgh' while expecting size_t");
+           == "read '+8' while expecting size_t");
   }
+
+  cout << "  Testing (-) parsing for size_t..." << endl;
+  try
+  {
+    [[maybe_unused]] const size_t negative
+        = loader.read<size_t>("negative");
+    assert(false);
+  }
+  catch (const iva& err)
+  {
+    assert(string(err.what())
+           == "read '-12' while expecting size_t");
+  }
+
+  cout << "  Testing float parsing for size_t..." << endl;
+  try
+  {
+    [[maybe_unused]] const size_t flt
+        = loader.read<size_t>("flt");
+    assert(false);
+  }
+  catch (const iva& err)
+  {
+    assert(string(err.what())
+           == "read '12.4' while expecting size_t");
+  }
+
+  cout << "  Testing scientific parsing for size_t..." << endl;
+  try
+  {
+    [[maybe_unused]] const size_t scientific
+        = loader.read<size_t>("scientific");
+    assert(false);
+  }
+  catch (const iva& err)
+  {
+    assert(string(err.what())
+           == "read '1e+6' while expecting size_t");
+  }
+
+  cout << "  Testing invalid values for size_t..." << endl;
+  try
+  {
+    [[maybe_unused]] const size_t invalid
+        = loader.read<size_t>("invalid");
+    assert(false);
+  }
+  catch (const iva& err)
+  {
+    assert(string(err.what())
+           == "read 'cde' while expecting size_t");
+  }
+
+
 
   cout << "  Testing int parsing for double..." << endl;
   assert(loader.read<double>("int_for_double") == 7.0);
