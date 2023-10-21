@@ -60,3 +60,9 @@ byp_loader::get_groups(const string& input,
   return vector<string>(pieces_match.begin() + 1,
                         pieces_match.end());
 }
+
+string byp_loader::trim(const string& input)
+{
+  // Cannot fail (may return "", expected).
+  return get_groups(input, "^\\s*(.*?)\\s*").value()[0];
+}

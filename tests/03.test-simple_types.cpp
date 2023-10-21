@@ -45,6 +45,32 @@ int main()
   cout << "  Testing (+) parsing for int..." << endl;
   assert(loader.read<int>("positive") == 8);
 
+  cout << "  Testing invalid position for sign for int..." << endl;
+  try
+  {
+    [[maybe_unused]] const int invalid_sign
+        = loader.read<int>("invalid_sign");
+    assert(false);
+  }
+  catch (const iva& err)
+  {
+    assert(string(err.what())
+           == "read '1+4' while expecting int");
+  }
+
+  cout << "  Testing double sign for int..." << endl;
+  try
+  {
+    [[maybe_unused]] const int double_sign
+        = loader.read<int>("double_sign");
+    assert(false);
+  }
+  catch (const iva& err)
+  {
+    assert(string(err.what())
+           == "read '++12' while expecting int");
+  }
+
   cout << "  Testing float parsing for int..." << endl;
   try
   {

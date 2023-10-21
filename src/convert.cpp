@@ -35,62 +35,69 @@ using iva = std::invalid_argument;
 
 void byp_loader::convert(const string& val, bool& res)
 {
-  if (match(val, "^\\s*true\\s*$"))
+  const string buffer = trim(val);
+
+  if (buffer == "true")
     res = true;
-  else if (match(val, "^\\s*false\\s*$"))
+  else if (buffer == "false")
     res = false;
   else
-    throw iva("read '" + val + "' while expecting bool");
+    throw iva("read '" + buffer + "' while expecting bool");
 }
 
 void byp_loader::convert(const string& val, int& res)
 {
-  if (!match(val, "^\\s*[0-9\\-\\+]+\\s*$"))
-    throw iva("read '" + val + "' while expecting int");
+  const string buffer = trim(val);
 
-  // Can natively deal with spaces
-  res = std::stoi(val, nullptr, 10);
+  // stoi() accepts floats, additional filtering required
+  if (!match(buffer, "^[\\+\\-]?[0-9]+$"))
+    throw iva("read '" + buffer + "' while expecting int");
+
+  res = std::stoi(buffer, nullptr, 10);
 }
 
 void byp_loader::convert(const string& val, size_t& res)
 {
-  if (!match(val, "^\\s*[0-9]+\\s*$"))
-    throw iva("read '" + val + "' while expecting size_t");
+  const string buffer = trim(val);
 
-  // Can natively deal with spaces
-  res = std::stoul(val, nullptr, 10);
+  // stoul() accepts floats and negatives,
+  // additional filtering required
+  if (!match(buffer, "^[0-9]+$"))
+    throw iva("read '" + buffer + "' while expecting size_t");
+
+  res = std::stoul(buffer, nullptr, 10);
 }
 
 void byp_loader::convert(const string& val, double& res)
 {
+  const string buffer = trim(val);
+
+  // Builtin filters in stod() should be enough
   try
   {
-    // Can natively deal with spaces
-    res = std::stod(val, nullptr);
+    res = std::stod(buffer, nullptr);
   }
   catch (const iva& err)
   {
-    throw iva("read '" + val + "' while expecting double");
+    throw iva("read '" + buffer + "' while expecting double");
   }
 }
 
 void byp_loader::convert(const string& val, string& res)
 {
-  const auto trimmed = get_groups(val, "^\\s*(.*?)\\s*");
-  if (!trimmed.has_value())
-    throw iva("read '" + val + "' while expecting string");
-
-  res = trimmed.value()[0];
+  res = trim(val);
 }
 
 template <typename T>
 void byp_loader::convert(const string& val, vector<T>& res)
 {
+  const string buffer = trim(val);
+
   // Filtering bounding [], not allowed in content
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
   const auto vec_string
-      = get_groups(val, "^\\s*\\[([^\\[\\]]*)\\]\\s*$");
+      = get_groups(buffer, "^\\[([^\\[\\]]*)\\]$");
 
   if (vec_string.has_value())
   {
@@ -105,7 +112,7 @@ void byp_loader::convert(const string& val, vector<T>& res)
     }
   }
   else
-    throw iva("read '" + val + "' while expecting vector");
+    throw iva("read '" + buffer + "' while expecting vector");
 }
 
 // Specializations (vector<bool> disallowed)
@@ -122,10 +129,12 @@ template <typename T>
 void byp_loader::convert(const string& val,
                          vector<vector<T>>& res)
 {
+  const string buffer = trim(val);
+
   // Filtering bounding [], allowed in content (vectors)
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
-  const auto table_string = get_groups(val, "^\\s*\\[(.*)\\]\\s*$");
+  const auto table_string = get_groups(buffer, "^\\[(.*)\\]$");
 
   if (table_string.has_value())
   {
@@ -146,7 +155,7 @@ void byp_loader::convert(const string& val,
     }
   }
   else
-    throw iva("read '" + val
+    throw iva("read '" + buffer
               + "' while expecting vector<vector>");
 }
 

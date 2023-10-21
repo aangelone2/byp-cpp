@@ -37,7 +37,9 @@ class byp_loader
   public:
     //! Public constructor.
     /*!
-     * \param filename The path to the filename to parse.
+     * @param filename The path to the filename to parse.
+     *
+     * @throws invalid_argument If file does not exist.
      */
     byp_loader(const std::string& filename);
 
@@ -47,9 +49,13 @@ class byp_loader
      *
      * Explicitly instantiated in the source files.
      *
-     * \param key The key associated to the value.
+     * @param key The key associated to the value.
      *
-     * \return The parsed value of the specified type.
+     * @return The parsed value of the specified type.
+     *
+     * @throws invalid_argument If key-value pair missing or
+     *                          invalid, or invalid row found
+     *                          while parsing.
      */
     template <typename T> T read(const std::string& key);
 
@@ -62,9 +68,12 @@ class byp_loader
      * Returns the value associated to a key as a string.
      * Does not trim spaces before and after value.
      *
-     * \param key The key associated to the value.
+     * @param key The key associated to the value.
      *
-     * \return The parsed value as a string.
+     * @return The parsed value as a string.
+     *
+     * @throws invalid_argument If missing key, or invalid row
+     *                          found while parsing the file.
      */
     std::string get(const std::string& key);
 
@@ -78,9 +87,11 @@ class byp_loader
      * The templated vector<> and vector<vector<>> functions
      * are explicitly instantiated in the source files.
      *
-     * \param val The string to convert.
-     * \param res The inout parameter in which the return value
+     * @param val The string to convert.
+     * @param res The inout parameter in which the return value
      *            will be stored.
+     *
+     * @throws invalid_argument If invalid value passed.
      */
     static void convert(const std::string& val, bool& res);
     static void convert(const std::string& val, int& res);
@@ -97,28 +108,35 @@ class byp_loader
 
     // Check if a string matches a pattern.
     /*
-     * \param input The string to analyze.
-     * \param pattern A regex pattern against which the string
+     * @param input The string to analyze.
+     * @param pattern A regex pattern against which the string
      *                will be checked.
      *
-     * \return bool, whether or not the string matches the
-     *               pattern.
+     * @return Whether or not the string matches the pattern.
      */
     static bool match(const std::string& input,
                       const std::string& pattern);
 
     // Extract groups from string if regex is matched.
     /*
-     * \param input The string to analyze.
-     * \param pattern A regexp pattern against which the string
+     * @param input The string to analyze.
+     * @param pattern A regexp pattern against which the string
      *                will be checked.
      *
-     * \return optional<vector<string>>, non-empty if the
-     *         string matches. i-th group is element `i-1`.
+     * @return Non-empty if the string matches. i-th group is
+     *         element `i-1`.
      */
     static std::optional<std::vector<std::string>>
     get_groups(const std::string& input,
                const std::string& pattern);
+
+    // Removes leading and trailing spaces.
+    /*
+     * @param input The string to trim.
+     *
+     * @return The trimmed string.
+     */
+    static std::string trim(const std::string& input);
 };
 
 #endif

@@ -31,7 +31,7 @@ int main()
   catch (const iva& err)
   {
     assert(string(err.what())
-        == "read ' -2.1' while expecting int");
+        == "read '-2.1' while expecting int");
   }
 
   cout << "  Testing invalid input for vector<int>..." << endl;
@@ -44,7 +44,7 @@ int main()
   catch (const iva& err)
   {
     assert(string(err.what())
-        == "read ' a' while expecting int");
+        == "read 'a' while expecting int");
   }
 
   cout << "  Testing empty component for vector<int>..." << endl;
@@ -57,7 +57,7 @@ int main()
   catch (const iva& err)
   {
     assert(string(err.what())
-        == "read '  ' while expecting int");
+        == "read '' while expecting int");
   }
 
   cout << "  Testing vector<size_t>..." << endl;

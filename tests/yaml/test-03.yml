@@ -3,6 +3,8 @@ invalid_bool_2: abc
 
 positive: +8
 negative: -12
+invalid_sign: 1+4
+double_sign: ++12
 flt: 12.4
 scientific: 1e+6
 invalid: cde
