@@ -35,7 +35,7 @@ using iva = std::invalid_argument;
 
 void byp_loader::convert(const string& val, bool& res)
 {
-  const string buffer = trim(val);
+  const string buffer = trim(remove_comments(val));
 
   if (buffer == "true")
     res = true;
@@ -47,7 +47,7 @@ void byp_loader::convert(const string& val, bool& res)
 
 void byp_loader::convert(const string& val, int& res)
 {
-  const string buffer = trim(val);
+  const string buffer = trim(remove_comments(val));
 
   // stoi() accepts floats, additional filtering required
   if (!match(buffer, "^[\\+\\-]?[0-9]+$"))
@@ -58,7 +58,7 @@ void byp_loader::convert(const string& val, int& res)
 
 void byp_loader::convert(const string& val, size_t& res)
 {
-  const string buffer = trim(val);
+  const string buffer = trim(remove_comments(val));
 
   // stoul() accepts floats and negatives,
   // additional filtering required
@@ -70,7 +70,7 @@ void byp_loader::convert(const string& val, size_t& res)
 
 void byp_loader::convert(const string& val, double& res)
 {
-  const string buffer = trim(val);
+  const string buffer = trim(remove_comments(val));
 
   // Builtin filters in stod() should be enough
   try
@@ -85,13 +85,13 @@ void byp_loader::convert(const string& val, double& res)
 
 void byp_loader::convert(const string& val, string& res)
 {
-  res = trim(val);
+  res = trim(remove_comments(val));
 }
 
 template <typename T>
 void byp_loader::convert(const string& val, vector<T>& res)
 {
-  const string buffer = trim(val);
+  const string buffer = trim(remove_comments(val));
 
   // Filtering bounding [], not allowed in content
   // Exceptions need not be caught here, they may only be
@@ -129,7 +129,7 @@ template <typename T>
 void byp_loader::convert(const string& val,
                          vector<vector<T>>& res)
 {
-  const string buffer = trim(val);
+  const string buffer = trim(remove_comments(val));
 
   // Filtering bounding [], allowed in content (vectors)
   // Exceptions need not be caught here, they may only be

@@ -108,5 +108,40 @@ int main()
   cout << "  Testing vector<string>..." << endl;
   assert(loader.read<s1t>("s1t") == s1t({"abc", "def", "ghi lkm", "ejg"}));
 
+  cout << "  Testing incomplete vector..." << endl;
+  try
+  {
+    [[maybe_unused]] const i1t incomplete_vector_1
+        = loader.read<i1t>("incomplete_vector_1");
+    assert(false);
+  }
+  catch (const iva& err)
+  {
+    assert(string(err.what())
+        == "read '[1,2,' while expecting vector");
+  }
+  try
+  {
+    [[maybe_unused]] const i1t incomplete_vector_2
+        = loader.read<i1t>("incomplete_vector_2");
+    assert(false);
+  }
+  catch (const iva& err)
+  {
+    assert(string(err.what())
+        == "read '[1,2' while expecting vector");
+  }
+  try
+  {
+    [[maybe_unused]] const i1t incomplete_vector_3
+        = loader.read<i1t>("incomplete_vector_3");
+    assert(false);
+  }
+  catch (const iva& err)
+  {
+    assert(string(err.what())
+        == "read '[1,2' while expecting vector");
+  }
+
   cout << "Test completed successfully" << endl;
 }

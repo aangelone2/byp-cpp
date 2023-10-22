@@ -58,6 +58,12 @@ int main()
            == "key 'not_existing' invalid or missing");
   }
 
+  cout << "  Testing partial comment..." << endl;
+  assert(loader.read<int>("partial_comment") == 123);
+
+  cout << "  Testing partial multiple comment..." << endl;
+  assert(loader.read<int>("partial_multiple_comment") == 123);
+
   // If any of the previous tests succeeded,
   // comments and empty lines were successfully ignored
   cout << "  Testing empty and commented lines..." << endl;

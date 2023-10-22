@@ -11,3 +11,7 @@ invalid_d1t: [7.0, 8.1,a]
 bracket_inside_d1t: [7.0, [8.1, 2.0]
 
 s1t: [abc,   def , ghi lkm  , ejg  ]
+
+incomplete_vector_1: [1,2,
+incomplete_vector_2: [1,2
+incomplete_vector_3: [1,2 #,3]

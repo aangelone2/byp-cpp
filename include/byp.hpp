@@ -137,6 +137,14 @@ class byp_loader
      * @return The trimmed string.
      */
     static std::string trim(const std::string& input);
+
+    // Removes trailing comments.
+    /*
+     * @param input The string to de-comment.
+     *
+     * @return The de-commented string.
+     */
+    static std::string remove_comments(const std::string& input);
 };
 
 #endif

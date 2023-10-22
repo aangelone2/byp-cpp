@@ -66,3 +66,10 @@ string byp_loader::trim(const string& input)
   // Cannot fail (may return "", expected).
   return get_groups(input, "^\\s*(.*?)\\s*").value()[0];
 }
+
+string byp_loader::remove_comments(const string& input)
+{
+  // Cannot fail (may return "", expected).
+  // Greedy match to catch all non-comment text.
+  return get_groups(input, "^([^#]*)#?.*").value()[0];
+}
