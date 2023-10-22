@@ -10,7 +10,9 @@ scientific: 1e+6
 invalid: cde
 
 int_for_double: 7
+scientific_2: 1.5e-06
 invalid_for_double: ilm
 
 int_for_string: 1
 spaces_in_string: a b c
+quotes_in_string: "ab" c"d ef

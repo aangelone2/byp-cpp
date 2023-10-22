@@ -178,8 +178,21 @@ int main()
 
 
 
+  cout << "  Testing float parsing for double..." << endl;
+  assert(loader.read<double>("flt") == 12.4);
+
+  cout << "  Testing scientific parsing for double..." << endl;
+  assert(loader.read<double>("scientific") == 1.0e+6);
+  assert(loader.read<double>("scientific_2") == 1.5e-6);
+
   cout << "  Testing int parsing for double..." << endl;
   assert(loader.read<double>("int_for_double") == 7.0);
+
+  cout << "  Testing (+) parsing for double..." << endl;
+  assert(loader.read<double>("positive") == 8.0);
+
+  cout << "  Testing (-) parsing for double..." << endl;
+  assert(loader.read<double>("negative") == -12);
 
   cout << "  Testing invalid values for double..." << endl;
   try
@@ -199,6 +212,9 @@ int main()
 
   cout << "  Testing space parsing for string..." << endl;
   assert(loader.read<string>("spaces_in_string") == "a b c");
+
+  cout << "  Testing quote parsing for string..." << endl;
+  assert(loader.read<string>("quotes_in_string") == "\"ab\" c\"d ef");
 
   cout << "Test completed successfully" << endl;
 }

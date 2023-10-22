@@ -11,7 +11,10 @@ simplified dialect of the YAML markup language.
 The library is designed to be easy to install, to manage and to
 use, while providing a reasonably wide and robust range of
 capabilities for users requiring basic YAML functionalities
-(parsing of single values, vectors and tables).
+(parsing of single values, vectors, and tables). High
+performance is not one of the main goals of the library, unless
+achievable without compromising simplicity of design and
+maintainability.
 
 We recommend the very complete and thorough
 [yaml-cpp](https://github.com/jbeder/yaml-cpp) open source
@@ -31,8 +34,12 @@ C++17-compatible). The command
 $ make build
 ```
 
-compiles the library statically as `libbypcpp.a` in the
-`build/` directory. Test can be ran by launching the command
+compiles the library statically as `libbyp-cpp.a` in the
+`build/` directory.
+
+Use the `-std=c++17` flag when compiling your code with `g++`.
+
+Tests can be ran launching the command
 
 ```
 $ make test
@@ -71,7 +78,8 @@ Parsable types are:
 
 ## Documentation
 
-The command
+Building the documentation requires
+[doxygen](https://www.doxygen.nl/). The command
 
 ```
 $ make docs
