@@ -71,11 +71,11 @@ namespace byp
        *
        * @return The parsed value as a string.
        *
-       * @throws invalid_argument If missing key, or invalid row
-       *                          found while parsing the file.
+       * @throws invalid_argument If missing key, or invalid
+       * row found while parsing the file.
        */
       std::string get(const std::string& key);
   };
-}
+} // namespace byp
 
 #endif

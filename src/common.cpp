@@ -30,7 +30,8 @@ bool match(const string& input, const string& pattern)
   return regex_match(input, regex(pattern));
 }
 
-optional<vector<string>> get_groups(const string& input, const string& pattern)
+optional<vector<string>> get_groups(const string& input,
+                                    const string& pattern)
 {
   const auto r = regex(pattern);
   std::smatch pieces_match;
@@ -49,7 +50,8 @@ string clean(const string& input)
   // Cannot fail (may return "", expected).
 
   // Greedy match to leave no pre-commented chars.
-  const string buffer = get_groups(input, "^([^#]*).*$").value()[0];
+  const string buffer
+      = get_groups(input, "^([^#]*).*$").value()[0];
   // Non-greedy match to leave all trailing spaces.
   return get_groups(buffer, "^\\s*(.*?)\\s*$").value()[0];
 }

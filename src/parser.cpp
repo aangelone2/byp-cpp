@@ -56,8 +56,8 @@ string byp::parser::get(const string& key)
 
     // Leading and trailing spaces for val not removed,
     // managed by convert() (1st, "dialect" space kept)
-    const auto key_val = get_groups(
-        buffer, "^\\s*([^\\s]*)\\s*: (.*)$");
+    const auto key_val
+        = get_groups(buffer, "^\\s*([^\\s]*)\\s*: (.*)$");
 
     // Skipping non-key-value-pair lines
     if (!key_val.has_value())
@@ -86,13 +86,21 @@ template double byp::parser::read<double>(const string& key);
 template string byp::parser::read<string>(const string& key);
 
 // vector<bool> and vector<string> disallowed
-template vector<int> byp::parser::read<vector<int>>(const string& key);
-template vector<size_t> byp::parser::read<vector<size_t>>(const string& key);
-template vector<double> byp::parser::read<vector<double>>(const string& key);
-template vector<string> byp::parser::read<vector<string>>(const string& key);
+template vector<int>
+byp::parser::read<vector<int>>(const string& key);
+template vector<size_t>
+byp::parser::read<vector<size_t>>(const string& key);
+template vector<double>
+byp::parser::read<vector<double>>(const string& key);
+template vector<string>
+byp::parser::read<vector<string>>(const string& key);
 
 // vector<vector<bool>> and vector<vector<string>> disallowed
-template vector<vector<int>> byp::parser::read<vector<vector<int>>>(const string& key);
-template vector<vector<size_t>> byp::parser::read<vector<vector<size_t>>>(const string& key);
-template vector<vector<double>> byp::parser::read<vector<vector<double>>>(const string& key);
-template vector<vector<string>> byp::parser::read<vector<vector<string>>>(const string& key);
+template vector<vector<int>>
+byp::parser::read<vector<vector<int>>>(const string& key);
+template vector<vector<size_t>>
+byp::parser::read<vector<vector<size_t>>>(const string& key);
+template vector<vector<double>>
+byp::parser::read<vector<vector<double>>>(const string& key);
+template vector<vector<string>>
+byp::parser::read<vector<vector<string>>>(const string& key);

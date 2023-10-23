@@ -20,7 +20,7 @@ int main()
   auto loader = byp::parser(filename);
 
   cout << "  Testing vector<int>..." << endl;
-  assert(loader.read<i1t>("i1t") == i1t({1,-2,3}));
+  assert(loader.read<i1t>("i1t") == i1t({1, -2, 3}));
 
   cout << "  Testing float input for vector<int>..." << endl;
   try
@@ -32,7 +32,7 @@ int main()
   catch (const iva& err)
   {
     assert(string(err.what())
-        == "read '-2.1' while expecting int");
+           == "read '-2.1' while expecting int");
   }
 
   cout << "  Testing invalid input for vector<int>..." << endl;
@@ -45,10 +45,11 @@ int main()
   catch (const iva& err)
   {
     assert(string(err.what())
-        == "read 'a' while expecting int");
+           == "read 'a' while expecting int");
   }
 
-  cout << "  Testing empty component for vector<int>..." << endl;
+  cout << "  Testing empty component for vector<int>..."
+       << endl;
   try
   {
     [[maybe_unused]] const i1t empty_i1t
@@ -58,13 +59,14 @@ int main()
   catch (const iva& err)
   {
     assert(string(err.what())
-        == "read '' while expecting int");
+           == "read '' while expecting int");
   }
 
   cout << "  Testing vector<size_t>..." << endl;
-  assert(loader.read<z1t>("z1t") == z1t({4,5,6}));
+  assert(loader.read<z1t>("z1t") == z1t({4, 5, 6}));
 
-  cout << "  Testing invalid input for vector<size_t>..." << endl;
+  cout << "  Testing invalid input for vector<size_t>..."
+       << endl;
   try
   {
     [[maybe_unused]] const z1t invalid_z1t
@@ -74,13 +76,14 @@ int main()
   catch (const iva& err)
   {
     assert(string(err.what())
-        == "read 'a' while expecting size_t");
+           == "read 'a' while expecting size_t");
   }
 
   cout << "  Testing vector<double>..." << endl;
   assert(loader.read<d1t>("d1t") == d1t({7.0, 8.1, 9.4}));
 
-  cout << "  Testing invalid input for vector<double>..." << endl;
+  cout << "  Testing invalid input for vector<double>..."
+       << endl;
   try
   {
     [[maybe_unused]] const d1t invalid_d1t
@@ -90,7 +93,7 @@ int main()
   catch (const iva& err)
   {
     assert(string(err.what())
-        == "read 'a' while expecting double");
+           == "read 'a' while expecting double");
   }
 
   cout << "  Testing bracket inside vector<double>..." << endl;
@@ -102,12 +105,14 @@ int main()
   }
   catch (const iva& err)
   {
-    assert(string(err.what())
+    assert(
+        string(err.what())
         == "read '[7.0, [8.1, 2.0]' while expecting vector");
   }
 
   cout << "  Testing vector<string>..." << endl;
-  assert(loader.read<s1t>("s1t") == s1t({"abc", "def", "ghi lkm", "ejg"}));
+  assert(loader.read<s1t>("s1t")
+         == s1t({"abc", "def", "ghi lkm", "ejg"}));
 
   cout << "  Testing incomplete vector..." << endl;
   try
@@ -119,7 +124,7 @@ int main()
   catch (const iva& err)
   {
     assert(string(err.what())
-        == "read '[1,2,' while expecting vector");
+           == "read '[1,2,' while expecting vector");
   }
   try
   {
@@ -130,7 +135,7 @@ int main()
   catch (const iva& err)
   {
     assert(string(err.what())
-        == "read '[1,2' while expecting vector");
+           == "read '[1,2' while expecting vector");
   }
   try
   {
@@ -141,7 +146,7 @@ int main()
   catch (const iva& err)
   {
     assert(string(err.what())
-        == "read '[1,2' while expecting vector");
+           == "read '[1,2' while expecting vector");
   }
 
   cout << "Test completed successfully" << endl;

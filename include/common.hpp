@@ -62,7 +62,8 @@ bool match(const string& input, const string& pattern);
  * @return Non-empty if the string matches. i-th group is
  *         element `i-1`.
  */
-std::optional<vector<string>> get_groups(const string& input, const string& pattern);
+std::optional<vector<string>>
+get_groups(const string& input, const string& pattern);
 
 // Removes trailing comments, then leading and trailing spaces.
 /*
@@ -93,7 +94,9 @@ void convert(const string& val, int& res);
 void convert(const string& val, size_t& res);
 void convert(const string& val, double& res);
 void convert(const string& val, string& res);
-template <typename T> void convert(const string& val, vector<T>& res);
-template <typename T> void convert(const string& val, vector<vector<T>>& res);
+template <typename T>
+void convert(const string& val, vector<T>& res);
+template <typename T>
+void convert(const string& val, vector<vector<T>>& res);
 
 #endif

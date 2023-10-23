@@ -15,8 +15,6 @@ int main()
   const string filename = "../tests/yaml/test-03.yml";
   auto loader = byp::parser(filename);
 
-
-
   cout << "  Testing invalid bool..." << endl;
   try
   {
@@ -41,12 +39,11 @@ int main()
            == "read 'abc' while expecting bool");
   }
 
-
-
   cout << "  Testing (+) parsing for int..." << endl;
   assert(loader.read<int>("positive") == 8);
 
-  cout << "  Testing invalid position for sign for int..." << endl;
+  cout << "  Testing invalid position for sign for int..."
+       << endl;
   try
   {
     [[maybe_unused]] const int invalid_sign
@@ -75,8 +72,7 @@ int main()
   cout << "  Testing float parsing for int..." << endl;
   try
   {
-    [[maybe_unused]] const int flt
-        = loader.read<int>("flt");
+    [[maybe_unused]] const int flt = loader.read<int>("flt");
     assert(false);
   }
   catch (const iva& err)
@@ -110,7 +106,6 @@ int main()
     assert(string(err.what())
            == "read 'cde' while expecting int");
   }
-
 
   cout << "  Testing (+) parsing for size_t..." << endl;
   try
@@ -177,8 +172,6 @@ int main()
            == "read 'cde' while expecting size_t");
   }
 
-
-
   cout << "  Testing float parsing for double..." << endl;
   assert(loader.read<double>("flt") == 12.4);
 
@@ -215,7 +208,8 @@ int main()
   assert(loader.read<string>("spaces_in_string") == "a b c");
 
   cout << "  Testing quote parsing for string..." << endl;
-  assert(loader.read<string>("quotes_in_string") == "\"ab\" c\"d ef");
+  assert(loader.read<string>("quotes_in_string")
+         == "\"ab\" c\"d ef");
 
   cout << "Test completed successfully" << endl;
 }

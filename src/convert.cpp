@@ -80,7 +80,8 @@ void convert(const string& val, string& res)
   res = clean(val);
 }
 
-template <typename T> void convert(const string& val, vector<T>& res)
+template <typename T>
+void convert(const string& val, vector<T>& res)
 {
   const string buffer = clean(val);
 
@@ -112,7 +113,8 @@ template void convert(const string& val, vector<size_t>& res);
 template void convert(const string& val, vector<double>& res);
 template void convert(const string& val, vector<string>& res);
 
-template <typename T> void convert(const string& val, vector<vector<T>>& res)
+template <typename T>
+void convert(const string& val, vector<vector<T>>& res)
 {
   const string buffer = clean(val);
 
@@ -145,7 +147,11 @@ template <typename T> void convert(const string& val, vector<vector<T>>& res)
 }
 
 // Specializations (vector<vector<bool>> disallowed)
-template void convert(const string& val, vector<vector<int>>& res);
-template void convert(const string& val, vector<vector<size_t>>& res);
-template void convert(const string& val, vector<vector<double>>& res);
-template void convert(const string& val, vector<vector<string>>& res);
+template void convert(const string& val,
+                      vector<vector<int>>& res);
+template void convert(const string& val,
+                      vector<vector<size_t>>& res);
+template void convert(const string& val,
+                      vector<vector<double>>& res);
+template void convert(const string& val,
+                      vector<vector<string>>& res);
