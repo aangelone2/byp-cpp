@@ -2,6 +2,7 @@
 #include <cassert>
 #include <iostream>
 #include <limits>
+#include <vector>
 
 using std::cout;
 using std::endl;
@@ -12,7 +13,7 @@ using iva = std::invalid_argument;
 int main()
 {
   const string filename = "../tests/yaml/test-03.yml";
-  auto loader = byp_loader(filename);
+  auto loader = byp::parser(filename);
 
 
 

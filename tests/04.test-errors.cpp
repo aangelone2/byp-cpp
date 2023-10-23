@@ -1,6 +1,7 @@
 #include "byp.hpp"
 #include <cassert>
 #include <iostream>
+#include <vector>
 
 using std::cout;
 using std::endl;
@@ -11,7 +12,7 @@ using iva = std::invalid_argument;
 
 int main()
 {
-  auto l1 = byp_loader("../tests/yaml/test-04-1.yml");
+  auto l1 = byp::parser("../tests/yaml/test-04-1.yml");
 
   cout << "  Testing spaces in key..." << endl;
   try
@@ -26,7 +27,7 @@ int main()
            == "invalid key-value pair at row 4");
   }
 
-  auto l2 = byp_loader("../tests/yaml/test-04-2.yml");
+  auto l2 = byp::parser("../tests/yaml/test-04-2.yml");
 
   cout << "  Testing no-space key..." << endl;
   try

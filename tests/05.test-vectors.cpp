@@ -1,6 +1,7 @@
 #include "byp.hpp"
 #include <cassert>
 #include <iostream>
+#include <vector>
 
 using std::cout;
 using std::endl;
@@ -16,7 +17,7 @@ using iva = std::invalid_argument;
 int main()
 {
   const string filename = "../tests/yaml/test-05.yml";
-  auto loader = byp_loader(filename);
+  auto loader = byp::parser(filename);
 
   cout << "  Testing vector<int>..." << endl;
   assert(loader.read<i1t>("i1t") == i1t({1,-2,3}));

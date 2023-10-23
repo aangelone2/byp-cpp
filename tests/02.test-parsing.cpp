@@ -1,6 +1,7 @@
 #include "byp.hpp"
 #include <cassert>
 #include <iostream>
+#include <vector>
 
 using std::cout;
 using std::endl;
@@ -14,7 +15,7 @@ using iva = std::invalid_argument;
 int main()
 {
   const string filename = "../tests/yaml/test-02.yml";
-  auto loader = byp_loader(filename);
+  auto loader = byp::parser(filename);
 
   cout << "  Testing many-spaced key..." << endl;
   assert(loader.read<int>("many_spaces") == 4);

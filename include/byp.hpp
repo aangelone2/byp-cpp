@@ -27,124 +27,55 @@
 #define BCP_HPP
 
 #include <fstream>
-#include <optional>
-#include <string>
-#include <vector>
 
-//! Basic loader class.
-class byp_loader
+namespace byp
 {
-  public:
-    //! Public constructor.
-    /*!
-     * @param filename The path to the filename to parse.
-     *
-     * @throws invalid_argument If file does not exist.
-     */
-    byp_loader(const std::string& filename);
+  //! Loader class for parsing values.
+  class parser
+  {
+    public:
+      //! Public constructor.
+      /*!
+       * @param filename The path to the filename to parse.
+       *
+       * @throws invalid_argument If file does not exist.
+       */
+      parser(const std::string& filename);
 
-    //! Main parsing function.
-    /*!
-     * Call to parse a value of the specified type.
-     *
-     * Explicitly instantiated in the source files.
-     *
-     * @param key The key associated to the value.
-     *
-     * @return The parsed value of the specified type.
-     *
-     * @throws invalid_argument If key-value pair missing or
-     *                          invalid, or invalid row found
-     *                          while parsing.
-     */
-    template <typename T> T read(const std::string& key);
+      //! Main parsing function.
+      /*!
+       * Call to parse a value of the specified type.
+       *
+       * Explicitly instantiated in the source files.
+       *
+       * @param key The key associated to the value.
+       *
+       * @return The parsed value of the specified type.
+       *
+       * @throws invalid_argument If key-value pair missing or
+       *                          invalid, or invalid row found
+       *                          while parsing.
+       */
+      template <typename T> T read(const std::string& key);
 
-  private:
-    // File object to be parsed for key-value pairs.
-    std::ifstream file;
+    private:
+      // File object to be parsed for key-value pairs.
+      std::ifstream file;
 
-    // Value parsing function.
-    /*
-     * Returns the value associated to a key as a string.
-     * Does not trim spaces before and after value.
-     *
-     * @param key The key associated to the value.
-     *
-     * @return The parsed value as a string.
-     *
-     * @throws invalid_argument If missing key, or invalid row
-     *                          found while parsing the file.
-     */
-    std::string get(const std::string& key);
-
-    // Conversion functions, string -> specified type
-    /*
-     * Required to trim leading and trailing spaces from value
-     * before conversion, or at least to ignore them. This is
-     * simpler than letting get() deal with it, since convert()
-     * can be called by other convert() calls.
-     *
-     * The templated vector<> and vector<vector<>> functions
-     * are explicitly instantiated in the source files.
-     *
-     * @param val The string to convert.
-     * @param res The inout parameter in which the return value
-     *            will be stored.
-     *
-     * @throws invalid_argument If invalid value passed.
-     */
-    static void convert(const std::string& val, bool& res);
-    static void convert(const std::string& val, int& res);
-    static void convert(const std::string& val, size_t& res);
-    static void convert(const std::string& val, double& res);
-    static void convert(const std::string& val,
-                        std::string& res);
-    template <typename T>
-    static void convert(const std::string& val,
-                        std::vector<T>& res);
-    template <typename T>
-    static void convert(const std::string& val,
-                        std::vector<std::vector<T>>& res);
-
-    // Check if a string matches a pattern.
-    /*
-     * @param input The string to analyze.
-     * @param pattern A regex pattern against which the string
-     *                will be checked.
-     *
-     * @return Whether or not the string matches the pattern.
-     */
-    static bool match(const std::string& input,
-                      const std::string& pattern);
-
-    // Extract groups from string if regex is matched.
-    /*
-     * @param input The string to analyze.
-     * @param pattern A regexp pattern against which the string
-     *                will be checked.
-     *
-     * @return Non-empty if the string matches. i-th group is
-     *         element `i-1`.
-     */
-    static std::optional<std::vector<std::string>>
-    get_groups(const std::string& input,
-               const std::string& pattern);
-
-    // Removes leading and trailing spaces.
-    /*
-     * @param input The string to trim.
-     *
-     * @return The trimmed string.
-     */
-    static std::string trim(const std::string& input);
-
-    // Removes trailing comments.
-    /*
-     * @param input The string to de-comment.
-     *
-     * @return The de-commented string.
-     */
-    static std::string remove_comments(const std::string& input);
-};
+      // Value parsing function.
+      /*
+       * Returns the value associated to a key as a string.
+       * Does not trim spaces before and after value.
+       *
+       * @param key The key associated to the value.
+       *
+       * @return The parsed value as a string.
+       *
+       * @throws invalid_argument If missing key, or invalid row
+       *                          found while parsing the file.
+       */
+      std::string get(const std::string& key);
+  };
+}
 
 #endif

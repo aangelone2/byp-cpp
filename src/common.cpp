@@ -23,45 +23,33 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#include "byp.hpp"
+#include "common.hpp"
 
-using std::string;
-using iva = std::invalid_argument;
-
-// Helper function, resets stream to the beginning
-void reset_stream(std::ifstream& file)
+bool match(const string& input, const string& pattern)
 {
-  file.clear();
-  file.seekg(0);
+  return regex_match(input, regex(pattern));
 }
 
-string byp_loader::get(const string& key)
+optional<vector<string>> get_groups(const string& input, const string& pattern)
 {
-  reset_stream(file);
+  const auto r = regex(pattern);
+  std::smatch pieces_match;
 
-  int counter = 0;
-  string buffer;
-  while (std::getline(file, buffer))
-  {
-    ++counter;
+  // Match failed
+  if (!regex_match(input, pieces_match, r))
+    return {};
 
-    const bool is_comment = match(buffer, "^\\s*#.*");
-    if (is_comment || buffer.empty())
-      continue;
+  // Removing 0th element (complete string)
+  return vector<string>(pieces_match.begin() + 1,
+                        pieces_match.end());
+}
 
-    // Leading and trailing spaces for val not removed,
-    // managed by convert() (1st, "dialect" space kept)
-    const auto key_val = get_groups(
-        buffer, "^\\s*([^\\s]*)\\s*: (.*)$");
+string clean(const string& input)
+{
+  // Cannot fail (may return "", expected).
 
-    // Skipping non-key-value-pair lines
-    if (!key_val.has_value())
-      throw iva("invalid key-value pair at row "
-                + std::to_string(counter));
-
-    if (key_val.value()[0] == key)
-      return key_val.value()[1];
-  }
-
-  throw iva("key '" + key + "' invalid or missing");
+  // Greedy match to leave no pre-commented chars.
+  const string buffer = get_groups(input, "^([^#]*).*$").value()[0];
+  // Non-greedy match to leave all trailing spaces.
+  return get_groups(buffer, "^\\s*(.*?)\\s*$").value()[0];
 }

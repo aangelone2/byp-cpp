@@ -23,19 +23,11 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#include "byp.hpp"
-#include <regex>
-#include <sstream>
+#include "common.hpp"
 
-using std::regex;
-using std::sregex_iterator;
-using std::string;
-using std::vector;
-using iva = std::invalid_argument;
-
-void byp_loader::convert(const string& val, bool& res)
+void convert(const string& val, bool& res)
 {
-  const string buffer = trim(remove_comments(val));
+  const string buffer = clean(val);
 
   if (buffer == "true")
     res = true;
@@ -45,9 +37,9 @@ void byp_loader::convert(const string& val, bool& res)
     throw iva("read '" + buffer + "' while expecting bool");
 }
 
-void byp_loader::convert(const string& val, int& res)
+void convert(const string& val, int& res)
 {
-  const string buffer = trim(remove_comments(val));
+  const string buffer = clean(val);
 
   // stoi() accepts floats, additional filtering required
   if (!match(buffer, "^[\\+\\-]?[0-9]+$"))
@@ -56,9 +48,9 @@ void byp_loader::convert(const string& val, int& res)
   res = std::stoi(buffer, nullptr, 10);
 }
 
-void byp_loader::convert(const string& val, size_t& res)
+void convert(const string& val, size_t& res)
 {
-  const string buffer = trim(remove_comments(val));
+  const string buffer = clean(val);
 
   // stoul() accepts floats and negatives,
   // additional filtering required
@@ -68,9 +60,9 @@ void byp_loader::convert(const string& val, size_t& res)
   res = std::stoul(buffer, nullptr, 10);
 }
 
-void byp_loader::convert(const string& val, double& res)
+void convert(const string& val, double& res)
 {
-  const string buffer = trim(remove_comments(val));
+  const string buffer = clean(val);
 
   // Builtin filters in stod() should be enough
   try
@@ -83,15 +75,14 @@ void byp_loader::convert(const string& val, double& res)
   }
 }
 
-void byp_loader::convert(const string& val, string& res)
+void convert(const string& val, string& res)
 {
-  res = trim(remove_comments(val));
+  res = clean(val);
 }
 
-template <typename T>
-void byp_loader::convert(const string& val, vector<T>& res)
+template <typename T> void convert(const string& val, vector<T>& res)
 {
-  const string buffer = trim(remove_comments(val));
+  const string buffer = clean(val);
 
   // Filtering bounding [], not allowed in content
   // Exceptions need not be caught here, they may only be
@@ -105,7 +96,7 @@ void byp_loader::convert(const string& val, vector<T>& res)
     std::stringstream ss(vec_string.value()[0]);
     string token;
 
-    while (std::getline(ss, token, ','))
+    while (getline(ss, token, ','))
     {
       res.resize(res.size() + 1);
       convert(token, res.back());
@@ -116,20 +107,14 @@ void byp_loader::convert(const string& val, vector<T>& res)
 }
 
 // Specializations (vector<bool> disallowed)
-template void byp_loader::convert(const string& val,
-                                  vector<int>& res);
-template void byp_loader::convert(const string& val,
-                                  vector<size_t>& res);
-template void byp_loader::convert(const string& val,
-                                  vector<double>& res);
-template void byp_loader::convert(const string& val,
-                                  vector<string>& res);
+template void convert(const string& val, vector<int>& res);
+template void convert(const string& val, vector<size_t>& res);
+template void convert(const string& val, vector<double>& res);
+template void convert(const string& val, vector<string>& res);
 
-template <typename T>
-void byp_loader::convert(const string& val,
-                         vector<vector<T>>& res)
+template <typename T> void convert(const string& val, vector<vector<T>>& res)
 {
-  const string buffer = trim(remove_comments(val));
+  const string buffer = clean(val);
 
   // Filtering bounding [], allowed in content (vectors)
   // Exceptions need not be caught here, they may only be
@@ -141,7 +126,7 @@ void byp_loader::convert(const string& val,
     const string vec_str = table_string.value()[0];
     // Filtering bounding [] in subvectors, not allowed within
     // Not catching leading/trailing spaces within subvectors
-    const regex el_pattern = regex("\\[[^\\[\\]]*\\]");
+    const auto el_pattern = std::regex("\\[[^\\[\\]]*\\]");
 
     const auto begin = sregex_iterator(
         vec_str.begin(), vec_str.end(), el_pattern);
@@ -160,11 +145,7 @@ void byp_loader::convert(const string& val,
 }
 
 // Specializations (vector<vector<bool>> disallowed)
-template void byp_loader::convert(const string& val,
-                                  vector<vector<int>>& res);
-template void byp_loader::convert(const string& val,
-                                  vector<vector<size_t>>& res);
-template void byp_loader::convert(const string& val,
-                                  vector<vector<double>>& res);
-template void byp_loader::convert(const string& val,
-                                  vector<vector<string>>& res);
+template void convert(const string& val, vector<vector<int>>& res);
+template void convert(const string& val, vector<vector<size_t>>& res);
+template void convert(const string& val, vector<vector<double>>& res);
+template void convert(const string& val, vector<vector<string>>& res);

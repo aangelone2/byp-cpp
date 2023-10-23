@@ -57,7 +57,7 @@ parse values associated to a specific key in the file.
 ```cpp
 #include "byp.hpp"
 
-byp_loader loader(<file path>);
+byp::parser loader(<file path>);
 
 // Assuming <key>: <value>, where <value>
 // is compatible with <type>, is present in the parsed file

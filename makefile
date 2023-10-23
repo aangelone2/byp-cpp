@@ -14,15 +14,13 @@ CPPLIB=-L$(BUILDDIR)/
 build:
 	mkdir -p $(BUILDDIR)
 	rm -fv $(BUILDDIR)/*.a $(BUILDDIR)/*.o
-	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/byp_loader.cpp -o $(BUILDDIR)/byp_loader.o
-	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/get.cpp -o $(BUILDDIR)/get.o
+	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/common.cpp -o $(BUILDDIR)/common.o
 	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/convert.cpp -o $(BUILDDIR)/convert.o
-	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/read.cpp -o $(BUILDDIR)/read.o
+	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/parser.cpp -o $(BUILDDIR)/parser.o
 	ar rcs $(BUILDDIR)/libbyp-cpp.a\
-		$(BUILDDIR)/byp_loader.o\
-		$(BUILDDIR)/get.o\
+		$(BUILDDIR)/common.o\
 		$(BUILDDIR)/convert.o\
-		$(BUILDDIR)/read.o
+		$(BUILDDIR)/parser.o
 
 test: build
 	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/01.test-basic.cpp -o $(BUILDDIR)/01.test-basic -lbyp-cpp
