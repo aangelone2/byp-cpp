@@ -29,6 +29,7 @@ test: build
 	$(CC) $(CPPFLAGS) $(TESTINC) $(CPPLIB) tests/03.test-simple_types.cpp -o $(BUILDDIR)/03.test-simple_types -lbyp-cpp
 	$(CC) $(CPPFLAGS) $(TESTINC) $(CPPLIB) tests/04.test-errors.cpp -o $(BUILDDIR)/04.test-errors -lbyp-cpp
 	$(CC) $(CPPFLAGS) $(TESTINC) $(CPPLIB) tests/05.test-vectors.cpp -o $(BUILDDIR)/05.test-vectors -lbyp-cpp
+	$(CC) $(CPPFLAGS) $(TESTINC) $(CPPLIB) tests/06.test-table.cpp -o $(BUILDDIR)/06.test-table -lbyp-cpp
 	@echo ''
 	@echo 'Beginning testing'
 	@echo ''
@@ -41,6 +42,8 @@ test: build
 	cd $(BUILDDIR)/ ; ./04.test-errors
 	@echo ''
 	cd $(BUILDDIR)/ ; ./05.test-vectors
+	@echo ''
+	cd $(BUILDDIR)/ ; ./06.test-table
 	@echo ''
 	@echo 'All tests completed successfully'
 

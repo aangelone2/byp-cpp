@@ -74,14 +74,14 @@ int main()
 
   cout << "  Testing valid empty vector..." << endl;
   assert(parser.read<i1t>("empty_1") == i1t({}));
+
+  cout << "  Testing invalid empty vector..." << endl;
   test_exception<i1t, iva>(
       "empty_2", "read '' while expecting int", parser
   );
   test_exception<i1t, iva>(
       "empty_3", "read '' while expecting int", parser
   );
-
-  cout << "  Testing invalid empty vector..." << endl;
   test_exception<i1t, iva>(
       "empty_4", "read '' while expecting int", parser
   );

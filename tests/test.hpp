@@ -16,7 +16,9 @@ using z1t = vector<size_t>;
 using d1t = vector<double>;
 using s1t = vector<string>;
 using i2t = vector<vector<int>>;
+using z2t = vector<vector<size_t>>;
 using d2t = vector<vector<double>>;
+using s2t = vector<vector<string>>;
 
 using iva = std::invalid_argument;
 

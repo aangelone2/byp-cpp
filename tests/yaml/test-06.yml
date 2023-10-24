@@ -1,0 +1,23 @@
+i2t: [[1,-2,3], [4,5,6]]
+float_i2t: [[1, 2,3], [-4.1, 5, 6]]
+invalid_i2t: [[1, a,3], [4,5,6]]
+empty_i2t: [[1,  ,3], [4, 5, 6]]
+
+z2t: [[4,5, 6], [7, 8,    9]]
+
+d2t: [[7.0,  8.1,9.4], [1.0, 2.0, 4.1]]
+invalid_d2t: [[1.0, 2.0, 3.0], [7.0, 8.1,a]]
+bracket_inside_d2t: [[7.0, [8.1, 2.0], [1.0, 2.0, 3.0]]
+
+s2t: [[abc,   def] , [ghi lkm  , ejg  ]]
+
+single_component: [[4,5,6]]
+
+incomplete_table_1: [[1,2],]
+incomplete_table_2: [[1,2]
+incomplete_table_3: [1,2 #,3]
+
+empty_1: [[]]
+empty_2: [ ]
+empty_3: [  ]
+empty_4: [ ,]
