@@ -32,8 +32,10 @@ int main()
 
   cout << "  Testing vector<vector<double>> parsing..."
        << endl;
-  assert(parser.read<d2t>("d2t_p")
-         == d2t({{1.0, 2.0}, {3.0, 4.0}}));
+  assert(
+      parser.read<d2t>("d2t_p")
+      == d2t({{1.0, 2.0}, {3.0, 4.0}})
+  );
 
   close_test();
 }

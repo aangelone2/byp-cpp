@@ -18,26 +18,32 @@ int main()
   assert(parser.read<bool>("spaces_after_value"));
 
   cout << "  Testing spaces after vector..." << endl;
-  assert(parser.read<i1t>("spaces_after_vector")
-         == i1t({1, 2, 3}));
+  assert(
+      parser.read<i1t>("spaces_after_vector") == i1t({1, 2, 3})
+  );
 
   cout << "  Testing spaces everywhere table..." << endl;
   assert(
       parser.read<i2t>("spaces_everywhere_table")
-      == i2t({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}}));
+      == i2t({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}})
+  );
 
   cout << "  Testing spaces before string..." << endl;
   assert(parser.read<string>("spaces_before_string") == "abc");
 
   cout << "  Testing spaces inside and after string..."
        << endl;
-  assert(parser.read<string>("spaces_inside_after_string")
-         == "def ghi");
+  assert(
+      parser.read<string>("spaces_inside_after_string")
+      == "def ghi"
+  );
 
   cout << "  Testing nonexistent key..." << endl;
   test_exception<int, iva>(
-      "not_existing", "key 'not_existing' invalid or missing",
-      parser);
+      "not_existing",
+      "key 'not_existing' invalid or missing",
+      parser
+  );
 
   cout << "  Testing partial comment..." << endl;
   assert(parser.read<int>("partial_comment") == 123);

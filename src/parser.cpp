@@ -64,8 +64,10 @@ string byp::parser::get(const string& key)
 
     // Skipping non-key-value-pair lines
     if (!key_val.has_value())
-      throw iva("invalid key-value pair at row "
-                + std::to_string(counter));
+      throw iva(
+          "invalid key-value pair at row "
+          + std::to_string(counter)
+      );
 
     if (key_val.value()[0] == key)
       return key_val.value()[1];

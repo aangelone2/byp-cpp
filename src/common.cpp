@@ -30,8 +30,8 @@ bool match(const string& input, const string& pattern)
   return regex_match(input, regex(pattern));
 }
 
-optional<vector<string>> get_groups(const string& input,
-                                    const string& pattern)
+optional<vector<string>>
+get_groups(const string& input, const string& pattern)
 {
   const auto r = regex(pattern);
   std::smatch pieces_match;
@@ -41,8 +41,9 @@ optional<vector<string>> get_groups(const string& input,
     return {};
 
   // Removing 0th element (complete string)
-  return vector<string>(pieces_match.begin() + 1,
-                        pieces_match.end());
+  return vector<string>(
+      pieces_match.begin() + 1, pieces_match.end()
+  );
 }
 
 string clean(const string& input)

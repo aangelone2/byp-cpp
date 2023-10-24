@@ -131,7 +131,8 @@ void convert(const string& val, vector<vector<T>>& res)
     const auto el_pattern = std::regex("\\[[^\\[\\]]*\\]");
 
     const auto begin = sregex_iterator(
-        vec_str.begin(), vec_str.end(), el_pattern);
+        vec_str.begin(), vec_str.end(), el_pattern
+    );
     const auto end = sregex_iterator();
 
     // Iterating over matches (subvectors)
@@ -142,16 +143,17 @@ void convert(const string& val, vector<vector<T>>& res)
     }
   }
   else
-    throw iva("read '" + buffer
-              + "' while expecting vector<vector>");
+    throw iva(
+        "read '" + buffer + "' while expecting vector<vector>"
+    );
 }
 
 // Specializations (vector<vector<bool>> disallowed)
-template void convert(const string& val,
-                      vector<vector<int>>& res);
-template void convert(const string& val,
-                      vector<vector<size_t>>& res);
-template void convert(const string& val,
-                      vector<vector<double>>& res);
-template void convert(const string& val,
-                      vector<vector<string>>& res);
+template void
+convert(const string& val, vector<vector<int>>& res);
+template void
+convert(const string& val, vector<vector<size_t>>& res);
+template void
+convert(const string& val, vector<vector<double>>& res);
+template void
+convert(const string& val, vector<vector<string>>& res);

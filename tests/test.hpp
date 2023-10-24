@@ -20,7 +20,8 @@ using d2t = vector<vector<double>>;
 
 using iva = std::invalid_argument;
 
-const string sep = ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " ;
+const string sep
+    = ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ";
 
 void close_test()
 {
@@ -28,8 +29,11 @@ void close_test()
 }
 
 template <typename T, typename EXC>
-void test_exception(const string& key, const string& message,
-                    byp::parser& parser)
+void test_exception(
+    const string& key,
+    const string& message,
+    byp::parser& parser
+)
 {
   try
   {
