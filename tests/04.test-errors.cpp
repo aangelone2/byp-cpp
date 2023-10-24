@@ -17,7 +17,11 @@ int main()
 
   cout << "  Testing spaces in key..." << endl;
   test_exception<int, iva>(
-      "spaces in key", "invalid key-value pair at row 4", p1);
+      "spaces in key", "invalid key 'spaces in key'", p1);
+
+  cout << "  Testing colon in key..." << endl;
+  test_exception<int, iva>(
+      "key:test", "invalid key 'key:test'", p1);
 
   auto p2 = byp::parser("../tests/yaml/test-04-2.yml");
 

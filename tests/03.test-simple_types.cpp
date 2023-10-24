@@ -90,5 +90,8 @@ int main()
   assert(parser.read<string>("quotes_in_string")
          == "\"ab\" c\"d ef");
 
+  cout << "  Testing colon in string..." << endl;
+  assert(parser.read<string>("colon_in_string") == "ab:cm:: o");
+
   close_test();
 }

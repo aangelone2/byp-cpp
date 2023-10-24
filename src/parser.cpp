@@ -42,6 +42,9 @@ void reset_stream(std::ifstream& file)
 
 string byp::parser::get(const string& key)
 {
+  if (match(key, "^.*\\s.*$") || match(key, "^.*:.*$"))
+    throw iva("invalid key '" + key + "'");
+
   reset_stream(file);
 
   int counter = 0;
@@ -85,7 +88,7 @@ template size_t byp::parser::read<size_t>(const string& key);
 template double byp::parser::read<double>(const string& key);
 template string byp::parser::read<string>(const string& key);
 
-// vector<bool> and vector<string> disallowed
+// vector<bool> disallowed
 template vector<int>
 byp::parser::read<vector<int>>(const string& key);
 template vector<size_t>
@@ -95,7 +98,7 @@ byp::parser::read<vector<double>>(const string& key);
 template vector<string>
 byp::parser::read<vector<string>>(const string& key);
 
-// vector<vector<bool>> and vector<vector<string>> disallowed
+// vector<vector<bool>> disallowed
 template vector<vector<int>>
 byp::parser::read<vector<vector<int>>>(const string& key);
 template vector<vector<size_t>>

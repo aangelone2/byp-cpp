@@ -93,7 +93,7 @@ void convert(const string& val, vector<T>& res)
 
   if (vec_string.has_value())
   {
-    // Code is simpler than with sregex_iterator
+    // Simpler than using sregex_iterator
     std::stringstream ss(vec_string.value()[0]);
     string token;
 
