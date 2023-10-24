@@ -13,9 +13,10 @@ s2t: [[abc,   def] , [ghi lkm  , ejg  ]]
 
 single_component: [[4,5,6]]
 
-incomplete_table_1: [[1,2],]
-incomplete_table_2: [[1,2]
-incomplete_table_3: [1,2 #,3]
+trailing_comma: [[1,2], [3,4,], [5,6],]
+
+incomplete_table_1: [[1,2]
+incomplete_table_2: [1,2 #,3]
 
 empty_1: [[]]
 empty_2: [ ]

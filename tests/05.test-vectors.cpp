@@ -72,6 +72,9 @@ int main()
       parser
   );
 
+  cout << "  Trailing comma..." << endl;
+  assert(parser.read<i1t>("trailing_comma") == i1t({1, 2}));
+
   cout << "  Testing valid empty vector..." << endl;
   assert(parser.read<i1t>("empty_1") == i1t({}));
 

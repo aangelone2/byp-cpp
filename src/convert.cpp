@@ -96,7 +96,8 @@ void convert(const string& val, vector<T>& res)
 
   if (vec_string.has_value())
   {
-    // Simpler than using sregex_iterator
+    // Simpler than using sregex_iterator,
+    // allows trailing comma
     std::stringstream ss(vec_string.value()[0]);
     string token;
 
@@ -127,10 +128,11 @@ void convert(const string& val, vector<vector<T>>& res)
   // Filtering bounding [], allowed in content (vectors)
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
-  // Note repeated group (()*), regex gotcha to match all
-  // vectors except the last.
-  const string global = "\\[((\\s*" + bvregex + "\\s*,)*)(\\s*"
-                        + bvregex + "\\s*)\\]";
+  // Non-capturing groups to avoid duplication issues
+  // Trailing comma is allowed.
+  const string global = "\\[(?:\\s*" + bvregex
+                        + "\\s*,)*(?:\\s*" + bvregex
+                        + "\\s*,?\\s*)\\]";
 
   if (!match(buffer, global))
     throw iva(
@@ -138,14 +140,17 @@ void convert(const string& val, vector<vector<T>>& res)
         + "' while expecting vector<vector<>>"
     );
 
+  // Cannot join with previous command, using get_groups() to
+  // extract the single components, due to general repeated
+  // capture group issues in regexs.
   const auto table_string = get_groups(buffer, "^\\[(.*)\\]$");
 
   if (table_string.has_value())
   {
     const string vec_str = table_string.value()[0];
-    // Filtering bounding [] in subvectors, not allowed within
+
     // Not catching leading/trailing spaces within subvectors
-    const auto el_pattern = std::regex(bvregex);
+    const auto el_pattern = regex(bvregex);
 
     const auto begin = sregex_iterator(
         vec_str.begin(), vec_str.end(), el_pattern
@@ -153,6 +158,7 @@ void convert(const string& val, vector<vector<T>>& res)
     const auto end = sregex_iterator();
 
     // Iterating over matches (subvectors)
+    // Will ignore possible trailing comma
     for (auto el = begin; el != end; ++el)
     {
       res.resize(res.size() + 1);

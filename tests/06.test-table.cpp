@@ -68,19 +68,20 @@ int main()
       parser.read<i2t>("single_component") == i2t({{4, 5, 6}})
   );
 
+  cout << "  Testing trailing comma..." << endl;
+  assert(
+      parser.read<i2t>("trailing_comma")
+      == i2t({{1, 2}, {3, 4}, {5, 6}})
+  );
+
   cout << "  Testing incomplete table..." << endl;
   test_exception<i2t, iva>(
       "incomplete_table_1",
-      "read '[[1,2],]' while expecting vector<vector<>>",
-      parser
-  );
-  test_exception<i2t, iva>(
-      "incomplete_table_2",
       "read '[[1,2]' while expecting vector<vector<>>",
       parser
   );
   test_exception<i2t, iva>(
-      "incomplete_table_3",
+      "incomplete_table_2",
       "read '[1,2' while expecting vector<vector<>>",
       parser
   );
