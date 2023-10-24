@@ -8,13 +8,13 @@
 `byp-cpp` (Basic Yaml Parser for C++) is a parser for a
 simplified dialect of the YAML markup language.
 
-The library is designed to be easy to install, to manage and to
-use, while providing a reasonably wide and robust range of
-capabilities for users requiring basic YAML functionalities
-(parsing of single values, vectors, and tables). High
-performance is not one of the main goals of the library, unless
-achievable without compromising simplicity of design and
-maintainability.
+The library is designed to be lightweight and easy to install,
+manage and use, while providing a reasonably wide and robust
+range of capabilities for users requiring basic YAML
+functionalities (parsing of single values, vectors, and
+tables). High performance is not one of the main goals of the
+library, unless achievable without compromising simplicity of
+design and maintainability.
 
 We recommend the very complete and thorough
 [yaml-cpp](https://github.com/jbeder/yaml-cpp) open source
@@ -24,33 +24,9 @@ dialect.
 
 
 
-## Dependencies and Setup
-
-The library itself does not have any dependencies beyond the
-C++ standard library and `g++` version 8 or higher (in general,
-C++17-compatible). The command
-
-```
-$ make build
-```
-
-compiles the library statically as `libbyp-cpp.a` in the
-`build/` directory.
-
-Use the `-std=c++17` flag when compiling your code with `g++`.
-
-Tests can be ran launching the command
-
-```
-$ make test
-```
-
-
-
-
 ## Usage
 
-To parse files, create a `byp_loader` object, initialized with
+To parse files, create a `byp::parser` object, initialized with
 the path of the file to parse, and call its `read()` method to
 parse values associated to a specific key in the file.
 
@@ -76,6 +52,52 @@ Parsable types are:
 
 
 
+## Dependencies and Setup
+
+The library itself does not have any dependencies beyond the
+C++ standard library and `g++` version 8 or higher (in general,
+C++17-compatible). The command
+
+```
+$ make build
+```
+
+compiles the library statically as `libbyp-cpp.a` in the
+`build/` directory.
+
+Use the `-std=c++17` flag when compiling your code with `g++`.
+
+
+
+
+## Testing
+
+Tests can be ran launching the command
+
+```
+$ make test
+```
+
+When successfully completed, the output of this command should
+have the form
+
+```
+<compilation logs>
+
+Beginning testing
+
+cd build/ ; ./01.test-basic
+  <testing logs>
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Test completed successfully
+
+...
+
+All tests completed successfully
+```
+
+
+
+
 ## Documentation
 
 Building the documentation requires
@@ -94,5 +116,3 @@ main page.
 
 ## Todo
 - [ ] Manage duplicate keys
-- [ ] Replace inout parameters in `convert()` with return-type
-  templates

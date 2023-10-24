@@ -15,3 +15,8 @@ s1t: [abc,   def , ghi lkm  , ejg  ]
 incomplete_vector_1: [1,2,
 incomplete_vector_2: [1,2
 incomplete_vector_3: [1,2 #,3]
+
+empty_1: []
+empty_2: [ ]
+empty_3: [  ]
+empty_4: [ ,]

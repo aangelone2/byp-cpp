@@ -1,12 +1,13 @@
 .PHONY: build docs
 
-CC=g++
 BUILDDIR=build
 
-CPPFLAGS=-std=c++17 -O3 -Wfatal-errors
-CPPWARNINGS=-Wall -Werror -Wextra -Wshadow -Wparentheses -Wpedantic -Wconversion -pedantic
+CC=g++
+CPPFLAGS=-std=c++17 -O3 -Wfatal-errors\
+				 -Wall -Werror -Wextra -Wshadow -Wparentheses -Wpedantic -Wconversion -pedantic
 
-CPPINCLUDES=-Iinclude/
+LIBINC=-Iinclude/
+TESTINC=$(LIBINC) -Itests/
 CPPLIB=-L$(BUILDDIR)/
 
 # preferred static library for portability concerns
@@ -14,25 +15,34 @@ CPPLIB=-L$(BUILDDIR)/
 build:
 	mkdir -p $(BUILDDIR)
 	rm -fv $(BUILDDIR)/*.a $(BUILDDIR)/*.o
-	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/common.cpp -o $(BUILDDIR)/common.o
-	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/convert.cpp -o $(BUILDDIR)/convert.o
-	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) -c src/parser.cpp -o $(BUILDDIR)/parser.o
+	$(CC) $(CPPFLAGS) $(LIBINC) -c src/common.cpp -o $(BUILDDIR)/common.o
+	$(CC) $(CPPFLAGS) $(LIBINC) -c src/convert.cpp -o $(BUILDDIR)/convert.o
+	$(CC) $(CPPFLAGS) $(LIBINC) -c src/parser.cpp -o $(BUILDDIR)/parser.o
 	ar rcs $(BUILDDIR)/libbyp-cpp.a\
 		$(BUILDDIR)/common.o\
 		$(BUILDDIR)/convert.o\
 		$(BUILDDIR)/parser.o
 
 test: build
-	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/01.test-basic.cpp -o $(BUILDDIR)/01.test-basic -lbyp-cpp
-	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/02.test-parsing.cpp -o $(BUILDDIR)/02.test-parsing -lbyp-cpp
-	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/03.test-simple_types.cpp -o $(BUILDDIR)/03.test-simple_types -lbyp-cpp
-	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/04.test-errors.cpp -o $(BUILDDIR)/04.test-errors -lbyp-cpp
-	$(CC) $(CPPFLAGS) $(CPPWARNINGS) $(CPPINCLUDES) $(CPPLIB) tests/05.test-vectors.cpp -o $(BUILDDIR)/05.test-vectors -lbyp-cpp
+	$(CC) $(CPPFLAGS) $(TESTINC) $(CPPLIB) tests/01.test-basic.cpp -o $(BUILDDIR)/01.test-basic -lbyp-cpp
+	$(CC) $(CPPFLAGS) $(TESTINC) $(CPPLIB) tests/02.test-parsing.cpp -o $(BUILDDIR)/02.test-parsing -lbyp-cpp
+	$(CC) $(CPPFLAGS) $(TESTINC) $(CPPLIB) tests/03.test-simple_types.cpp -o $(BUILDDIR)/03.test-simple_types -lbyp-cpp
+	$(CC) $(CPPFLAGS) $(TESTINC) $(CPPLIB) tests/04.test-errors.cpp -o $(BUILDDIR)/04.test-errors -lbyp-cpp
+	$(CC) $(CPPFLAGS) $(TESTINC) $(CPPLIB) tests/05.test-vectors.cpp -o $(BUILDDIR)/05.test-vectors -lbyp-cpp
+	@echo ''
+	@echo 'Beginning testing'
+	@echo ''
 	cd $(BUILDDIR)/ ; ./01.test-basic
+	@echo ''
 	cd $(BUILDDIR)/ ; ./02.test-parsing
+	@echo ''
 	cd $(BUILDDIR)/ ; ./03.test-simple_types
+	@echo ''
 	cd $(BUILDDIR)/ ; ./04.test-errors
+	@echo ''
 	cd $(BUILDDIR)/ ; ./05.test-vectors
+	@echo ''
+	@echo 'All tests completed successfully'
 
 docs:
 	rm -rf html/

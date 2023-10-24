@@ -1,46 +1,29 @@
-#include "byp.hpp"
-#include <cassert>
-#include <iostream>
-#include <vector>
-
-using std::cout;
-using std::endl;
-using std::string;
-using std::vector;
-
-using iva = std::invalid_argument;
+#include "test.hpp"
 
 int main()
 {
-  auto l1 = byp::parser("../tests/yaml/test-04-1.yml");
+  cout << "  Testing missing file..." << endl;
+  try
+  {
+    [[maybe_unused]] auto p0 = byp::parser("../tests/yaml/not-existent.yaml");
+    assert(false);
+  }
+  catch(const iva& err)
+  {
+    assert(string(err.what()) == "file '../tests/yaml/not-existent.yaml' not found");
+  }
+
+  auto p1 = byp::parser("../tests/yaml/test-04-1.yml");
 
   cout << "  Testing spaces in key..." << endl;
-  try
-  {
-    [[maybe_unused]] const int spaces_in_key
-        = l1.read<int>("spaces in key");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(string(err.what())
-           == "invalid key-value pair at row 4");
-  }
+  test_exception<int, iva>(
+      "spaces in key", "invalid key-value pair at row 4", p1);
 
-  auto l2 = byp::parser("../tests/yaml/test-04-2.yml");
+  auto p2 = byp::parser("../tests/yaml/test-04-2.yml");
 
   cout << "  Testing no-space key..." << endl;
-  try
-  {
-    [[maybe_unused]] const int no_spaces
-        = l2.read<int>("no_spaces");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(string(err.what())
-           == "invalid key-value pair at row 4");
-  }
+  test_exception<int, iva>(
+      "no_spaces", "invalid key-value pair at row 4", p2);
 
-  cout << "Test completed successfully" << endl;
+  close_test();
 }

@@ -1,153 +1,72 @@
-#include "byp.hpp"
-#include <cassert>
-#include <iostream>
-#include <vector>
-
-using std::cout;
-using std::endl;
-using std::string;
-using std::vector;
-
-using i1t = vector<int>;
-using z1t = vector<size_t>;
-using d1t = vector<double>;
-using s1t = vector<string>;
-using iva = std::invalid_argument;
+#include "test.hpp"
 
 int main()
 {
   const string filename = "../tests/yaml/test-05.yml";
-  auto loader = byp::parser(filename);
+  auto parser = byp::parser(filename);
 
   cout << "  Testing vector<int>..." << endl;
-  assert(loader.read<i1t>("i1t") == i1t({1, -2, 3}));
+  assert(parser.read<i1t>("i1t") == i1t({1, -2, 3}));
 
   cout << "  Testing float input for vector<int>..." << endl;
-  try
-  {
-    [[maybe_unused]] const i1t float_i1t
-        = loader.read<i1t>("float_i1t");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(string(err.what())
-           == "read '-2.1' while expecting int");
-  }
+  test_exception<i1t, iva>(
+      "float_i1t", "read '-2.1' while expecting int", parser);
 
   cout << "  Testing invalid input for vector<int>..." << endl;
-  try
-  {
-    [[maybe_unused]] const i1t invalid_i1t
-        = loader.read<i1t>("invalid_i1t");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(string(err.what())
-           == "read 'a' while expecting int");
-  }
+  test_exception<i1t, iva>(
+      "invalid_i1t", "read 'a' while expecting int", parser);
 
   cout << "  Testing empty component for vector<int>..."
        << endl;
-  try
-  {
-    [[maybe_unused]] const i1t empty_i1t
-        = loader.read<i1t>("empty_i1t");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(string(err.what())
-           == "read '' while expecting int");
-  }
+  test_exception<i1t, iva>(
+      "empty_i1t", "read '' while expecting int", parser);
 
   cout << "  Testing vector<size_t>..." << endl;
-  assert(loader.read<z1t>("z1t") == z1t({4, 5, 6}));
+  assert(parser.read<z1t>("z1t") == z1t({4, 5, 6}));
 
   cout << "  Testing invalid input for vector<size_t>..."
        << endl;
-  try
-  {
-    [[maybe_unused]] const z1t invalid_z1t
-        = loader.read<z1t>("invalid_z1t");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(string(err.what())
-           == "read 'a' while expecting size_t");
-  }
+  test_exception<z1t, iva>("invalid_z1t",
+                           "read 'a' while expecting size_t",
+                           parser);
 
   cout << "  Testing vector<double>..." << endl;
-  assert(loader.read<d1t>("d1t") == d1t({7.0, 8.1, 9.4}));
+  assert(parser.read<d1t>("d1t") == d1t({7.0, 8.1, 9.4}));
 
   cout << "  Testing invalid input for vector<double>..."
        << endl;
-  try
-  {
-    [[maybe_unused]] const d1t invalid_d1t
-        = loader.read<d1t>("invalid_d1t");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(string(err.what())
-           == "read 'a' while expecting double");
-  }
+  test_exception<d1t, iva>("invalid_d1t",
+                           "read 'a' while expecting double",
+                           parser);
 
   cout << "  Testing bracket inside vector<double>..." << endl;
-  try
-  {
-    [[maybe_unused]] const d1t bracket_inside_d1t
-        = loader.read<d1t>("bracket_inside_d1t");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(
-        string(err.what())
-        == "read '[7.0, [8.1, 2.0]' while expecting vector");
-  }
+  test_exception<d1t, iva>(
+      "bracket_inside_d1t",
+      "read '[7.0, [8.1, 2.0]' while expecting vector",
+      parser);
 
   cout << "  Testing vector<string>..." << endl;
-  assert(loader.read<s1t>("s1t")
+  assert(parser.read<s1t>("s1t")
          == s1t({"abc", "def", "ghi lkm", "ejg"}));
 
   cout << "  Testing incomplete vector..." << endl;
-  try
-  {
-    [[maybe_unused]] const i1t incomplete_vector_1
-        = loader.read<i1t>("incomplete_vector_1");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(string(err.what())
-           == "read '[1,2,' while expecting vector");
-  }
-  try
-  {
-    [[maybe_unused]] const i1t incomplete_vector_2
-        = loader.read<i1t>("incomplete_vector_2");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(string(err.what())
-           == "read '[1,2' while expecting vector");
-  }
-  try
-  {
-    [[maybe_unused]] const i1t incomplete_vector_3
-        = loader.read<i1t>("incomplete_vector_3");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(string(err.what())
-           == "read '[1,2' while expecting vector");
-  }
+  test_exception<i1t, iva>(
+      "incomplete_vector_1",
+      "read '[1,2,' while expecting vector", parser);
+  test_exception<i1t, iva>(
+      "incomplete_vector_2",
+      "read '[1,2' while expecting vector", parser);
+  test_exception<i1t, iva>(
+      "incomplete_vector_3",
+      "read '[1,2' while expecting vector", parser);
 
-  cout << "Test completed successfully" << endl;
+  cout << "  Testing valid empty vector..." << endl;
+  assert(parser.read<i1t>("empty_1") == i1t({}));
+  test_exception<i1t, iva>("empty_2", "read '' while expecting int", parser);
+  test_exception<i1t, iva>("empty_3", "read '' while expecting int", parser);
+
+  cout << "  Testing invalid empty vector..." << endl;
+  test_exception<i1t, iva>("empty_4", "read '' while expecting int", parser);
+
+  close_test();
 }
