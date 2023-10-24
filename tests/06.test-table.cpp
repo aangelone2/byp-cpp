@@ -49,9 +49,11 @@ int main()
 
   cout << "  Testing bracket inside vector<vector<double>>..."
        << endl;
-  assert(
-      parser.read<d2t>("bracket_inside_d2t")
-      == d2t({{8.1, 2.0}, {1.0, 2.0, 3.0}})
+  test_exception<d2t, iva>(
+      "bracket_inside_d2t",
+      "read '[[7.0, [8.1, 2.0], [1.0, 2.0, 3.0]]' while "
+      "expecting vector<vector<>>",
+      parser
   );
 
   cout << "  Testing vector<vector<string>>..." << endl;
@@ -67,21 +69,39 @@ int main()
   );
 
   cout << "  Testing incomplete table..." << endl;
-  assert(
-      parser.read<i2t>("incomplete_table_1") == i2t({{1, 2}})
+  test_exception<i2t, iva>(
+      "incomplete_table_1",
+      "read '[[1,2],]' while expecting vector<vector<>>",
+      parser
   );
-  assert(parser.read<i2t>("incomplete_table_2") == i2t({}));
+  test_exception<i2t, iva>(
+      "incomplete_table_2",
+      "read '[[1,2]' while expecting vector<vector<>>",
+      parser
+  );
   test_exception<i2t, iva>(
       "incomplete_table_3",
-      "read '[1,2' while expecting vector<vector>",
+      "read '[1,2' while expecting vector<vector<>>",
       parser
   );
 
   cout << "  Testing valid empty table..." << endl;
   assert(parser.read<i2t>("empty_1") == i2t({{}}));
-  assert(parser.read<i2t>("empty_2") == i2t({}));
-  assert(parser.read<i2t>("empty_3") == i2t({}));
-  assert(parser.read<i2t>("empty_4") == i2t({}));
+  test_exception<i2t, iva>(
+      "empty_2",
+      "read '[ ]' while expecting vector<vector<>>",
+      parser
+  );
+  test_exception<i2t, iva>(
+      "empty_3",
+      "read '[  ]' while expecting vector<vector<>>",
+      parser
+  );
+  test_exception<i2t, iva>(
+      "empty_4",
+      "read '[ ,]' while expecting vector<vector<>>",
+      parser
+  );
 
   close_test();
 }

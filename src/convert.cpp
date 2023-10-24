@@ -85,11 +85,14 @@ void convert(const string& val, vector<T>& res)
 {
   const string buffer = clean(val);
 
+  // Only vector content, no bounding []
+  const string vregex = "[^\\[\\]]*";
+
   // Filtering bounding [], not allowed in content
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
   const auto vec_string
-      = get_groups(buffer, "^\\[([^\\[\\]]*)\\]$");
+      = get_groups(buffer, "^\\[(" + vregex + ")\\]$");
 
   if (vec_string.has_value())
   {
@@ -118,9 +121,23 @@ void convert(const string& val, vector<vector<T>>& res)
 {
   const string buffer = clean(val);
 
+  // Vector + bounding []
+  const string bvregex = "\\[[^\\[\\]]*\\]";
+
   // Filtering bounding [], allowed in content (vectors)
   // Exceptions need not be caught here, they may only be
   // raised by lower-level convert() calls.
+  // Note repeated group (()*), regex gotcha to match all
+  // vectors except the last.
+  const string global = "\\[((\\s*" + bvregex + "\\s*,)*)(\\s*"
+                        + bvregex + "\\s*)\\]";
+
+  if (!match(buffer, global))
+    throw iva(
+        "read '" + buffer
+        + "' while expecting vector<vector<>>"
+    );
+
   const auto table_string = get_groups(buffer, "^\\[(.*)\\]$");
 
   if (table_string.has_value())
@@ -128,7 +145,7 @@ void convert(const string& val, vector<vector<T>>& res)
     const string vec_str = table_string.value()[0];
     // Filtering bounding [] in subvectors, not allowed within
     // Not catching leading/trailing spaces within subvectors
-    const auto el_pattern = std::regex("\\[[^\\[\\]]*\\]");
+    const auto el_pattern = std::regex(bvregex);
 
     const auto begin = sregex_iterator(
         vec_str.begin(), vec_str.end(), el_pattern
@@ -144,7 +161,8 @@ void convert(const string& val, vector<vector<T>>& res)
   }
   else
     throw iva(
-        "read '" + buffer + "' while expecting vector<vector>"
+        "read '" + buffer
+        + "' while expecting vector<vector<>>"
     );
 }
 
