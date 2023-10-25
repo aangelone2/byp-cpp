@@ -27,7 +27,7 @@ const string sep
 
 void close_test()
 {
-  cout << sep << "Test completed successfully" << endl;
+  cout << sep << "Test completed successfully" << endl << endl;
 }
 
 template <typename T, typename EXC>
