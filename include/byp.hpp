@@ -65,14 +65,16 @@ namespace byp
       // Value parsing function.
       /*
        * Returns the value associated to a key as a string.
+       * Stops and attempts parsing at the first matching key
+       * from the top of the file.
        * Does not trim spaces before and after value.
        *
        * @param key The key associated to the value.
        *
        * @return The parsed value as a string.
        *
-       * @throws invalid_argument If missing key, or invalid
-       * row found while parsing the file.
+       * @throws invalid_argument If missing key, invalid row,
+       * or invalid value found while parsing the file.
        */
       std::string get(const std::string& key);
   };

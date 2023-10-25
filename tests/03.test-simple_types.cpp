@@ -110,5 +110,11 @@ int main()
       parser.read<string>("colon_in_string") == "ab:cm:: o"
   );
 
+  cout << "  Testing comma in string..." << endl;
+  assert(parser.read<string>("comma_in_string") == "ab,cm");
+
+  cout << "  Testing hash in string..." << endl;
+  assert(parser.read<string>("hash_in_string") == "ab");
+
   close_test();
 }

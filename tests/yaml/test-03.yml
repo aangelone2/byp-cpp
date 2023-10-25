@@ -17,3 +17,5 @@ int_for_string: 1
 spaces_in_string: a b c
 quotes_in_string: "ab" c"d ef
 colon_in_string:   ab:cm:: o 
+comma_in_string:   ab,cm
+hash_in_string:   ab#def

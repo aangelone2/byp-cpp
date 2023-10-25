@@ -65,7 +65,13 @@ int main()
   cout << "  Testing single-component vector<vector<int>>..."
        << endl;
   assert(
-      parser.read<i2t>("single_component") == i2t({{4, 5, 6}})
+      parser.read<i2t>("single_component_ok")
+      == i2t({{4, 5, 6}})
+  );
+  test_exception<i2t, iva>(
+      "single_component_wrong",
+      "read '[1,2,3]' while expecting vector<vector<>>",
+      parser
   );
 
   cout << "  Testing trailing comma..." << endl;
@@ -82,26 +88,20 @@ int main()
   );
   test_exception<i2t, iva>(
       "incomplete_table_2",
-      "read '[1,2' while expecting vector<vector<>>",
+      "read '[[1,2' while expecting vector<vector<>>",
       parser
   );
 
   cout << "  Testing valid empty table..." << endl;
   assert(parser.read<i2t>("empty_1") == i2t({{}}));
   test_exception<i2t, iva>(
-      "empty_2",
-      "read '[ ]' while expecting vector<vector<>>",
-      parser
+      "empty_2", "read '' while expecting int", parser
   );
   test_exception<i2t, iva>(
-      "empty_3",
-      "read '[  ]' while expecting vector<vector<>>",
-      parser
+      "empty_3", "read '' while expecting int", parser
   );
   test_exception<i2t, iva>(
-      "empty_4",
-      "read '[ ,]' while expecting vector<vector<>>",
-      parser
+      "empty_4", "read '' while expecting int", parser
   );
 
   close_test();

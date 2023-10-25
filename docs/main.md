@@ -6,12 +6,16 @@
 
 
 `byp-cpp` (Basic Yaml Parser for C++) is a parser for a
-simplified dialect of the YAML markup language.
+simplified [dialect](@ref BasicYAML) of the YAML markup
+language.
 
-The library is designed to be easy to install, to manage and to
-use, while providing a reasonably wide and robust range of
-capabilities for users requiring basic YAML functionalities
-(parsing of single values, vectors and tables).
+The library is designed to be lightweight and easy to install,
+manage and use, while providing a reasonably wide and robust
+range of capabilities for users requiring basic YAML
+functionalities (parsing of single values, vectors, and
+tables). High performance is not one of the main goals of the
+library, unless achievable without compromising simplicity of
+design and maintainability.
 
 We recommend the very complete and thorough
 [yaml-cpp](https://github.com/jbeder/yaml-cpp) open source
@@ -21,36 +25,16 @@ dialect.
 
 
 
-## Dependencies and Setup
-
-The library itself does not have any dependencies beyond the
-C++ standard library and `g++` version 8 or higher (in general,
-C++17-compatible). The command
-
-```
-$ make build
-```
-
-compiles the library statically as `libbypcpp.a` in the
-`build/` directory. Test can be ran by launching the command
-
-```
-$ make test
-```
-
-
-
-
 ## Usage
 
-To parse files, create a `byp_loader` object, initialized with
+To parse files, create a `byp::parser` object, initialized with
 the path of the file to parse, and call its `read()` method to
 parse values associated to a specific key in the file.
 
 ```cpp
 #include "byp.hpp"
 
-byp_loader loader(<file path>);
+byp::parser loader(<file path>);
 
 // Assuming <key>: <value>, where <value>
 // is compatible with <type>, is present in the parsed file
@@ -69,13 +53,64 @@ Parsable types are:
 
 
 
+## Dependencies and Setup
+
+The library itself does not have any dependencies beyond the
+C++ standard library and `g++` version 8 or higher (in general,
+C++17-compatible). The command
+
+```
+$ make build
+```
+
+compiles the library statically as `libbyp-cpp.a` in the
+`build/` directory.
+
+Use the `-std=c++17` flag when compiling your code with `g++`.
+
+
+
+
+## Testing
+
+Tests can be ran launching the command
+
+```
+$ make test
+```
+
+When successfully completed, the output of this command should
+have the form
+
+```
+<compilation logs>
+
+Beginning testing
+
+cd build/ ; ./01.test-basic
+  <testing logs>
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Test completed successfully
+
+...
+
+All tests completed successfully
+```
+
+
+
+
 ## Documentation
 
-The command
+Building the documentation requires
+[doxygen](https://www.doxygen.nl/). The command
 
 ```
 $ make docs
 ```
 
 re-generates the documentation in html format in the `html/`
-directory.
+directory. [index.html](html/index.html) is the corresponding
+main page.
+
+The [dialect](@ref BasicYAML) page contains information on the
+specifications of the YAML dialect parsed by the library.

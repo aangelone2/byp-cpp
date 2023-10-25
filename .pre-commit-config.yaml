@@ -5,7 +5,7 @@ repos:
     rev: v3.2.0
     hooks:
       - id: trailing-whitespace
-        exclude: tests/yaml/
+        exclude: tests/yaml/|docs/dialect.md
       - id: end-of-file-fixer
         exclude: tests/yaml/
       - id: check-yaml

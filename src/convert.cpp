@@ -140,36 +140,28 @@ void convert(const string& val, vector<vector<T>>& res)
         + "' while expecting vector<vector<>>"
     );
 
+  // Match cannot fail (the one above succeeded)
   // Cannot join with previous command, using get_groups() to
   // extract the single components, due to general repeated
   // capture group issues in regexs.
-  const auto table_string = get_groups(buffer, "^\\[(.*)\\]$");
+  const string table_str
+      = get_groups(buffer, "^\\[(.*)\\]$").value()[0];
 
-  if (table_string.has_value())
+  // Not catching leading/trailing spaces within subvectors
+  const auto el_pattern = regex(bvregex);
+
+  const auto begin = sregex_iterator(
+      table_str.begin(), table_str.end(), el_pattern
+  );
+  const auto end = sregex_iterator();
+
+  // Iterating over matches (subvectors)
+  // Will ignore possible trailing comma
+  for (auto el = begin; el != end; ++el)
   {
-    const string vec_str = table_string.value()[0];
-
-    // Not catching leading/trailing spaces within subvectors
-    const auto el_pattern = regex(bvregex);
-
-    const auto begin = sregex_iterator(
-        vec_str.begin(), vec_str.end(), el_pattern
-    );
-    const auto end = sregex_iterator();
-
-    // Iterating over matches (subvectors)
-    // Will ignore possible trailing comma
-    for (auto el = begin; el != end; ++el)
-    {
-      res.resize(res.size() + 1);
-      convert(el->str(), res.back());
-    }
+    res.resize(res.size() + 1);
+    convert(el->str(), res.back());
   }
-  else
-    throw iva(
-        "read '" + buffer
-        + "' while expecting vector<vector<>>"
-    );
 }
 
 // Specializations (vector<vector<bool>> disallowed)
