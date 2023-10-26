@@ -33,97 +33,41 @@ using std::false_type;
 using std::stringstream;
 using std::true_type;
 
+/* clang-format off */
+
 // Trait for supported vector types
 // (cannot test on value_type, since every container has it)
-template <typename T> struct is_vector : false_type
-{
-};
-template <> struct is_vector<vector<short>> : true_type
-{
-};
-template <> struct is_vector<vector<int>> : true_type
-{
-};
-template <> struct is_vector<vector<long>> : true_type
-{
-};
-template <> struct is_vector<vector<long long>> : true_type
-{
-};
-template <>
-struct is_vector<vector<unsigned short>> : true_type
-{
-};
-template <> struct is_vector<vector<unsigned int>> : true_type
-{
-};
-template <> struct is_vector<vector<unsigned long>> : true_type
-{
-};
-template <>
-struct is_vector<vector<unsigned long long>> : true_type
-{
-};
-template <> struct is_vector<vector<float>> : true_type
-{
-};
-template <> struct is_vector<vector<double>> : true_type
-{
-};
-template <> struct is_vector<vector<long double>> : true_type
-{
-};
-template <> struct is_vector<vector<string>> : true_type
-{
-};
+template <typename T> struct is_vector : false_type {};
+template <> struct is_vector<vector<short>> : true_type {};
+template <> struct is_vector<vector<int>> : true_type {};
+template <> struct is_vector<vector<long>> : true_type {};
+template <> struct is_vector<vector<long long>> : true_type {};
+template <> struct is_vector<vector<unsigned short>> : true_type {};
+template <> struct is_vector<vector<unsigned int>> : true_type {};
+template <> struct is_vector<vector<unsigned long>> : true_type {};
+template <> struct is_vector<vector<unsigned long long>> : true_type {};
+template <> struct is_vector<vector<float>> : true_type {};
+template <> struct is_vector<vector<double>> : true_type {};
+template <> struct is_vector<vector<long double>> : true_type {};
+template <> struct is_vector<vector<string>> : true_type {};
 
 // Trait for supported table (2D vector) types
 // (cannot test on value_type, since every container has it)
-template <typename T> struct is_table : false_type
-{
-};
-template <> struct is_table<vector<vector<short>>> : true_type
-{
-};
-template <> struct is_table<vector<vector<int>>> : true_type
-{
-};
-template <> struct is_table<vector<vector<long>>> : true_type
-{
-};
-template <>
-struct is_table<vector<vector<long long>>> : true_type
-{
-};
-template <>
-struct is_table<vector<vector<unsigned short>>> : true_type
-{
-};
-template <>
-struct is_table<vector<vector<unsigned int>>> : true_type
-{
-};
-template <>
-struct is_table<vector<vector<unsigned long>>> : true_type
-{
-};
-template <>
-struct is_table<vector<vector<unsigned long long>>> : true_type
-{
-};
-template <> struct is_table<vector<vector<float>>> : true_type
-{
-};
-template <> struct is_table<vector<vector<double>>> : true_type
-{
-};
-template <>
-struct is_table<vector<vector<long double>>> : true_type
-{
-};
-template <> struct is_table<vector<vector<string>>> : true_type
-{
-};
+template <typename T> struct is_table : false_type {};
+template <> struct is_table<vector<vector<short>>> : true_type {};
+template <> struct is_table<vector<vector<int>>> : true_type {};
+template <> struct is_table<vector<vector<long>>> : true_type {};
+template <> struct is_table<vector<vector<long long>>> : true_type {};
+template <> struct is_table<vector<vector<unsigned short>>> : true_type {};
+template <> struct is_table<vector<vector<unsigned int>>> : true_type {};
+template <> struct is_table<vector<vector<unsigned long>>> : true_type {};
+template <> struct is_table<vector<vector<unsigned long long>>> : true_type {};
+template <> struct is_table<vector<vector<float>>> : true_type {};
+template <> struct is_table<vector<vector<double>>> : true_type {};
+template <> struct is_table<vector<vector<long double>>> : true_type {};
+template <> struct is_table<vector<vector<string>>> : true_type {};
+
+/* clang-format on */
 
 // Converts string -> bool
 bool convert_bool(const string& val)
@@ -262,6 +206,8 @@ template <typename T> T byp::convert(const string& val)
     return convert_numeric<T>(buffer);
 }
 
+/* clang-format off */
+
 template bool byp::convert(const string& val);
 template short byp::convert(const string& val);
 template int byp::convert(const string& val);
@@ -280,12 +226,10 @@ template vector<short> byp::convert(const string& val);
 template vector<int> byp::convert(const string& val);
 template vector<long> byp::convert(const string& val);
 template vector<long long> byp::convert(const string& val);
-template vector<unsigned short> byp::convert(const string& val
-);
+template vector<unsigned short> byp::convert(const string& val);
 template vector<unsigned int> byp::convert(const string& val);
 template vector<unsigned long> byp::convert(const string& val);
-template vector<unsigned long long>
-byp::convert(const string& val);
+template vector<unsigned long long> byp::convert(const string& val);
 template vector<float> byp::convert(const string& val);
 template vector<double> byp::convert(const string& val);
 template vector<long double> byp::convert(const string& val);
@@ -294,20 +238,14 @@ template vector<string> byp::convert(const string& val);
 template vector<vector<short>> byp::convert(const string& val);
 template vector<vector<int>> byp::convert(const string& val);
 template vector<vector<long>> byp::convert(const string& val);
-template vector<vector<long long>>
-byp::convert(const string& val);
-template vector<vector<unsigned short>>
-byp::convert(const string& val);
-template vector<vector<unsigned int>>
-byp::convert(const string& val);
-template vector<vector<unsigned long>>
-byp::convert(const string& val);
-template vector<vector<unsigned long long>>
-byp::convert(const string& val);
+template vector<vector<long long>> byp::convert(const string& val);
+template vector<vector<unsigned short>> byp::convert(const string& val);
+template vector<vector<unsigned int>> byp::convert(const string& val);
+template vector<vector<unsigned long>> byp::convert(const string& val);
+template vector<vector<unsigned long long>> byp::convert(const string& val);
 template vector<vector<float>> byp::convert(const string& val);
-template vector<vector<double>> byp::convert(const string& val
-);
-template vector<vector<long double>>
-byp::convert(const string& val);
-template vector<vector<string>> byp::convert(const string& val
-);
+template vector<vector<double>> byp::convert(const string& val);
+template vector<vector<long double>> byp::convert(const string& val);
+template vector<vector<string>> byp::convert(const string& val);
+
+/* clang-format on */
