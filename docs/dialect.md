@@ -32,7 +32,8 @@ marked as such by the parser.
 
 ## Integer values
 
-`byp-cpp` allows to parse these values as the `int` C++ type.
+`byp-cpp` allows to parse several C++ integral types (`short`,
+`int`, `long` and `long long`).
 
 - Integer values can be unsigned (`12`), explicitly positive
   (`+12`) or negative (`-12`) collections of digits.
@@ -52,11 +53,12 @@ marked as such by the parser.
 
 ## Unsigned integer values
 
-`byp-cpp` allows to parse these values as the `size_t` C++
-type.
+`byp-cpp` allows to parse several C++ unsigned integral types
+(`unsigned short`, `unsigned int`, `unsigned long` and
+`unsigned long long`).
 
-The rules specified for `int` above hold, with the following
-addendum:
+The rules specified for integer types above hold, with the
+following addendum:
 
 - Unsigned integer values only allow unsigned values (i.e., no
   explicitly positive or negative values).
@@ -64,14 +66,33 @@ addendum:
 
 ## Floating-point values
 
-`byp-cpp` allows to parse these values as the `double` C++
-type.
+`byp-cpp` allows to parse several C++ floating-point types
+(`float`, `double`, and `long double`).
 
-- Values can be given in fixed-point notation (e.g., `-12.45`)
-  or in scientific notation (e.g., `-1.245e+01`).
-- Integer values are allowed (will receive null decimal part).
-- The passed values should be valid floating-point values
-  according to the C++ definition.
+Allowed values should have:
+- An integral part, composed by an optional sign followed by
+  *one or more* digits;
+- An optional decimal part, composed by a decimal point `.`
+  followed by *one or more* digits;
+- An optional exponential part (in scientific notation), with
+  the letter `e` or `E` followed by an optional sign and one or
+  more digits.
+
+```YAML
+# valid (-> 12.0)
+flt_1: 12
+# valid
+flt_2: 12.1
+# valid
+flt_3: 12e+4
+# valid
+flt_4: 12.0e08
+
+# invalid
+invalid_flt_1: 1.
+# invalid
+invalid_flt_2: 1.e+03
+```
 
 
 ## String values

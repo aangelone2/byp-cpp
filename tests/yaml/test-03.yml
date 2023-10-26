@@ -13,6 +13,25 @@ int_for_double: 7
 scientific_2: 1.5e-06
 invalid_for_double: ilm
 
+flt_1: 1
+flt_2: 1e6
+flt_3: 1e06
+flt_4: 1e+06
+flt_5: 1.0
+flt_6: 1.0e6
+flt_7: 1.0e06
+flt_8: 1.0e+06
+
+invalid_flt_1: 1.
+invalid_flt_2: 1.e6
+invalid_flt_3: 1.e06
+invalid_flt_4: 1.e+06
+invalid_flt_5: .345
+invalid_flt_6: .345e+06
+invalid_flt_7: .345+06
+invalid_flt_8: .345e+
+invalid_flt_9: .345e
+
 int_for_string: 1
 spaces_in_string: a b c
 quotes_in_string: "ab" c"d ef

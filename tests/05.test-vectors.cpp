@@ -10,18 +10,22 @@ int main()
 
   cout << "  Testing float input for vector<int>..." << endl;
   test_exception<i1t, iva>(
-      "float_i1t", "read '-2.1' while expecting int", parser
+      "float_i1t",
+      "read '-2.1' while expecting integral",
+      parser
   );
 
   cout << "  Testing invalid input for vector<int>..." << endl;
   test_exception<i1t, iva>(
-      "invalid_i1t", "read 'a' while expecting int", parser
+      "invalid_i1t",
+      "read 'a' while expecting integral",
+      parser
   );
 
   cout << "  Testing empty component for vector<int>..."
        << endl;
   test_exception<i1t, iva>(
-      "empty_i1t", "read '' while expecting int", parser
+      "empty_i1t", "read '' while expecting integral", parser
   );
 
   cout << "  Testing vector<size_t>..." << endl;
@@ -30,7 +34,9 @@ int main()
   cout << "  Testing invalid input for vector<size_t>..."
        << endl;
   test_exception<z1t, iva>(
-      "invalid_z1t", "read 'a' while expecting size_t", parser
+      "invalid_z1t",
+      "read 'a' while expecting unsigned",
+      parser
   );
 
   cout << "  Testing vector<double>..." << endl;
@@ -39,13 +45,15 @@ int main()
   cout << "  Testing invalid input for vector<double>..."
        << endl;
   test_exception<d1t, iva>(
-      "invalid_d1t", "read 'a' while expecting double", parser
+      "invalid_d1t",
+      "read 'a' while expecting floating-point",
+      parser
   );
 
   cout << "  Testing bracket inside vector<double>..." << endl;
   test_exception<d1t, iva>(
       "bracket_inside_d1t",
-      "read '[7.0, [8.1, 2.0]' while expecting vector",
+      "read '[7.0, [8.1, 2.0]' while expecting vector<>",
       parser
   );
 
@@ -58,17 +66,17 @@ int main()
   cout << "  Testing incomplete vector..." << endl;
   test_exception<i1t, iva>(
       "incomplete_vector_1",
-      "read '[1,2,' while expecting vector",
+      "read '[1,2,' while expecting vector<>",
       parser
   );
   test_exception<i1t, iva>(
       "incomplete_vector_2",
-      "read '[1,2' while expecting vector",
+      "read '[1,2' while expecting vector<>",
       parser
   );
   test_exception<i1t, iva>(
       "incomplete_vector_3",
-      "read '[1,2' while expecting vector",
+      "read '[1,2' while expecting vector<>",
       parser
   );
 
@@ -80,13 +88,13 @@ int main()
 
   cout << "  Testing invalid empty vector..." << endl;
   test_exception<i1t, iva>(
-      "empty_2", "read '' while expecting int", parser
+      "empty_2", "read '' while expecting integral", parser
   );
   test_exception<i1t, iva>(
-      "empty_3", "read '' while expecting int", parser
+      "empty_3", "read '' while expecting integral", parser
   );
   test_exception<i1t, iva>(
-      "empty_4", "read '' while expecting int", parser
+      "empty_4", "read '' while expecting integral", parser
   );
 
   close_test();

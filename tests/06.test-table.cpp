@@ -13,20 +13,24 @@ int main()
   cout << "  Testing float input for vector<vector<int>>..."
        << endl;
   test_exception<i2t, iva>(
-      "float_i2t", "read '-4.1' while expecting int", parser
+      "float_i2t",
+      "read '-4.1' while expecting integral",
+      parser
   );
 
   cout << "  Testing invalid input for vector<vector<int>>..."
        << endl;
   test_exception<i2t, iva>(
-      "invalid_i2t", "read 'a' while expecting int", parser
+      "invalid_i2t",
+      "read 'a' while expecting integral",
+      parser
   );
 
   cout
       << "  Testing empty component for vector<vector<int>>..."
       << endl;
   test_exception<i2t, iva>(
-      "empty_i2t", "read '' while expecting int", parser
+      "empty_i2t", "read '' while expecting integral", parser
   );
 
   cout << "  Testing vector<vector<size_t>>..." << endl;
@@ -44,7 +48,9 @@ int main()
           "vector<vector<double>>..."
        << endl;
   test_exception<d2t, iva>(
-      "invalid_d2t", "read 'a' while expecting double", parser
+      "invalid_d2t",
+      "read 'a' while expecting floating-point",
+      parser
   );
 
   cout << "  Testing bracket inside vector<vector<double>>..."
@@ -95,13 +101,13 @@ int main()
   cout << "  Testing valid empty table..." << endl;
   assert(parser.read<i2t>("empty_1") == i2t({{}}));
   test_exception<i2t, iva>(
-      "empty_2", "read '' while expecting int", parser
+      "empty_2", "read '' while expecting integral", parser
   );
   test_exception<i2t, iva>(
-      "empty_3", "read '' while expecting int", parser
+      "empty_3", "read '' while expecting integral", parser
   );
   test_exception<i2t, iva>(
-      "empty_4", "read '' while expecting int", parser
+      "empty_4", "read '' while expecting integral", parser
   );
 
   close_test();

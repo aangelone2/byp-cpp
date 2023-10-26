@@ -7,7 +7,9 @@ bdir := build
 tdir := tests
 
 headers := $(wildcard $(idir)/*.hpp)
-objects := $(odir)/common.o $(odir)/convert.o $(odir)/parser.o
+objects := $(odir)/common.o\
+					 $(odir)/convert.o\
+					 $(odir)/parser.o
 lib := $(bdir)/libbyp-cpp.a
 
 theaders := $(wildcard $(tdir)/*.hpp)
@@ -23,7 +25,7 @@ CXXFLAGS := -std=c++17 -O3 -Wfatal-errors\
 						-Wall -Werror -Wextra -Wshadow -Wparentheses\
 						-Wconversion -Wpedantic -pedantic
 INC := -I$(idir)
-LIB := -L$(bdir)
+LIB := -L$(bdir) -lbyp-cpp
 
 
 
@@ -44,7 +46,7 @@ test: $(tobjects)
 # Rule to build test object files
 $(tobjects): $(bdir)/%: $(tdir)/%.cpp $(theaders) $(lib)
 	mkdir -p $(odir)
-	$(CC) $(CXXFLAGS) $(INC) $< -o $@ $(LIB) -lbyp-cpp
+	$(CC) $(CXXFLAGS) $(INC) $< -o $@ $(LIB)
 
 
 # Target, which executes the rule to build the library

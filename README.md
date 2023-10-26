@@ -25,6 +25,33 @@ dialect.
 
 
 
+## Dependencies and Setup
+
+The library itself does not have any dependencies beyond the
+C++ standard library and `g++` version 8 or higher (in general,
+C++17-compatible). The command
+
+```
+$ make build
+```
+
+compiles the library statically as `libbyp-cpp.a` in the
+`build/` directory.
+
+The command
+
+```
+$ make clean
+```
+
+resets the build environment.
+
+Use the `-std=c++17` flag when compiling the calling code with
+`g++`.
+
+
+
+
 ## Usage
 
 To parse files, create a `byp::parser` object, initialized with
@@ -43,30 +70,28 @@ byp::parser loader(<file path>);
 
 Parsable types are:
 
-- Several builtin C++ types (`bool`, `int`, `size_t`, `double`,
-  `std::string`).
+- Booleans (`bool`);
+- Several signed integral types (`short`, `int`, `long`, `long
+  long`);
+- Several unsigned integral types (`unsigned short`, `unsigned
+  int`, `unsigned long`, `unsigned long long`);
+- Several floating-point types (`float`, `double`, `long
+  double`);
+- Strings (`std::string`);
 - 1D vectors, `std::vector<T>`, where `T` is one of the types
   above (except `bool`).
 - 2D vectors, `std::vector<std::vector<T>>`, where `T` is one
   of the types above (except `bool`).
 
+The library also allows direct access to the `byp::convert()`
+function, which attempts to convert its `std::string` argument
+to an instance of the type of choice.
 
+```cpp
+#include <byp.hpp>
 
-
-## Dependencies and Setup
-
-The library itself does not have any dependencies beyond the
-C++ standard library and `g++` version 8 or higher (in general,
-C++17-compatible). The command
-
+<type> val = byp::convert<<type>>(<string>);
 ```
-$ make build
-```
-
-compiles the library statically as `libbyp-cpp.a` in the
-`build/` directory.
-
-Use the `-std=c++17` flag when compiling your code with `g++`.
 
 
 
