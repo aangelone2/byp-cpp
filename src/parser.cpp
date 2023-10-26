@@ -75,37 +75,3 @@ string byp::parser::get(const string& key)
 
   throw iva("key '" + key + "' invalid or missing");
 }
-
-template <typename T> T byp::parser::read(const string& key)
-{
-  T res;
-  convert(get(key), res);
-  return res;
-}
-
-// Specializations
-template bool byp::parser::read<bool>(const string& key);
-template int byp::parser::read<int>(const string& key);
-template size_t byp::parser::read<size_t>(const string& key);
-template double byp::parser::read<double>(const string& key);
-template string byp::parser::read<string>(const string& key);
-
-// vector<bool> disallowed
-template vector<int>
-byp::parser::read<vector<int>>(const string& key);
-template vector<size_t>
-byp::parser::read<vector<size_t>>(const string& key);
-template vector<double>
-byp::parser::read<vector<double>>(const string& key);
-template vector<string>
-byp::parser::read<vector<string>>(const string& key);
-
-// vector<vector<bool>> disallowed
-template vector<vector<int>>
-byp::parser::read<vector<vector<int>>>(const string& key);
-template vector<vector<size_t>>
-byp::parser::read<vector<vector<size_t>>>(const string& key);
-template vector<vector<double>>
-byp::parser::read<vector<vector<double>>>(const string& key);
-template vector<vector<string>>
-byp::parser::read<vector<vector<string>>>(const string& key);

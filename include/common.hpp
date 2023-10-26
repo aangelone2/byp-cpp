@@ -27,17 +27,12 @@
 #define COMMON_HPP
 
 #include <optional>
-#include <regex>
-#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
 using std::getline;
 using std::optional;
-using std::regex;
-using std::regex_match;
-using std::sregex_iterator;
 using std::string;
 using std::vector;
 
@@ -65,6 +60,21 @@ bool match(const string& input, const string& pattern);
 std::optional<vector<string>>
 get_groups(const string& input, const string& pattern);
 
+// Extract all repeated instances of a group from a string.
+/*
+ * If no matches, an empty vector will be returned.
+ *
+ * @param input The string to analyze.
+ * @param pattern A regexp pattern which will be repeatedly
+ *                extracted from the input string.
+ *
+ * @return A vector of strings containing all the matched grup
+ *         instances.
+ */
+vector<string> get_repeating_group(
+    const string& input, const string& pattern
+);
+
 // Removes trailing comments, then leading and trailing spaces.
 /*
  * @param input The string to de-commented and trim.
@@ -72,31 +82,5 @@ get_groups(const string& input, const string& pattern);
  * @return The treated string.
  */
 string clean(const string& input);
-
-// Conversion functions, string -> specified type
-/*
- * Required to trim leading and trailing spaces from value
- * before conversion, or at least to ignore them. This is
- * simpler than letting get() deal with it, since convert()
- * can be called by other convert() calls.
- *
- * The templated vector<> and vector<vector<>> functions
- * are explicitly instantiated in the source files.
- *
- * @param val The string to convert.
- * @param res The inout parameter in which the return value
- *            will be stored.
- *
- * @throws invalid_argument If invalid value passed.
- */
-void convert(const string& val, bool& res);
-void convert(const string& val, int& res);
-void convert(const string& val, size_t& res);
-void convert(const string& val, double& res);
-void convert(const string& val, string& res);
-template <typename T>
-void convert(const string& val, vector<T>& res);
-template <typename T>
-void convert(const string& val, vector<vector<T>>& res);
 
 #endif

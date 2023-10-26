@@ -24,6 +24,11 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #include "common.hpp"
+#include <regex>
+
+using std::regex;
+using std::regex_match;
+using std::sregex_iterator;
 
 bool match(const string& input, const string& pattern)
 {
@@ -44,6 +49,27 @@ get_groups(const string& input, const string& pattern)
   return vector<string>(
       pieces_match.begin() + 1, pieces_match.end()
   );
+}
+
+vector<string>
+get_repeating_group(const string& input, const string& pattern)
+{
+  // Cannot pass temporary regex, requires pre-creation
+  const auto rpattern = regex(pattern);
+
+  const auto begin
+      = sregex_iterator(input.begin(), input.end(), rpattern);
+  const auto end = sregex_iterator();
+
+  vector<string> res;
+
+  // Iterating over matches (subvectors)
+  // Will ignore possible trailing comma
+  // If no matches, will return an empty vector, expected
+  for (auto el = begin; el != end; ++el)
+    res.push_back(el->str());
+
+  return res;
 }
 
 string clean(const string& input)

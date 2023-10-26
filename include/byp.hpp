@@ -28,8 +28,20 @@
 
 #include <fstream>
 
+//! Namespace for `byp` library.
 namespace byp
 {
+  //! Conversion functions, string -> specified type
+  /*!
+   * Trims leading and trailing spaces from value before
+   * conversion, or at least to ignore them.
+   *
+   * @param val The string to convert.
+   *
+   * @throws invalid_argument If invalid value passed.
+   */
+  template <typename T> T convert(const std::string& val);
+
   //! Loader class for parsing values.
   class parser
   {
@@ -56,7 +68,11 @@ namespace byp
        *                          invalid, or invalid row found
        *                          while parsing.
        */
-      template <typename T> T read(const std::string& key);
+      template <typename T>
+      inline T read(const std::string& key)
+      {
+        return convert<T>(get(key));
+      }
 
     private:
       // File object to be parsed for key-value pairs.
