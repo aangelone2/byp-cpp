@@ -45,7 +45,6 @@ test: $(tobjects)
 
 # Rule to build test object files
 $(tobjects): $(bdir)/%: $(tdir)/%.cpp $(theaders) $(lib)
-	mkdir -p $(odir)
 	$(CC) $(CXXFLAGS) $(INC) $< -o $@ $(LIB)
 
 
@@ -57,7 +56,7 @@ build: $(lib)
 $(lib): $(objects)
 	mkdir -p $(bdir)
 	rm -fv $(bdir)/*.a
-	ar rcs $(bdir)/libbyp-cpp.a $(wildcard $(odir)/*.o)
+	ar rcs $(bdir)/libbyp-cpp.a $(objects)
 
 
 # Rule to build library object files
