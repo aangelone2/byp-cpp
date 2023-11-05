@@ -54,18 +54,26 @@ Use the `-std=c++17` flag when compiling the calling code with
 
 ## Usage
 
-To parse files, create a `byp::parser` object, initialized with
-the path of the file to parse, and call its `read()` method to
-parse values associated to a specific key in the file.
+To parse files, create a `(const) byp::parser` object,
+initialized with the path of the file to parse.
+
+- The constructor will immediately parse the file (throwing a
+  `std::invalid_argument` exception if invalid/duplicate rows
+  are found).
+- The parsed key-value pairs are stored internally (no further
+  access to the file is performed/required).
+- Use the `get<<type>>(<key>)` method to extract the value
+  corresponding to a given key (`std::invalid_argument` is
+  thrown if the key is not present).
 
 ```cpp
 #include "byp.hpp"
 
-byp::parser loader(<file path>);
+const byp::parser parser(<file path>);
 
 // Assuming <key>: <value>, where <value>
 // is compatible with <type>, is present in the parsed file
-<type> val = loader.read<<type>>(<key>);
+<type> val = parser.get<<type>>(<key>);
 ```
 
 Parsable types are:
@@ -85,7 +93,8 @@ Parsable types are:
 
 The library also allows direct access to the `byp::convert()`
 function, which attempts to convert its `std::string` argument
-to an instance of the type of choice.
+to an instance of the type of choice (throwing
+`std::invalid_argument` on failure).
 
 ```cpp
 #include <byp.hpp>
@@ -98,7 +107,7 @@ to an instance of the type of choice.
 
 ## Testing
 
-Tests can be ran launching the command
+Tests can be run launching the command
 
 ```
 $ make test

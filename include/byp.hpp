@@ -51,9 +51,13 @@ namespace byp
     public:
       //! Public constructor.
       /*!
+       * Populates the internal dictionary with the key-value
+       * pairs parsed from the file.
+       *
        * @param filename The path to the filename to parse.
        *
-       * @throws invalid_argument If file does not exist.
+       * @throws invalid_argument If file does not exist or
+       * invalid key and/or value found.
        */
       parser(const std::string& filename);
 

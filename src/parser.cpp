@@ -27,7 +27,6 @@
 #include "common.hpp"
 
 using std::ifstream;
-using std::unordered_map;
 
 byp::parser::parser(const string& filename)
 {

@@ -6,6 +6,7 @@
 - Basic YAML declarations should follow the `key: value` scheme.
 - At least one space between `:` and the value is required.
 - Spaces are not allowed in key names.
+- Duplicate keys are not allowed.
 - Commented lines should begin with `#`.
 - Inline comments (e.g., `key: 3   # info`) are allowed.
   Anything following the first `#` will be ignored.
