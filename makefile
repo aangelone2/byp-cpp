@@ -42,7 +42,6 @@ LIB := -L$(bdir) -lbyp-cpp
 
 
 test: $(tobjects)
-	@cd $(bdir)/
 	@echo ''
 	@echo 'Beginning testing'
 	@echo ''
