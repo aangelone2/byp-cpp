@@ -3,37 +3,33 @@
 int main()
 {
   cout << "  Testing missing file..." << endl;
-  try
-  {
-    [[maybe_unused]] auto p0
-        = byp::parser("../tests/yaml/not-existent.yaml");
-    assert(false);
-  }
-  catch (const iva& err)
-  {
-    assert(
-        string(err.what())
-        == "file '../tests/yaml/not-existent.yaml' not found"
-    );
-  }
-
-  auto p1 = byp::parser("../tests/yaml/test-04-1.yml");
+  assert_fail_build<iva>(
+      "../tests/yaml/not-existent.yml",
+      "file '../tests/yaml/not-existent.yml' not found"
+  );
 
   cout << "  Testing spaces in key..." << endl;
-  test_exception<int, iva>(
-      "spaces in key", "invalid key 'spaces in key'", p1
+  assert_fail_build<iva>(
+      "../tests/yaml/test-04-1.yml",
+      "invalid key-value pair at row 4"
+  );
+
+  cout << "  Testing no-space key..." << endl;
+  assert_fail_build<iva>(
+      "../tests/yaml/test-04-2.yml",
+      "invalid key-value pair at row 4"
   );
 
   cout << "  Testing colon in key..." << endl;
-  test_exception<int, iva>(
-      "key:test", "invalid key 'key:test'", p1
+  assert_fail_build<iva>(
+      "../tests/yaml/test-04-3.yml",
+      "invalid key 'colon:in:key' at row 4"
   );
 
-  auto p2 = byp::parser("../tests/yaml/test-04-2.yml");
-
-  cout << "  Testing no-space key..." << endl;
-  test_exception<int, iva>(
-      "no_spaces", "invalid key-value pair at row 4", p2
+  cout << "  Testing duplicate key..." << endl;
+  assert_fail_build<iva>(
+      "../tests/yaml/test-04-4.yml",
+      "duplicate key 'test_2' at row 4"
   );
 
   close_test();

@@ -30,16 +30,32 @@ void close_test()
   cout << sep << "Test completed successfully" << endl << endl;
 }
 
-template <typename T, typename EXC>
-void test_exception(
-    const string& key,
-    const string& message,
-    byp::parser& parser
+template <typename EXC>
+void assert_fail_build(
+    const string& filename, const string& message
 )
 {
   try
   {
-    [[maybe_unused]] const T buffer = parser.read<T>(key);
+    [[maybe_unused]] const byp::parser parser(filename);
+    assert(false);
+  }
+  catch (const EXC& err)
+  {
+    assert(string(err.what()) == message);
+  }
+}
+
+template <typename T, typename EXC>
+void assert_fail_get(
+    const string& key,
+    const string& message,
+    const byp::parser& parser
+)
+{
+  try
+  {
+    [[maybe_unused]] const T buffer = parser.get<T>(key);
     assert(false);
   }
   catch (const EXC& err)
