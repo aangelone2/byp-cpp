@@ -1,3 +1,19 @@
+# Ensure bash is used
+SHELL := bash
+# Ensures 100% stopping if step in recipe fails
+.SHELLFLAGS := -eu -o pipefail -c
+
+# If a rule fails, its target file is deleted
+.DELETE_ON_ERROR:
+
+# Warning if using undefined make variables
+MAKEFLAGS += --warn-undefined-variables
+# Disables builtin rules (C...)
+MAKEFLAGS += --no-builtin-rules
+
+
+# Targets which are not supposed to generate
+# a file with the same name
 .PHONY: docs
 
 idir := include
@@ -7,18 +23,13 @@ bdir := build
 tdir := tests
 
 headers := $(wildcard $(idir)/*.hpp)
-objects := $(odir)/common.o\
-					 $(odir)/convert.o\
-					 $(odir)/parser.o
+sources := $(wildcard $(sdir)/*.cpp)
+objects := $(patsubst $(sdir)/%.cpp, $(odir)/%.o, $(sources))
 lib := $(bdir)/libbyp-cpp.a
 
 theaders := $(wildcard $(tdir)/*.hpp)
-tobjects := $(bdir)/01.test-basic\
-						$(bdir)/02.test-parsing\
-						$(bdir)/03.test-simple_types\
-						$(bdir)/04.test-errors\
-						$(bdir)/05.test-vectors\
-						$(bdir)/06.test-table
+tsources := $(wildcard $(tdir)/*.cpp)
+tobjects := $(patsubst $(tdir)/%.cpp, $(bdir)/%, $(tsources))
 
 CC := g++
 CXXFLAGS := -std=c++17 -O3 -Wfatal-errors\
@@ -31,15 +42,16 @@ LIB := -L$(bdir) -lbyp-cpp
 
 
 test: $(tobjects)
+	@cd $(bdir)/
 	@echo ''
 	@echo 'Beginning testing'
 	@echo ''
-	cd $(bdir)/ ; ./01.test-basic
-	cd $(bdir)/ ; ./02.test-parsing
-	cd $(bdir)/ ; ./03.test-simple_types
-	cd $(bdir)/ ; ./04.test-errors
-	cd $(bdir)/ ; ./05.test-vectors
-	cd $(bdir)/ ; ./06.test-table
+	cd $(bdir); ./01.test-basic
+	cd $(bdir); ./02.test-parsing
+	cd $(bdir); ./03.test-simple_types
+	cd $(bdir); ./04.test-errors
+	cd $(bdir); ./05.test-vectors
+	cd $(bdir); ./06.test-table
 	@echo 'All tests completed successfully'
 
 
@@ -54,14 +66,14 @@ build: $(lib)
 
 # Rule to build the library
 $(lib): $(objects)
-	mkdir -p $(bdir)
+	@mkdir -p $(bdir)
 	rm -fv $(bdir)/*.a
 	ar rcs $(bdir)/libbyp-cpp.a $(objects)
 
 
 # Rule to build library object files
 $(objects): $(odir)/%.o: $(sdir)/%.cpp $(headers)
-	mkdir -p $(odir)
+	@mkdir -p $(odir)
 	$(CC) $(CXXFLAGS) $(INC) -c $< -o $@
 
 

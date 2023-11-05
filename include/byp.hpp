@@ -27,6 +27,9 @@
 #define BCP_HPP
 
 #include <fstream>
+#include <stdexcept>
+#include <string>
+#include <unordered_map>
 
 //! Namespace for `byp` library.
 namespace byp
@@ -64,35 +67,38 @@ namespace byp
        *
        * @return The parsed value of the specified type.
        *
-       * @throws invalid_argument If key-value pair missing or
-       *                          invalid, or invalid row found
-       *                          while parsing.
+       * @throws invalid_argument If key not found.
        */
       template <typename T>
-      inline T read(const std::string& key)
+      inline T get(const std::string& key) const
       {
-        return convert<T>(get(key));
+        try
+        {
+          return convert<T>(values.at(key));
+        }
+        catch (const std::out_of_range& err)
+        {
+          throw std::invalid_argument(
+              "key '" + key + "' not found"
+          );
+        }
       }
 
     private:
-      // File object to be parsed for key-value pairs.
-      std::ifstream file;
+      // Map containing string values, accessed by key.
+      std::unordered_map<std::string, std::string> values;
 
-      // Value parsing function.
+      // Parsing function.
       /*
-       * Returns the value associated to a key as a string.
-       * Stops and attempts parsing at the first matching key
-       * from the top of the file.
-       * Does not trim spaces before and after value.
+       * Populates the internal dictionary with key-value
+       * pairs. Trims spaces before/after key, but not value.
        *
-       * @param key The key associated to the value.
+       * @param file The ifstream to parse.
        *
-       * @return The parsed value as a string.
-       *
-       * @throws invalid_argument If missing key, invalid row,
-       * or invalid value found while parsing the file.
+       * @throws invalid_argument If invalid row,
+       * or invalid or duplicate key found while parsing.
        */
-      std::string get(const std::string& key);
+      void populate_values(std::ifstream& file);
   };
 } // namespace byp
 

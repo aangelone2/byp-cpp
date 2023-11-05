@@ -26,27 +26,20 @@
 #include "byp.hpp"
 #include "common.hpp"
 
+using std::ifstream;
+using std::unordered_map;
+
 byp::parser::parser(const string& filename)
 {
-  file.open(filename.c_str());
+  ifstream file(filename.c_str());
   if (!file)
     throw iva("file '" + filename + "' not found");
+
+  populate_values(file);
 }
 
-// Helper function, resets stream to the beginning
-void reset_stream(std::ifstream& file)
+void byp::parser::populate_values(ifstream& file)
 {
-  file.clear();
-  file.seekg(0);
-}
-
-string byp::parser::get(const string& key)
-{
-  if (match(key, "^.*\\s.*$") || match(key, "^.*:.*$"))
-    throw iva("invalid key '" + key + "'");
-
-  reset_stream(file);
-
   int counter = 0;
   string buffer;
   while (getline(file, buffer))
@@ -69,9 +62,20 @@ string byp::parser::get(const string& key)
           + std::to_string(counter)
       );
 
-    if (key_val.value()[0] == key)
-      return key_val.value()[1];
-  }
+    const string key = key_val.value()[0];
 
-  throw iva("key '" + key + "' invalid or missing");
+    if (match(key, "^.*\\s.*$") || match(key, "^.*:.*$"))
+      throw iva(
+          "invalid key '" + key + "' at row "
+          + std::to_string(counter)
+      );
+
+    if (values.find(key) != values.end())
+      throw iva(
+          "duplicate key '" + key + "' at row "
+          + std::to_string(counter)
+      );
+
+    values.insert({key, key_val.value()[1]});
+  }
 }
