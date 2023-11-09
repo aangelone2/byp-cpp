@@ -25,50 +25,12 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #include "byp.hpp"
-#include "common.hpp"
+#include "common/regex.hpp"
+#include "common/traits.hpp"
 #include <sstream>
-#include <type_traits>
 
 using byp::convert;
-using std::false_type;
 using std::stringstream;
-using std::true_type;
-
-/* clang-format off */
-
-// Trait for supported vector types
-// (cannot test on value_type, since every container has it)
-template <typename T> struct is_vector : false_type {};
-template <> struct is_vector<vector<short>> : true_type {};
-template <> struct is_vector<vector<int>> : true_type {};
-template <> struct is_vector<vector<long>> : true_type {};
-template <> struct is_vector<vector<long long>> : true_type {};
-template <> struct is_vector<vector<unsigned short>> : true_type {};
-template <> struct is_vector<vector<unsigned int>> : true_type {};
-template <> struct is_vector<vector<unsigned long>> : true_type {};
-template <> struct is_vector<vector<unsigned long long>> : true_type {};
-template <> struct is_vector<vector<float>> : true_type {};
-template <> struct is_vector<vector<double>> : true_type {};
-template <> struct is_vector<vector<long double>> : true_type {};
-template <> struct is_vector<vector<string>> : true_type {};
-
-// Trait for supported table (2D vector) types
-// (cannot test on value_type, since every container has it)
-template <typename T> struct is_table : false_type {};
-template <> struct is_table<vector<vector<short>>> : true_type {};
-template <> struct is_table<vector<vector<int>>> : true_type {};
-template <> struct is_table<vector<vector<long>>> : true_type {};
-template <> struct is_table<vector<vector<long long>>> : true_type {};
-template <> struct is_table<vector<vector<unsigned short>>> : true_type {};
-template <> struct is_table<vector<vector<unsigned int>>> : true_type {};
-template <> struct is_table<vector<vector<unsigned long>>> : true_type {};
-template <> struct is_table<vector<vector<unsigned long long>>> : true_type {};
-template <> struct is_table<vector<vector<float>>> : true_type {};
-template <> struct is_table<vector<vector<double>>> : true_type {};
-template <> struct is_table<vector<vector<long double>>> : true_type {};
-template <> struct is_table<vector<vector<string>>> : true_type {};
-
-/* clang-format on */
 
 // Converts string -> bool
 bool convert_bool(const string& val)
@@ -185,8 +147,8 @@ T convert_numeric(const string& val)
     // Essentially same filters as in stod(), but 1.
     // disallowed
     pattern = "^[\\+\\-]?[0-9]+"
-      "(?:\\.[0-9]+)?"
-      "(?:[Ee][\\+" "\\-]?[0-9]+)?$";
+              "(?:\\.[0-9]+)?"
+              "(?:[Ee][\\+\\-]?[0-9]+)?$";
     type = "floating-point";
   }
 

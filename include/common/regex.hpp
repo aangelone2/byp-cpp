@@ -24,8 +24,8 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#ifndef COMMON_HPP
-#define COMMON_HPP
+#ifndef REGEX_HPP
+#define REGEX_HPP
 
 #include <optional>
 #include <stdexcept>

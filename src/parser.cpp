@@ -25,7 +25,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #include "byp.hpp"
-#include "common.hpp"
+#include "common/regex.hpp"
 
 using std::ifstream;
 

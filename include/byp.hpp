@@ -24,8 +24,8 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#ifndef BCP_HPP
-#define BCP_HPP
+#ifndef BYP_HPP
+#define BYP_HPP
 
 #include <fstream>
 #include <stdexcept>
