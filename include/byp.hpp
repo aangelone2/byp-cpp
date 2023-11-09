@@ -1,27 +1,28 @@
 /* Copyright (c) 2023 Adriano Angelone
  *
- * The above copyright notice and this permission notice shall
- * be included in all copies or substantial portions of the
- * Software.
+ * The above copyright notice and this permission notice
+ * shall be included in all copies or substantial
+ * portions of the Software.
  *
  * This file is part of byp-cpp.
  *
- * This file may be used under the terms of the GNU General
- * Public License version 3.0 as published by the Free Software
- * Foundation and appearing in the file LICENSE included in the
- * packaging of this file.  Please review the following
- * information to ensure the GNU General Public License version
- * 3.0 requirements will be met:
- * http://www.gnu.org/copyleft/gpl.html.
+ * This file may be used under the terms of the GNU
+ * General Public License version 3.0 as published by the
+ * Free Software Foundation and appearing in the file
+ * LICENSE included in the packaging of this file. Please
+ * review the following information to ensure the GNU
+ * General Public License version 3.0 requirements will
+ * be met: http://www.gnu.org/copyleft/gpl.html.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
- * KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
- * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
- * OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
- * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
- * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
+ * ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+ * LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+ * EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+ * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+ * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #ifndef BCP_HPP
 #define BCP_HPP
@@ -43,7 +44,8 @@ namespace byp
    *
    * @throws invalid_argument If invalid value passed.
    */
-  template <typename T> T convert(const std::string& val);
+  template <typename T>
+  T convert(const std::string& val);
 
   //! Loader class for parsing values.
   class parser
@@ -51,13 +53,14 @@ namespace byp
     public:
       //! Public constructor.
       /*!
-       * Populates the internal dictionary with the key-value
-       * pairs parsed from the file.
+       * Populates the internal dictionary with the
+       * key-value pairs parsed from the file.
        *
-       * @param filename The path to the filename to parse.
+       * @param filename The path to the filename to
+       * parse.
        *
-       * @throws invalid_argument If file does not exist or
-       * invalid key and/or value found.
+       * @throws invalid_argument If file does not exist
+       * or invalid key and/or value found.
        */
       parser(const std::string& filename);
 
@@ -90,12 +93,14 @@ namespace byp
 
     private:
       // Map containing string values, accessed by key.
-      std::unordered_map<std::string, std::string> values;
+      std::unordered_map<std::string, std::string>
+          values;
 
       // Parsing function.
       /*
        * Populates the internal dictionary with key-value
-       * pairs. Trims spaces before/after key, but not value.
+       * pairs. Trims spaces before/after key, but not
+       * value.
        *
        * @param file The ifstream to parse.
        *

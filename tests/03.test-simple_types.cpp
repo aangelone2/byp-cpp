@@ -7,7 +7,9 @@ int main()
 
   cout << "  Testing invalid bool..." << endl;
   assert_fail_get<bool, iva>(
-      "invalid_bool_1", "read '1' while expecting bool", parser
+      "invalid_bool_1",
+      "read '1' while expecting bool",
+      parser
   );
   assert_fail_get<bool, iva>(
       "invalid_bool_2",
@@ -18,7 +20,8 @@ int main()
   cout << "  Testing (+) parsing for int..." << endl;
   assert(parser.get<int>("positive") == 8);
 
-  cout << "  Testing invalid sign position for int..." << endl;
+  cout << "  Testing invalid sign position for int..."
+       << endl;
   assert_fail_get<int, iva>(
       "invalid_sign",
       "read '1+4' while expecting integral",
@@ -34,10 +37,13 @@ int main()
 
   cout << "  Testing float parsing for int..." << endl;
   assert_fail_get<int, iva>(
-      "flt", "read '12.4' while expecting integral", parser
+      "flt",
+      "read '12.4' while expecting integral",
+      parser
   );
 
-  cout << "  Testing scientific parsing for int..." << endl;
+  cout << "  Testing scientific parsing for int..."
+       << endl;
   assert_fail_get<int, iva>(
       "scientific",
       "read '1e+6' while expecting integral",
@@ -46,40 +52,55 @@ int main()
 
   cout << "  Testing invalid values for int..." << endl;
   assert_fail_get<int, iva>(
-      "invalid", "read 'cde' while expecting integral", parser
+      "invalid",
+      "read 'cde' while expecting integral",
+      parser
   );
 
   cout << "  Testing (+) parsing for size_t..." << endl;
   assert_fail_get<size_t, iva>(
-      "positive", "read '+8' while expecting unsigned", parser
+      "positive",
+      "read '+8' while expecting unsigned",
+      parser
   );
 
   cout << "  Testing (-) parsing for size_t..." << endl;
   assert_fail_get<size_t, iva>(
-      "negative", "read '-12' while expecting unsigned", parser
+      "negative",
+      "read '-12' while expecting unsigned",
+      parser
   );
 
-  cout << "  Testing float parsing for size_t..." << endl;
+  cout << "  Testing float parsing for size_t..."
+       << endl;
   assert_fail_get<size_t, iva>(
-      "flt", "read '12.4' while expecting unsigned", parser
+      "flt",
+      "read '12.4' while expecting unsigned",
+      parser
   );
 
-  cout << "  Testing scientific parsing for size_t..." << endl;
+  cout << "  Testing scientific parsing for size_t..."
+       << endl;
   assert_fail_get<size_t, iva>(
       "scientific",
       "read '1e+6' while expecting unsigned",
       parser
   );
 
-  cout << "  Testing invalid values for size_t..." << endl;
+  cout << "  Testing invalid values for size_t..."
+       << endl;
   assert_fail_get<size_t, iva>(
-      "invalid", "read 'cde' while expecting unsigned", parser
+      "invalid",
+      "read 'cde' while expecting unsigned",
+      parser
   );
 
-  cout << "  Testing float parsing for double..." << endl;
+  cout << "  Testing float parsing for double..."
+       << endl;
   assert(parser.get<double>("flt") == 12.4);
 
-  cout << "  Testing scientific parsing for double..." << endl;
+  cout << "  Testing scientific parsing for double..."
+       << endl;
   assert(parser.get<double>("scientific") == 1.0e+6);
   assert(parser.get<double>("scientific_2") == 1.5e-6);
 
@@ -92,7 +113,8 @@ int main()
   cout << "  Testing (-) parsing for double..." << endl;
   assert(parser.get<double>("negative") == -12);
 
-  cout << "  Testing invalid values for double..." << endl;
+  cout << "  Testing invalid values for double..."
+       << endl;
   assert_fail_get<double, iva>(
       "invalid_for_double",
       "read 'ilm' while expecting floating-point",
@@ -159,20 +181,29 @@ int main()
   cout << "  Testing int parsing for string..." << endl;
   assert(parser.get<string>("int_for_string") == "1");
 
-  cout << "  Testing space parsing for string..." << endl;
-  assert(parser.get<string>("spaces_in_string") == "a b c");
+  cout << "  Testing space parsing for string..."
+       << endl;
+  assert(
+      parser.get<string>("spaces_in_string") == "a b c"
+  );
 
-  cout << "  Testing quote parsing for string..." << endl;
+  cout << "  Testing quote parsing for string..."
+       << endl;
   assert(
       parser.get<string>("quotes_in_string")
       == "\"ab\" c\"d ef"
   );
 
   cout << "  Testing colon in string..." << endl;
-  assert(parser.get<string>("colon_in_string") == "ab:cm:: o");
+  assert(
+      parser.get<string>("colon_in_string")
+      == "ab:cm:: o"
+  );
 
   cout << "  Testing comma in string..." << endl;
-  assert(parser.get<string>("comma_in_string") == "ab,cm");
+  assert(
+      parser.get<string>("comma_in_string") == "ab,cm"
+  );
 
   cout << "  Testing hash in string..." << endl;
   assert(parser.get<string>("hash_in_string") == "ab");

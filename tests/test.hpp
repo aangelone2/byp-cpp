@@ -22,12 +22,13 @@ using s2t = vector<vector<string>>;
 
 using iva = std::invalid_argument;
 
-const string sep
-    = ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ";
+const string sep = ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+                   ">>>>>>>>>>>>>>>>> ";
 
 void close_test()
 {
-  cout << sep << "Test completed successfully" << endl << endl;
+  cout << sep << "Test completed successfully" << endl
+       << endl;
 }
 
 template <typename EXC>

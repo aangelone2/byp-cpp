@@ -19,17 +19,22 @@ int main()
 
   cout << "  Testing spaces after vector..." << endl;
   assert(
-      parser.get<i1t>("spaces_after_vector") == i1t({1, 2, 3})
+      parser.get<i1t>("spaces_after_vector")
+      == i1t({1, 2, 3})
   );
 
   cout << "  Testing spaces everywhere table..." << endl;
   assert(
       parser.get<i2t>("spaces_everywhere_table")
-      == i2t({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}})
+      == i2t(
+          {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}}
+      )
   );
 
   cout << "  Testing spaces before string..." << endl;
-  assert(parser.get<string>("spaces_before_string") == "abc");
+  assert(
+      parser.get<string>("spaces_before_string") == "abc"
+  );
 
   cout << "  Testing spaces inside and after string..."
        << endl;
@@ -40,18 +45,24 @@ int main()
 
   cout << "  Testing nonexistent key..." << endl;
   assert_fail_get<int, iva>(
-      "not_existing", "key 'not_existing' not found", parser
+      "not_existing",
+      "key 'not_existing' not found",
+      parser
   );
 
   cout << "  Testing partial comment..." << endl;
   assert(parser.get<int>("partial_comment") == 123);
 
-  cout << "  Testing partial multiple comment..." << endl;
-  assert(parser.get<int>("partial_multiple_comment") == 123);
+  cout << "  Testing partial multiple comment..."
+       << endl;
+  assert(
+      parser.get<int>("partial_multiple_comment") == 123
+  );
 
   // If any of the previous tests succeeded,
   // comments and empty lines were successfully ignored
-  cout << "  Testing empty and commented lines..." << endl;
+  cout << "  Testing empty and commented lines..."
+       << endl;
 
   close_test();
 }

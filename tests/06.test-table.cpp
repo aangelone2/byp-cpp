@@ -7,10 +7,12 @@ int main()
 
   cout << "  Testing vector<vector<int>>..." << endl;
   assert(
-      parser.get<i2t>("i2t") == i2t({{1, -2, 3}, {4, 5, 6}})
+      parser.get<i2t>("i2t")
+      == i2t({{1, -2, 3}, {4, 5, 6}})
   );
 
-  cout << "  Testing float input for vector<vector<int>>..."
+  cout << "  Testing float input for "
+          "vector<vector<int>>..."
        << endl;
   assert_fail_get<i2t, iva>(
       "float_i2t",
@@ -18,7 +20,8 @@ int main()
       parser
   );
 
-  cout << "  Testing invalid input for vector<vector<int>>..."
+  cout << "  Testing invalid input for "
+          "vector<vector<int>>..."
        << endl;
   assert_fail_get<i2t, iva>(
       "invalid_i2t",
@@ -26,16 +29,19 @@ int main()
       parser
   );
 
-  cout
-      << "  Testing empty component for vector<vector<int>>..."
-      << endl;
+  cout << "  Testing empty component for "
+          "vector<vector<int>>..."
+       << endl;
   assert_fail_get<i2t, iva>(
-      "empty_i2t", "read '' while expecting integral", parser
+      "empty_i2t",
+      "read '' while expecting integral",
+      parser
   );
 
   cout << "  Testing vector<vector<size_t>>..." << endl;
   assert(
-      parser.get<z2t>("z2t") == z2t({{4, 5, 6}, {7, 8, 9}})
+      parser.get<z2t>("z2t")
+      == z2t({{4, 5, 6}, {7, 8, 9}})
   );
 
   cout << "  Testing vector<vector<double>>..." << endl;
@@ -53,7 +59,8 @@ int main()
       parser
   );
 
-  cout << "  Testing bracket inside vector<vector<double>>..."
+  cout << "  Testing bracket inside "
+          "vector<vector<double>>..."
        << endl;
   assert_fail_get<d2t, iva>(
       "bracket_inside_d2t",
@@ -68,7 +75,8 @@ int main()
       == s2t({{"abc", "def"}, {"ghi lkm", "ejg"}})
   );
 
-  cout << "  Testing single-component vector<vector<int>>..."
+  cout << "  Testing single-component "
+          "vector<vector<int>>..."
        << endl;
   assert(
       parser.get<i2t>("single_component_ok")
@@ -101,13 +109,19 @@ int main()
   cout << "  Testing valid empty table..." << endl;
   assert(parser.get<i2t>("empty_1") == i2t({{}}));
   assert_fail_get<i2t, iva>(
-      "empty_2", "read '' while expecting integral", parser
+      "empty_2",
+      "read '' while expecting integral",
+      parser
   );
   assert_fail_get<i2t, iva>(
-      "empty_3", "read '' while expecting integral", parser
+      "empty_3",
+      "read '' while expecting integral",
+      parser
   );
   assert_fail_get<i2t, iva>(
-      "empty_4", "read '' while expecting integral", parser
+      "empty_4",
+      "read '' while expecting integral",
+      parser
   );
 
   close_test();

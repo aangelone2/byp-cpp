@@ -8,14 +8,16 @@ int main()
   cout << "  Testing vector<int>..." << endl;
   assert(parser.get<i1t>("i1t") == i1t({1, -2, 3}));
 
-  cout << "  Testing float input for vector<int>..." << endl;
+  cout << "  Testing float input for vector<int>..."
+       << endl;
   assert_fail_get<i1t, iva>(
       "float_i1t",
       "read '-2.1' while expecting integral",
       parser
   );
 
-  cout << "  Testing invalid input for vector<int>..." << endl;
+  cout << "  Testing invalid input for vector<int>..."
+       << endl;
   assert_fail_get<i1t, iva>(
       "invalid_i1t",
       "read 'a' while expecting integral",
@@ -25,7 +27,9 @@ int main()
   cout << "  Testing empty component for vector<int>..."
        << endl;
   assert_fail_get<i1t, iva>(
-      "empty_i1t", "read '' while expecting integral", parser
+      "empty_i1t",
+      "read '' while expecting integral",
+      parser
   );
 
   cout << "  Testing vector<size_t>..." << endl;
@@ -50,7 +54,8 @@ int main()
       parser
   );
 
-  cout << "  Testing bracket inside vector<double>..." << endl;
+  cout << "  Testing bracket inside vector<double>..."
+       << endl;
   assert_fail_get<d1t, iva>(
       "bracket_inside_d1t",
       "read '[7.0, [8.1, 2.0]' while expecting vector<>",
@@ -81,20 +86,28 @@ int main()
   );
 
   cout << "  Trailing comma..." << endl;
-  assert(parser.get<i1t>("trailing_comma") == i1t({1, 2}));
+  assert(
+      parser.get<i1t>("trailing_comma") == i1t({1, 2})
+  );
 
   cout << "  Testing valid empty vector..." << endl;
   assert(parser.get<i1t>("empty_1") == i1t({}));
 
   cout << "  Testing invalid empty vector..." << endl;
   assert_fail_get<i1t, iva>(
-      "empty_2", "read '' while expecting integral", parser
+      "empty_2",
+      "read '' while expecting integral",
+      parser
   );
   assert_fail_get<i1t, iva>(
-      "empty_3", "read '' while expecting integral", parser
+      "empty_3",
+      "read '' while expecting integral",
+      parser
   );
   assert_fail_get<i1t, iva>(
-      "empty_4", "read '' while expecting integral", parser
+      "empty_4",
+      "read '' while expecting integral",
+      parser
   );
 
   close_test();
