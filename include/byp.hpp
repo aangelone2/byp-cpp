@@ -42,10 +42,23 @@ namespace byp
    *
    * @param val The string to convert.
    *
+   * @return The parsed value of the specified type.
+   *
    * @throws invalid_argument If invalid value passed.
    */
   template <typename T>
   T convert(const std::string& val);
+
+  //! Formatting functions, specified type -> string
+  /*!
+   * Uses the same conventions expected when parsing
+   * parameter files (+ no trailing commas for vectors).
+   *
+   * @param val The value to convert.
+   *
+   * @return The converted string.
+   */
+  template <typename T> std::string format(const T& val);
 
   //! Loader class for parsing values.
   class parser

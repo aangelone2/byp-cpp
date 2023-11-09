@@ -99,15 +99,24 @@ Parsable types are:
 - 2D vectors, `std::vector<std::vector<T>>`, where `T` is
   one of the types above (except `bool`).
 
-The library also allows direct access to the
-`byp::convert()` function, which attempts to convert its
-`std::string` argument to an instance of the type of
-choice (throwing `std::invalid_argument` on failure).
+The library also gives direct access to medium-level
+utility functions:
+
+- `byp::convert()` attempts to convert its `std::string`
+  argument to an instance of the type of choice (throwing
+  `std::invalid_argument` on failure).
+
+- `byp::format()` converts a value of one of the types
+  parsed by the library to its `std::string`
+  representation, using the same conventions expected in
+  the parameter files (+ no trailing commas for vectors).
 
 ```cpp
 #include <byp.hpp>
 
 <type> val = byp::convert<<type>>(<string>);
+
+std::string str = byp::format(val);
 ```
 
 

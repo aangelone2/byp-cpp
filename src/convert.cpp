@@ -29,7 +29,6 @@
 #include "common/traits.hpp"
 #include <sstream>
 
-using byp::convert;
 using std::stringstream;
 
 // Converts string -> bool
@@ -68,7 +67,7 @@ template <typename T> T convert_vector(const string& val)
 
     T res;
     while (getline(ss, token, ','))
-      res.push_back(convert<element_type>(token));
+      res.push_back(byp::convert<element_type>(token));
 
     return res;
   }
@@ -118,7 +117,7 @@ template <typename T> T convert_table(const string& val)
 
   T res;
   for (const auto& el : elements)
-    res.push_back(convert<row_type>(el));
+    res.push_back(byp::convert<row_type>(el));
 
   return res;
 }
