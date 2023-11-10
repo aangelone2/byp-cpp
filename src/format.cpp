@@ -24,8 +24,10 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#include "byp.hpp"
-#include "common/traits.hpp"
+#include "byp-cpp/common/traits.hpp"
+#include "byp-cpp/functions.hpp"
+#include <iomanip>
+#include <sstream>
 
 // Converts vector<> and vector<vector<>> -> string
 // Does not need instantiation (done when compiling
@@ -49,7 +51,12 @@ template <typename T> string byp::format(const T& val)
   else if constexpr (is_vector<T>::value || is_table<T>::value)
     return format_vector(val);
   else // only numeric types left among the instantiated
-    return std::to_string(val);
+  {
+    std::stringstream ss;
+    // Format locked for reproducibility
+    ss << std::setprecision(6) << std::scientific << val;
+    return ss.str();
+  }
 }
 
 /* clang-format off */

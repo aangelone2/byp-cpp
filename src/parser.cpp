@@ -24,10 +24,11 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#include "byp.hpp"
-#include "common/regex.hpp"
+#include "byp-cpp/parser.hpp"
+#include "byp-cpp/common/regex.hpp"
 
 using std::ifstream;
+using std::to_string;
 
 byp::parser::parser(const string& filename)
 {
@@ -60,7 +61,7 @@ void byp::parser::populate_values(ifstream& file)
     if (!key_val.has_value())
       throw iva(
           "invalid key-value pair at row "
-          + std::to_string(counter)
+          + to_string(counter)
       );
 
     const string key = key_val.value()[0];
@@ -68,15 +69,15 @@ void byp::parser::populate_values(ifstream& file)
     if (match(key, "^.*\\s.*$") || match(key, "^.*:.*$"))
       throw iva(
           "invalid key '" + key + "' at row "
-          + std::to_string(counter)
+          + to_string(counter)
       );
 
-    if (values.find(key) != values.end())
+    if (m_values.find(key) != m_values.end())
       throw iva(
           "duplicate key '" + key + "' at row "
-          + std::to_string(counter)
+          + to_string(counter)
       );
 
-    values.insert({key, key_val.value()[1]});
+    m_values.insert({key, key_val.value()[1]});
   }
 }

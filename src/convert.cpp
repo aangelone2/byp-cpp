@@ -24,9 +24,9 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#include "byp.hpp"
-#include "common/regex.hpp"
-#include "common/traits.hpp"
+#include "byp-cpp/common/regex.hpp"
+#include "byp-cpp/common/traits.hpp"
+#include "byp-cpp/functions.hpp"
 #include <sstream>
 
 using std::stringstream;

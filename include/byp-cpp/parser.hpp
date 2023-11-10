@@ -24,9 +24,15 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#ifndef BYP_HPP
-#define BYP_HPP
+#ifndef BYPCPP_PARSER_HPP
+#define BYPCPP_PARSER_HPP
 
+/*! @file include/byp-cpp/parser.hpp
+ *
+ *  @brief Class for silent (no-log) parsing
+ */
+
+#include "byp-cpp/functions.hpp"
 #include <fstream>
 #include <stdexcept>
 #include <string>
@@ -35,31 +41,6 @@
 //! Namespace for `byp` library.
 namespace byp
 {
-  //! Conversion functions, string -> specified type
-  /*!
-   * Trims leading and trailing spaces from value before
-   * conversion, or at least to ignore them.
-   *
-   * @param val The string to convert.
-   *
-   * @return The parsed value of the specified type.
-   *
-   * @throws invalid_argument If invalid value passed.
-   */
-  template <typename T>
-  T convert(const std::string& val);
-
-  //! Formatting functions, specified type -> string
-  /*!
-   * Uses the same conventions expected when parsing
-   * parameter files (+ no trailing commas for vectors).
-   *
-   * @param val The value to convert.
-   *
-   * @return The converted string.
-   */
-  template <typename T> std::string format(const T& val);
-
   //! Loader class for parsing values.
   class parser
   {
@@ -94,7 +75,7 @@ namespace byp
       {
         try
         {
-          return convert<T>(values.at(key));
+          return convert<T>(m_values.at(key));
         }
         catch (const std::out_of_range& err)
         {
@@ -107,7 +88,7 @@ namespace byp
     private:
       // Map containing string values, accessed by key.
       std::unordered_map<std::string, std::string>
-          values;
+          m_values{{}};
 
       // Parsing function.
       /*

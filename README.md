@@ -75,7 +75,7 @@ initialized with the path of the file to parse.
   present).
 
 ```cpp
-#include "byp.hpp"
+#include "byp-cpp/parser.hpp"
 
 const byp::parser parser(<file path>);
 
@@ -112,12 +112,15 @@ utility functions:
   the parameter files (+ no trailing commas for vectors).
 
 ```cpp
-#include <byp.hpp>
+#include "byp-cpp/functions.hpp"
 
 <type> val = byp::convert<<type>>(<string>);
 
 std::string str = byp::format(val);
 ```
+
+(these functions are automatically imported by the
+`byp-cpp/parser.hpp` header as well).
 
 
 

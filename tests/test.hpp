@@ -1,7 +1,7 @@
-#ifndef TEST_HPP
-#define TEST_HPP
+#ifndef BYPCPP_TEST_HPP
+#define BYPCPP_TEST_HPP
 
-#include "byp.hpp"
+#include "byp-cpp/parser.hpp"
 #include <cassert>
 #include <iostream>
 #include <vector>

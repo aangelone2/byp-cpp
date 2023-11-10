@@ -53,6 +53,7 @@ test: $(tobjects)
 	cd $(bdir); ./04.test-errors
 	cd $(bdir); ./05.test-vectors
 	cd $(bdir); ./06.test-table
+	cd $(bdir); ./07.test-format
 	@echo 'All tests completed successfully'
 
 
