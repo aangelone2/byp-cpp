@@ -24,55 +24,51 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#ifndef BYPCPP_FORMATTER_HPP
-#define BYPCPP_FORMATTER_HPP
+#ifndef BYPCPP_LOGGER_HPP
+#define BYPCPP_LOGGER_HPP
 
-/*! @file include/byp-cpp/formatter.hpp
+/*! @file include/byp-cpp/logger.hpp
  *
- *  @brief Formatter class definition
+ *  @brief Logger class definition
  */
 
-#include <iomanip>
-#include <sstream>
 #include <string>
 
 //! Namespace for `byp` library.
 namespace byp
 {
-  class formatter
+  //! Logger class to log key-value parsings.
+  class logger
   {
     public:
       //! Public constructor.
       /*!
-       * Does not specify floating-point formatting,
-       * left to system default.
+       * Sets default value parameters calling setters
+       * with no arguments (see below).
        */
-      formatter() {}
+      logger();
 
-      //! Public constructor.
+      //! Sets scientific/fixed-point notation.
       /*!
-       * Sets scientific notation with the specified
-       * number of floating-point part digits.
+       * Call without argument to reset to C++ default.
        *
-       * @param digits Set floating-point digit number.
-       *
-       * @throws invalid_argument If `digits < 0`.
+       * @param scientific Sets scientific/fixed-point
+       * notation if true/false.
        */
-      formatter(const int digits)
+      void set_scientific(const bool scientific = false)
       {
-        set_scientific(digits);
+        m_scientific = scientific;
       }
 
-      //! Set number of digits post-construction.
+      //! Set floating-point precision.
       /*!
-       * Sets scientific notation with the specified
-       * number of floating-point part digits.
+       * Call without argument to set to C++ default.
        *
-       * @param digits Set floating-point digit number.
+       * @param precision Desired decimal digit number.
        *
        * @throws invalid_argument If `digits < 0`.
        */
-      void set_scientific(const int digits);
+      void set_precision(const int precision = 6);
 
       //! Formatting functions, specified type -> string
       /*!
@@ -88,8 +84,11 @@ namespace byp
       std::string format(const T& val);
 
     private:
-      // Stringstream object used for type-safe printing
-      std::stringstream ss{};
+      // Scientific/fixed-point notation if true/false.
+      bool m_scientific;
+      // Scientific/fixed-point precision (default C++
+      // value, set by `std::basic_ios::init()`).
+      int m_precision;
   };
 } // namespace byp
 

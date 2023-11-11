@@ -1081,8 +1081,8 @@ WARN_LOGFILE =
 
 INPUT = docs/main.md,\
   docs/dialect.md,\
-  include/byp-cpp/formatter.hpp,\
   include/byp-cpp/functions.hpp,\
+  include/byp-cpp/logger.hpp,\
   include/byp-cpp/parser.hpp
 
 # This tag can be used to specify the character encoding

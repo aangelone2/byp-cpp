@@ -121,22 +121,31 @@ const vector<int> val = byp::convert<vector<int>>(str);
 
 ### Formatting
 
-The `byp::formatter` class allows to convert an argument
+The `byp::logger` class allows to convert an argument
 of the types parsed by the library to a string, following
 the same conventions used in parsing. The class allows to
 set some formatting options (see the API for a list).
 
 ```cpp
-#include "byp-cpp/formatter.hpp"
+#include "byp-cpp/logger.hpp"
 
-byp::formatter fmt();
-// Sets scientific notation for floating-point variables
-// with 6 floating-point digits
-// Equal to constructing as fmt(6)
-fmt.set_scientic(6);
+// Now has default C++ stream behavior
+byp::logger lgr();
 
-// res = "1.123457e+12"
-const std::string str = fmt.format(1.1234569870937e+12);
+// Sets scientific notation
+lgr.set_scientific(true);
+// Sets precision to 5 digits
+lgr.set_precision(5);
+
+// res = "1.12346e+04"
+const std::string s1 = lgr.format(11234.5678);
+
+// Resetting
+lgr.set_scientific();
+lgr.set_precision();
+
+// res = "11234.6"
+const std::string s1 = lgr.format(11234.5678);
 ```
 
 
