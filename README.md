@@ -61,6 +61,8 @@ with `g++` or `clang++`.
 
 ## Usage
 
+### Parsing
+
 To parse files, create a `(const) byp::parser` object,
 initialized with the path of the file to parse.
 
@@ -77,11 +79,11 @@ initialized with the path of the file to parse.
 ```cpp
 #include "byp-cpp/parser.hpp"
 
-const byp::parser parser(<file path>);
+const string filename = "example.yml";
+const byp::parser prs(filename);
 
-// Assuming <key>: <value>, where <value>
-// is compatible with <type>, is present in the parsed file
-<type> val = parser.get<<type>>(<key>);
+// Assuming "example.yml" contains "vi: [1, 2, 3]]"
+const vector<int> val = prs.get<vector<int>>("vi");
 ```
 
 Parsable types are:
@@ -99,28 +101,43 @@ Parsable types are:
 - 2D vectors, `std::vector<std::vector<T>>`, where `T` is
   one of the types above (except `bool`).
 
-The library also gives direct access to medium-level
-utility functions:
-
-- `byp::convert()` attempts to convert its `std::string`
-  argument to an instance of the type of choice (throwing
-  `std::invalid_argument` on failure).
-
-- `byp::format()` converts a value of one of the types
-  parsed by the library to its `std::string`
-  representation, using the same conventions expected in
-  the parameter files (+ no trailing commas for vectors).
+The library also gives direct access to the medium-level
+utility function `byp::convert()`, which attempts to
+convert its `std::string` argument to an instance of the
+type of choice (throwing `std::invalid_argument` on
+failure).
 
 ```cpp
 #include "byp-cpp/functions.hpp"
 
-<type> val = byp::convert<<type>>(<string>);
+const string str = "[1, 2, 3]";
 
-std::string str = byp::format(val);
+// val = vector<int>({1, 2, 3})
+const vector<int> val = byp::convert<vector<int>>(str);
 ```
 
-(these functions are automatically imported by the
-`byp-cpp/parser.hpp` header as well).
+(the function is also imported by `byp-cpp/parser.hpp`).
+
+
+### Formatting
+
+The `byp::formatter` class allows to convert an argument
+of the types parsed by the library to a string, following
+the same conventions used in parsing. The class allows to
+set some formatting options (see the API for a list).
+
+```cpp
+#include "byp-cpp/formatter.hpp"
+
+byp::formatter fmt();
+// Sets scientific notation for floating-point variables
+// with 6 floating-point digits
+// Equal to constructing as fmt(6)
+fmt.set_scientic(6);
+
+// res = "1.123457e+12"
+const std::string str = fmt.format(1.1234569870937e+12);
+```
 
 
 

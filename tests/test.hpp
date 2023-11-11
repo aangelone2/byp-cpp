@@ -1,6 +1,7 @@
 #ifndef BYPCPP_TEST_HPP
 #define BYPCPP_TEST_HPP
 
+#include "byp-cpp/formatter.hpp"
 #include "byp-cpp/parser.hpp"
 #include <cassert>
 #include <iostream>

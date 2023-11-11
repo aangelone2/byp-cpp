@@ -29,7 +29,10 @@
 #include "byp-cpp/functions.hpp"
 #include <sstream>
 
+using std::string;
 using std::stringstream;
+using iva = std::invalid_argument;
+using std::vector;
 
 // Converts string -> bool
 bool convert_bool(const string& val)

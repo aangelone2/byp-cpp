@@ -31,43 +31,38 @@
 #include <string>
 #include <vector>
 
-using std::false_type;
-using std::string;
-using std::true_type;
-using std::vector;
-
 // Trait for supported vector types (cannot test on
 // value_type, since every container has it)
 
-template <typename T> struct is_vector : false_type {};
-template <> struct is_vector<vector<short>> : true_type {};
-template <> struct is_vector<vector<int>> : true_type {};
-template <> struct is_vector<vector<long>> : true_type {};
-template <> struct is_vector<vector<long long>> : true_type {};
-template <> struct is_vector<vector<unsigned short>> : true_type {};
-template <> struct is_vector<vector<unsigned int>> : true_type {};
-template <> struct is_vector<vector<unsigned long>> : true_type {};
-template <> struct is_vector<vector<unsigned long long>> : true_type {};
-template <> struct is_vector<vector<float>> : true_type {};
-template <> struct is_vector<vector<double>> : true_type {};
-template <> struct is_vector<vector<long double>> : true_type {};
-template <> struct is_vector<vector<string>> : true_type {};
+template <typename T> struct is_vector : std::false_type {};
+template <> struct is_vector<std::vector<short>> : std::true_type {};
+template <> struct is_vector<std::vector<int>> : std::true_type {};
+template <> struct is_vector<std::vector<long>> : std::true_type {};
+template <> struct is_vector<std::vector<long long>> : std::true_type {};
+template <> struct is_vector<std::vector<unsigned short>> : std::true_type {};
+template <> struct is_vector<std::vector<unsigned int>> : std::true_type {};
+template <> struct is_vector<std::vector<unsigned long>> : std::true_type {};
+template <> struct is_vector<std::vector<unsigned long long>> : std::true_type {};
+template <> struct is_vector<std::vector<float>> : std::true_type {};
+template <> struct is_vector<std::vector<double>> : std::true_type {};
+template <> struct is_vector<std::vector<long double>> : std::true_type {};
+template <> struct is_vector<std::vector<std::string>> : std::true_type {};
 
 // Trait for supported table (2D vector) types (cannot
 // test on value_type, since every container has it)
 
-template <typename T> struct is_table : false_type {};
-template <> struct is_table<vector<vector<short>>> : true_type {};
-template <> struct is_table<vector<vector<int>>> : true_type {};
-template <> struct is_table<vector<vector<long>>> : true_type {};
-template <> struct is_table<vector<vector<long long>>> : true_type {};
-template <> struct is_table<vector<vector<unsigned short>>> : true_type {};
-template <> struct is_table<vector<vector<unsigned int>>> : true_type {};
-template <> struct is_table<vector<vector<unsigned long>>> : true_type {};
-template <> struct is_table<vector<vector<unsigned long long>>> : true_type {};
-template <> struct is_table<vector<vector<float>>> : true_type {};
-template <> struct is_table<vector<vector<double>>> : true_type {};
-template <> struct is_table<vector<vector<long double>>> : true_type {};
-template <> struct is_table<vector<vector<string>>> : true_type {};
+template <typename T> struct is_table : std::false_type {};
+template <> struct is_table<std::vector<std::vector<short>>> : std::true_type {};
+template <> struct is_table<std::vector<std::vector<int>>> : std::true_type {};
+template <> struct is_table<std::vector<std::vector<long>>> : std::true_type {};
+template <> struct is_table<std::vector<std::vector<long long>>> : std::true_type {};
+template <> struct is_table<std::vector<std::vector<unsigned short>>> : std::true_type {};
+template <> struct is_table<std::vector<std::vector<unsigned int>>> : std::true_type {};
+template <> struct is_table<std::vector<std::vector<unsigned long>>> : std::true_type {};
+template <> struct is_table<std::vector<std::vector<unsigned long long>>> : std::true_type {};
+template <> struct is_table<std::vector<std::vector<float>>> : std::true_type {};
+template <> struct is_table<std::vector<std::vector<double>>> : std::true_type {};
+template <> struct is_table<std::vector<std::vector<long double>>> : std::true_type {};
+template <> struct is_table<std::vector<std::vector<std::string>>> : std::true_type {};
 
 #endif

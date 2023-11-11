@@ -28,7 +28,9 @@
 #include "byp-cpp/common/regex.hpp"
 
 using std::ifstream;
+using std::string;
 using std::to_string;
+using iva = std::invalid_argument;
 
 byp::parser::parser(const string& filename)
 {

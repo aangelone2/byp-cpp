@@ -32,13 +32,6 @@
 #include <string>
 #include <vector>
 
-using std::getline;
-using std::optional;
-using std::string;
-using std::vector;
-
-using iva = std::invalid_argument;
-
 // Check if a string matches a pattern.
 /*
  * @param input The string to analyze.
@@ -47,7 +40,9 @@ using iva = std::invalid_argument;
  *
  * @return Whether or not the string matches the pattern.
  */
-bool match(const string& input, const string& pattern);
+bool match(
+    const std::string& input, const std::string& pattern
+);
 
 // Extract groups from string if regex is matched.
 /*
@@ -58,8 +53,9 @@ bool match(const string& input, const string& pattern);
  * @return Non-empty if the string matches. i-th group is
  *         element `i-1`.
  */
-std::optional<vector<string>>
-get_groups(const string& input, const string& pattern);
+std::optional<std::vector<std::string>> get_groups(
+    const std::string& input, const std::string& pattern
+);
 
 // Extract all repeated instances of a group from a
 // string.
@@ -73,8 +69,8 @@ get_groups(const string& input, const string& pattern);
  * @return A vector of strings containing all the matched
  * group instances.
  */
-vector<string> get_repeating_group(
-    const string& input, const string& pattern
+std::vector<std::string> get_repeating_group(
+    const std::string& input, const std::string& pattern
 );
 
 // Removes trailing comments, then leading and trailing
@@ -84,6 +80,6 @@ vector<string> get_repeating_group(
  *
  * @return The treated string.
  */
-string clean(const string& input);
+std::string clean(const std::string& input);
 
 #endif

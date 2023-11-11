@@ -27,9 +27,12 @@
 #include "byp-cpp/common/regex.hpp"
 #include <regex>
 
+using std::optional;
 using std::regex;
 using std::regex_match;
 using std::sregex_iterator;
+using std::string;
+using std::vector;
 
 bool match(const string& input, const string& pattern)
 {

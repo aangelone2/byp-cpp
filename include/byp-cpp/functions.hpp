@@ -29,7 +29,7 @@
 
 /*! @file include/byp-cpp/functions.hpp
  *
- *  @brief Formatting and parsing medium-level functions
+ *  @brief Common medium-level functions
  */
 
 #include <string>
@@ -37,17 +37,6 @@
 //! Namespace for `byp` library.
 namespace byp
 {
-  //! Formatting functions, specified type -> string
-  /*!
-   * Uses the same conventions expected when parsing
-   * parameter files (+ no trailing commas for vectors).
-   *
-   * @param val The value to convert.
-   *
-   * @return The converted string.
-   */
-  template <typename T> std::string format(const T& val);
-
   //! Conversion functions, string -> specified type
   /*!
    * Trims leading and trailing spaces from value before
