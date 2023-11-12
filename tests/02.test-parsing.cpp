@@ -3,7 +3,7 @@
 int main()
 {
   const string filename = "../tests/yaml/test-02.yml";
-  const parser prs(filename);
+  parser prs(filename);
 
   cout << "  Testing many-spaced key..." << endl;
   assert(prs.get<int>("many_spaces") == 4);

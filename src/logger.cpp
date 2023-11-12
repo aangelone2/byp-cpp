@@ -40,16 +40,6 @@ byp::logger::logger()
   set_context();
 }
 
-void byp::logger::set_precision(const int precision)
-{
-  if (precision < 0)
-    throw std::invalid_argument(
-        "invalid precision in logger::set_precision()"
-    );
-
-  m_precision = precision;
-}
-
 template <typename T>
 string byp::logger::format(const T& val) const
 {

@@ -27,6 +27,7 @@
 #ifndef BYPCPP_LOGGER_HPP
 #define BYPCPP_LOGGER_HPP
 
+#include <fstream>
 #include <iostream>
 #include <string>
 
@@ -64,7 +65,15 @@ namespace byp
        *
        * @throws invalid_argument If `digits < 0`.
        */
-      void set_precision(const int precision = 6);
+      void set_precision(const int precision = 6)
+      {
+        if (precision < 0)
+          throw std::invalid_argument(
+              "invalid arg in logger::set_precision()"
+          );
+
+        m_precision = precision;
+      }
 
       //! Set prefix/suffix strings.
       /*!
@@ -82,6 +91,22 @@ namespace byp
         m_suffix = suffix;
       }
 
+      //! Set file to contain logging messages.
+      /*!
+       * Call without argument to set to std::cout.
+       * File will be appended to if existing.
+       *
+       * @param logfile Path to the desired logfile.
+       */
+      void set_logfile(const std::string path = "")
+      {
+        if (m_ofs.is_open())
+          m_ofs.close();
+
+        if (!path.empty())
+          m_ofs.open(path);
+      }
+
       //! Formatting functions, specified type -> string
       /*!
        * Uses the same conventions expected when parsing
@@ -97,15 +122,18 @@ namespace byp
 
       //! Prints keeping prefix/suffix into account.
       /*!
+       * Uses the internal ofstream if open, std::cout
+       * otherwise.
+       *
        * @param content The string to print.
-       * @param os The stream to print the content to.
        */
-      void print(
-          const std::string content, std::ostream& os
-      ) const
+      void print(const std::string content)
       {
-        os << m_prefix << content << m_suffix
-           << std::endl;
+        std::ostream& out
+            = (m_ofs.is_open() ? m_ofs : std::cout);
+
+        out << m_prefix << content << m_suffix
+            << std::endl;
       }
 
     private:
@@ -121,6 +149,9 @@ namespace byp
 
       // Prepended/appended when calling `print()`.
       std::string m_prefix, m_suffix;
+
+      // Logfile for print().
+      std::ofstream m_ofs;
   };
 } // namespace byp
 

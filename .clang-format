@@ -19,3 +19,7 @@ BinPackArguments: false
 # definition’s parameters will either all be on the same
 # line or will have one line each.
 BinPackParameters: false
+# If true, a space will be inserted before a C++11 braced
+# list used to initialize an object (after the preceding
+# identifier or type).
+SpaceBeforeCpp11BracedList: true

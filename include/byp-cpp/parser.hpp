@@ -92,7 +92,7 @@ namespace byp
        * @throws invalid_argument If key not found.
        */
       template <typename T>
-      inline T get(const std::string& key) const
+      inline T get(const std::string& key)
       {
         try
         {
@@ -101,9 +101,7 @@ namespace byp
           // string -> T -> string useful to have
           // uniform syntax and test valid conversion
           if (m_logging)
-            m_lgr.print(
-                key + ": " + m_lgr.format(val), std::cout
-            );
+            m_lgr.print(key + ": " + m_lgr.format(val));
 
           return val;
         }
@@ -118,10 +116,10 @@ namespace byp
     private:
       // Map containing string values, accessed by key.
       std::unordered_map<std::string, std::string>
-          m_values{{}};
+          m_values {{}};
 
       // True if logging is active, false otherwise.
-      bool m_logging{false};
+      bool m_logging {false};
 
       // Logger for key-value parsing. Always present
       // even if not used, but waste deemed negligible.
@@ -129,7 +127,7 @@ namespace byp
       // checks were required to avoid dereferencing null
       // in lgr().
       // Default-initialized unless set up.
-      logger m_lgr{};
+      logger m_lgr {};
 
       // Parsing function.
       /*

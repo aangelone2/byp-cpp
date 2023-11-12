@@ -10,11 +10,11 @@ int main()
 
   cout << "  Testing prefix-suffix printing..." << endl;
   const i1t iv = i1t({1, 2, 3, 4});
-  lgr.print(lgr.format(iv), cout);
+  lgr.print(lgr.format(iv));
 
   cout << "  Testing resetting..." << endl;
   lgr.set_context();
-  lgr.print(lgr.format(iv), cout);
+  lgr.print(lgr.format(iv));
 
   cout << "  Testing integration with parser..." << endl;
 

@@ -3,7 +3,7 @@
 int main()
 {
   const string filename = "../tests/yaml/test-05.yml";
-  const parser prs(filename);
+  parser prs(filename);
 
   cout << "  Testing vector<int>..." << endl;
   assert(prs.get<i1t>("i1t") == i1t({1, -2, 3}));

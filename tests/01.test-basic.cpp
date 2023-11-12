@@ -3,7 +3,7 @@
 int main()
 {
   const string filename = "../tests/yaml/test-01.yml";
-  const parser prs(filename);
+  parser prs(filename);
 
   cout << "  Testing bool parsing..." << endl;
   assert(prs.get<bool>("bool_p"));

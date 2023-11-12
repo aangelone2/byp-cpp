@@ -80,7 +80,7 @@ initialized with the path of the file to parse.
 #include "byp-cpp/parser.hpp"
 
 const string filename = "example.yml";
-const byp::parser prs(filename);
+byp::parser prs(filename);
 
 // Assuming "example.yml" contains "vi: [1, 2, 3]]"
 const vector<int> val = prs.get<vector<int>>("vi");

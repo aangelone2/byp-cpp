@@ -3,7 +3,7 @@
 int main()
 {
   const string filename = "../tests/yaml/test-03.yml";
-  const parser prs(filename);
+  parser prs(filename);
 
   cout << "  Testing invalid bool..." << endl;
   assert_fail_get<bool, iva>(

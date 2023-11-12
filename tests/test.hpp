@@ -42,7 +42,7 @@ void assert_fail_build(
 {
   try
   {
-    [[maybe_unused]] const byp::parser parser(filename);
+    [[maybe_unused]] const parser parser(filename);
     assert(false);
   }
   catch (const EXC& err)
@@ -55,12 +55,12 @@ template <typename T, typename EXC>
 void assert_fail_get(
     const string& key,
     const string& message,
-    const byp::parser& parser
+    parser& parser
 )
 {
   try
   {
-    [[maybe_unused]] const T buffer = parser.get<T>(key);
+    [[maybe_unused]] T buffer = parser.get<T>(key);
     assert(false);
   }
   catch (const EXC& err)
