@@ -75,20 +75,20 @@ namespace byp
         m_precision = precision;
       }
 
-      //! Set prefix/suffix strings.
+      //! Set prefix/postfix strings.
       /*!
        * Call without argument to set to empty.
        *
        * @param prefix Desired prefix string.
-       * @param suffix Desired suffix string.
+       * @param postfix Desired postfix string.
        */
       void set_context(
           const std::string prefix = "",
-          const std::string suffix = ""
+          const std::string postfix = ""
       )
       {
         m_prefix = prefix;
-        m_suffix = suffix;
+        m_postfix = postfix;
       }
 
       //! Set file to contain logging messages.
@@ -104,7 +104,7 @@ namespace byp
           m_ofs.close();
 
         if (!path.empty())
-          m_ofs.open(path);
+          m_ofs.open(path, std::ios::app);
       }
 
       //! Formatting functions, specified type -> string
@@ -120,7 +120,7 @@ namespace byp
       template <typename T>
       std::string format(const T& val) const;
 
-      //! Prints keeping prefix/suffix into account.
+      //! Prints keeping prefix/postfix into account.
       /*!
        * Uses the internal ofstream if open, std::cout
        * otherwise.
@@ -132,7 +132,7 @@ namespace byp
         std::ostream& out
             = (m_ofs.is_open() ? m_ofs : std::cout);
 
-        out << m_prefix << content << m_suffix
+        out << m_prefix << content << m_postfix
             << std::endl;
       }
 
@@ -148,7 +148,7 @@ namespace byp
       int m_precision;
 
       // Prepended/appended when calling `print()`.
-      std::string m_prefix, m_suffix;
+      std::string m_prefix, m_postfix;
 
       // Logfile for print().
       std::ofstream m_ofs;

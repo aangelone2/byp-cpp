@@ -86,7 +86,7 @@ byp::parser prs(filename);
 const vector<int> val = prs.get<vector<int>>("vi");
 ```
 
-Parsable types are:
+The parsable types are:
 
 - Booleans (`bool`);
 - Several signed integral types (`short`, `int`, `long`,
@@ -146,6 +146,53 @@ lgr.set_precision();
 
 // res = "11234.6"
 const std::string s1 = lgr.format(11234.5678);
+```
+
+(the object is also imported by `byp-cpp/parser.hpp`, see
+below).
+
+
+### Logging
+
+The `logger` object can be used to write messages within
+a prefix-postfix context using the `print()` method.
+
+```cpp
+#include "byp-cpp/logger.hpp"
+
+byp::logger lgr();
+lgr.set_context("prefix :: ", " :: postfix");
+
+const vector<int> iv({1, 2, 3});
+
+// Will print "prefix :: [1, 2, 3] :: postfix"
+lgr.print(lgr.format(iv));
+```
+
+By default the logger will print to `std::cout`; the
+`set_logfile()` method allows to create a new logfile (or
+append to an existing one) passed by path. If called
+without arguments, the output stream will be reset to
+`std::cout`.
+
+The `parser` object contains an internal `logger`,
+accessed through the `lgr()` method, which can be set and
+used to log the parsing of key-value pairs.
+
+```cpp
+#include "byp-cpp/parser.hpp"
+
+const string filename = "example.yml";
+byp::parser prs(filename);
+
+prs.lgr().set_precision(3);
+// Default "" postfix set
+prs.lgr().set_context("prs :: ");
+prs.lgr().set_logfile("logfile.log");
+
+// If "example.yml" contains the row "dv: [1.0, 2.0]",
+// "prs :: dv: [1.00, 2.00]" is printed to "logfile.log"
+rs.get<vector<double>>("dv");
 ```
 
 

@@ -54,7 +54,10 @@ test: $(tobjects)
 	cd $(bdir); ./05.test-vectors
 	cd $(bdir); ./06.test-table
 	cd $(bdir); ./07.test-format
-	cd $(bdir); ./08.test-logger
+	rm -f $(tdir)/logging/logfile.log;\
+		cd $(bdir); ./08.test-logger;\
+		cd ../$(tdir); \diff logging/logfile.log logging/logfile.log.benchmark
+
 	@echo 'All tests completed successfully'
 
 
