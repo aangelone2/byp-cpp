@@ -27,11 +27,6 @@
 #ifndef BYPCPP_FUNCTIONS_HPP
 #define BYPCPP_FUNCTIONS_HPP
 
-/*! @file include/byp-cpp/functions.hpp
- *
- *  @brief Common medium-level functions
- */
-
 #include <string>
 
 //! Namespace for `byp` library.

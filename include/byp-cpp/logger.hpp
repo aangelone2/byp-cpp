@@ -27,11 +27,7 @@
 #ifndef BYPCPP_LOGGER_HPP
 #define BYPCPP_LOGGER_HPP
 
-/*! @file include/byp-cpp/logger.hpp
- *
- *  @brief Logger class definition
- */
-
+#include <iostream>
 #include <string>
 
 //! Namespace for `byp` library.
@@ -70,6 +66,22 @@ namespace byp
        */
       void set_precision(const int precision = 6);
 
+      //! Set prefix/suffix strings.
+      /*!
+       * Call without argument to set to empty.
+       *
+       * @param prefix Desired prefix string.
+       * @param suffix Desired suffix string.
+       */
+      void set_context(
+          const std::string prefix = "",
+          const std::string suffix = ""
+      )
+      {
+        m_prefix = prefix;
+        m_suffix = suffix;
+      }
+
       //! Formatting functions, specified type -> string
       /*!
        * Uses the same conventions expected when parsing
@@ -81,14 +93,34 @@ namespace byp
        * @return The converted string.
        */
       template <typename T>
-      std::string format(const T& val);
+      std::string format(const T& val) const;
+
+      //! Prints keeping prefix/suffix into account.
+      /*!
+       * @param content The string to print.
+       * @param os The stream to print the content to.
+       */
+      void print(
+          const std::string content, std::ostream& os
+      ) const
+      {
+        os << m_prefix << content << m_suffix
+           << std::endl;
+      }
 
     private:
+      // Private parameters are left uninitialized here,
+      // default constructor will set defaults.
+
       // Scientific/fixed-point notation if true/false.
       bool m_scientific;
+
       // Scientific/fixed-point precision (default C++
       // value, set by `std::basic_ios::init()`).
       int m_precision;
+
+      // Prepended/appended when calling `print()`.
+      std::string m_prefix, m_suffix;
   };
 } // namespace byp
 

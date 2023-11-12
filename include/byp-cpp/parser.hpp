@@ -27,13 +27,10 @@
 #ifndef BYPCPP_PARSER_HPP
 #define BYPCPP_PARSER_HPP
 
-/*! @file include/byp-cpp/parser.hpp
- *
- *  @brief Class for silent (no-log) parsing
- */
-
 #include "byp-cpp/functions.hpp"
+#include "byp-cpp/logger.hpp"
 #include <fstream>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -42,13 +39,17 @@
 namespace byp
 {
   //! Loader class for parsing values.
+  // Chosen unused members + flags rather than
+  // inheritance due to get<>() being a template (double
+  // instantiation, for base and derived class).
   class parser
   {
     public:
       //! Public constructor.
       /*!
        * Populates the internal dictionary with the
-       * key-value pairs parsed from the file.
+       * key-value pairs parsed from the file. Unsets
+       * logging (default).
        *
        * @param filename The path to the filename to
        * parse.
@@ -57,6 +58,26 @@ namespace byp
        * or invalid key and/or value found.
        */
       parser(const std::string& filename);
+
+      //! Toggles logging.
+      /*!
+       * @param value `true` to activate logging, `false`
+       * otherwise.
+       */
+      void set_logging(const bool value)
+      {
+        m_logging = value;
+      }
+
+      //! Reference to internal logger for setup.
+      /*!
+       * Will return reference even if logger not in use
+       * (for setup). The logger will still not be used
+       * when parsing, in this case.
+       *
+       * @return A reference to the internal logger.
+       */
+      logger& lgr() { return m_lgr; }
 
       //! Main parsing function.
       /*!
@@ -75,7 +96,16 @@ namespace byp
       {
         try
         {
-          return convert<T>(m_values.at(key));
+          const T val = convert<T>(m_values.at(key));
+
+          // string -> T -> string useful to have
+          // uniform syntax and test valid conversion
+          if (m_logging)
+            m_lgr.print(
+                key + ": " + m_lgr.format(val), std::cout
+            );
+
+          return val;
         }
         catch (const std::out_of_range& err)
         {
@@ -89,6 +119,17 @@ namespace byp
       // Map containing string values, accessed by key.
       std::unordered_map<std::string, std::string>
           m_values{{}};
+
+      // True if logging is active, false otherwise.
+      bool m_logging{false};
+
+      // Logger for key-value parsing. Always present
+      // even if not used, but waste deemed negligible.
+      // Could have used unique_ptr<logger>, but then
+      // checks were required to avoid dereferencing null
+      // in lgr().
+      // Default-initialized unless set up.
+      logger m_lgr{};
 
       // Parsing function.
       /*

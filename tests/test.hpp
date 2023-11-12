@@ -23,6 +23,9 @@ using s2t = vector<vector<string>>;
 
 using iva = std::invalid_argument;
 
+using byp::logger;
+using byp::parser;
+
 const string sep = ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
                    ">>>>>>>>>>>>>>>>> ";
 

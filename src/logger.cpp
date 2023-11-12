@@ -37,6 +37,7 @@ byp::logger::logger()
 {
   set_scientific();
   set_precision();
+  set_context();
 }
 
 void byp::logger::set_precision(const int precision)
@@ -50,7 +51,7 @@ void byp::logger::set_precision(const int precision)
 }
 
 template <typename T>
-string byp::logger::format(const T& val)
+string byp::logger::format(const T& val) const
 {
   if constexpr (std::is_same<T, bool>::value)
     return (val ? "true" : "false");
@@ -80,44 +81,44 @@ string byp::logger::format(const T& val)
 
 /* clang-format off */
 
-template string byp::logger::format(const bool& val);
-template string byp::logger::format(const short& val);
-template string byp::logger::format(const int& val);
-template string byp::logger::format(const long& val);
-template string byp::logger::format(const long long& val);
-template string byp::logger::format(const unsigned short& val);
-template string byp::logger::format(const unsigned int& val);
-template string byp::logger::format(const unsigned long& val);
-template string byp::logger::format(const unsigned long long& val);
-template string byp::logger::format(const float& val);
-template string byp::logger::format(const double& val);
-template string byp::logger::format(const long double& val);
-template string byp::logger::format(const string& val);
+template string byp::logger::format(const bool& val) const;
+template string byp::logger::format(const short& val) const;
+template string byp::logger::format(const int& val) const;
+template string byp::logger::format(const long& val) const;
+template string byp::logger::format(const long long& val) const;
+template string byp::logger::format(const unsigned short& val) const;
+template string byp::logger::format(const unsigned int& val) const;
+template string byp::logger::format(const unsigned long& val) const;
+template string byp::logger::format(const unsigned long long& val) const;
+template string byp::logger::format(const float& val) const;
+template string byp::logger::format(const double& val) const;
+template string byp::logger::format(const long double& val) const;
+template string byp::logger::format(const string& val) const;
 
-template string byp::logger::format(const vector<short>& val);
-template string byp::logger::format(const vector<int>& val);
-template string byp::logger::format(const vector<long>& val);
-template string byp::logger::format(const vector<long long>& val);
-template string byp::logger::format(const vector<unsigned short>& val);
-template string byp::logger::format(const vector<unsigned int>& val);
-template string byp::logger::format(const vector<unsigned long>& val);
-template string byp::logger::format(const vector<unsigned long long>& val);
-template string byp::logger::format(const vector<float>& val);
-template string byp::logger::format(const vector<double>& val);
-template string byp::logger::format(const vector<long double>& val);
-template string byp::logger::format(const vector<string>& val);
+template string byp::logger::format(const vector<short>& val) const;
+template string byp::logger::format(const vector<int>& val) const;
+template string byp::logger::format(const vector<long>& val) const;
+template string byp::logger::format(const vector<long long>& val) const;
+template string byp::logger::format(const vector<unsigned short>& val) const;
+template string byp::logger::format(const vector<unsigned int>& val) const;
+template string byp::logger::format(const vector<unsigned long>& val) const;
+template string byp::logger::format(const vector<unsigned long long>& val) const;
+template string byp::logger::format(const vector<float>& val) const;
+template string byp::logger::format(const vector<double>& val) const;
+template string byp::logger::format(const vector<long double>& val) const;
+template string byp::logger::format(const vector<string>& val) const;
 
-template string byp::logger::format(const vector<vector<short>>& val);
-template string byp::logger::format(const vector<vector<int>>& val);
-template string byp::logger::format(const vector<vector<long>>& val);
-template string byp::logger::format(const vector<vector<long long>>& val);
-template string byp::logger::format(const vector<vector<unsigned short>>& val);
-template string byp::logger::format(const vector<vector<unsigned int>>& val);
-template string byp::logger::format(const vector<vector<unsigned long>>& val);
-template string byp::logger::format(const vector<vector<unsigned long long>>& val);
-template string byp::logger::format(const vector<vector<float>>& val);
-template string byp::logger::format(const vector<vector<double>>& val);
-template string byp::logger::format(const vector<vector<long double>>& val);
-template string byp::logger::format(const vector<vector<string>>& val);
+template string byp::logger::format(const vector<vector<short>>& val) const;
+template string byp::logger::format(const vector<vector<int>>& val) const;
+template string byp::logger::format(const vector<vector<long>>& val) const;
+template string byp::logger::format(const vector<vector<long long>>& val) const;
+template string byp::logger::format(const vector<vector<unsigned short>>& val) const;
+template string byp::logger::format(const vector<vector<unsigned int>>& val) const;
+template string byp::logger::format(const vector<vector<unsigned long>>& val) const;
+template string byp::logger::format(const vector<vector<unsigned long long>>& val) const;
+template string byp::logger::format(const vector<vector<float>>& val) const;
+template string byp::logger::format(const vector<vector<double>>& val) const;
+template string byp::logger::format(const vector<vector<long double>>& val) const;
+template string byp::logger::format(const vector<vector<string>>& val) const;
 
 /* clang-format on */
