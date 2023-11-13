@@ -18,6 +18,8 @@ MAKEFLAGS += --no-builtin-rules
 # a file with the same name
 .PHONY: docs
 
+LIBTYPE := static
+
 idir := include
 sdir := src
 odir := obj
@@ -27,7 +29,6 @@ tdir := tests
 headers := $(wildcard $(idir)/*.hpp)
 sources := $(wildcard $(sdir)/*.cpp)
 objects := $(patsubst $(sdir)/%.cpp, $(odir)/%.o, $(sources))
-lib := $(bdir)/libbyp-cpp.a
 
 theaders := $(wildcard $(tdir)/*.hpp)
 tsources := $(wildcard $(tdir)/*.cpp)
@@ -36,9 +37,10 @@ tobjects := $(patsubst $(tdir)/%.cpp, $(bdir)/%, $(tsources))
 CC := g++
 CXXFLAGS := -std=c++17 -O3 -Wfatal-errors\
 						-Wall -Werror -Wextra -Wshadow -Wparentheses\
-						-Wconversion -Wpedantic -pedantic
+						-Wconversion -Wpedantic -pedantic -fpic
 INC := -I$(idir)
 LIB := -L$(bdir) -lbyp-cpp
+LDFLAGS := -Wl,-rpath='$$ORIGIN'
 
 
 
@@ -62,19 +64,26 @@ test: $(tobjects)
 
 
 # Rule to build test object files
-$(tobjects): $(bdir)/%: $(tdir)/%.cpp $(theaders) $(lib)
-	$(CC) $(CXXFLAGS) $(INC) $< -o $@ $(LIB)
+$(tobjects): $(bdir)/%: $(tdir)/%.cpp $(theaders) lib
+	$(CC) $(CXXFLAGS) $(INC) $< -o $@ $(LIB) $(LDFLAGS)
 
 
 # Target, which executes the rule to build the library
-build: $(lib)
+build: lib
 
 
 # Rule to build the library
-$(lib): $(objects)
+lib: $(objects)
+ifeq ($(LIBTYPE), static)
 	@mkdir -p $(bdir)
 	rm -fv $(bdir)/*.a
 	ar rcs $(bdir)/libbyp-cpp.a $(objects)
+else ifeq ($(LIBTYPE), dynamic)
+	@mkdir -p $(bdir)
+	$(CC) $(CXXFLAGS) -shared -o $(bdir)/libbyp-cpp.so $(objects)
+else
+	@echo 'Unknown target type'
+endif
 
 
 # Rule to build library object files

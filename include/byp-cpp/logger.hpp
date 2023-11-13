@@ -43,7 +43,7 @@ namespace byp
        * Sets default value parameters calling setters
        * with no arguments (see below).
        */
-      logger();
+      logger() { reset_formatting(); }
 
       //! Sets scientific/fixed-point notation.
       /*!
@@ -90,6 +90,9 @@ namespace byp
         m_prefix = prefix;
         m_postfix = postfix;
       }
+
+      //! Resets all options to default values.
+      void reset_formatting();
 
       //! Set file to contain logging messages.
       /*!
@@ -151,7 +154,7 @@ namespace byp
       std::string m_prefix, m_postfix;
 
       // Logfile for print().
-      std::ofstream m_ofs;
+      std::ofstream m_ofs {};
   };
 } // namespace byp
 

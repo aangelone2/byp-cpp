@@ -37,13 +37,15 @@ such as:
 The command
 
 ```
-$ make [CC=<C++ compiler>] build
+$ make [CC=<C++ compiler>] [LIBTYPE=dynamic] build
 ```
 
-compiles the library statically as `libbyp-cpp.a` in the
-`build/` directory. The default compiler is `g++`, and
-the library has been successfully built and tested with
-both `g++` (13.2.1) and `clang++` (16.0.6).
+builds the library in the `build/` directory (setting
+`LIBTYPE=dynamic` will create a dynamic `libbyp-cpp.so`
+library; otherwise, a static `libbyp-cpp.a` file will be
+generated). The default compiler is `g++`, and the
+library has been successfully built and tested with both
+`g++` (13.2.1) and `clang++` (16.0.6).
 
 The command
 
@@ -54,7 +56,10 @@ $ make clean
 resets the build environment.
 
 Use the `-std=c++17` flag when compiling the calling code
-with `g++` or `clang++`.
+with `g++` or `clang++`. If the generated library is
+dynamic, remember to compile the calling code with the
+flag `-Wl,-rpath=<path>`, where `<path>` is the absolute
+path to the `libbyp-cpp.so` file.
 
 
 
@@ -141,8 +146,7 @@ lgr.set_precision(5);
 const std::string s1 = lgr.format(11234.5678);
 
 // Resetting
-lgr.set_scientific();
-lgr.set_precision();
+lgr.reset_formatting();
 
 // res = "11234.6"
 const std::string s1 = lgr.format(11234.5678);
@@ -154,8 +158,9 @@ below).
 
 ### Logging
 
-The `logger` object can be used to write messages within
-a prefix-postfix context using the `print()` method.
+The `byp::logger` object can be used to write messages
+within a prefix-postfix context using the `print()`
+method.
 
 ```cpp
 #include "byp-cpp/logger.hpp"
@@ -177,7 +182,8 @@ without arguments, the output stream will be reset to
 
 The `parser` object contains an internal `logger`,
 accessed through the `lgr()` method, which can be set and
-used to log the parsing of key-value pairs.
+used to log the parsing of key-value pairs (using the
+formatting options discussed above).
 
 ```cpp
 #include "byp-cpp/parser.hpp"
@@ -189,6 +195,9 @@ prs.lgr().set_precision(3);
 // Default "" postfix set
 prs.lgr().set_context("prs :: ");
 prs.lgr().set_logfile("logfile.log");
+
+// Activating logging (disabled by default)
+prs.lgr().set_logging(true);
 
 // If "example.yml" contains the row "dv: [1.0, 2.0]",
 // "prs :: dv: [1.00, 2.00]" is printed to "logfile.log"
@@ -203,13 +212,15 @@ rs.get<vector<double>>("dv");
 Tests can be run launching the command
 
 ```
-$ make [CC=<C++ compiler>] test
+$ make [CC=<C++ compiler>] [LIBTYPE=dynamic] test
 ```
 
-The default compiler is `g++`, and the library has been
-successfully built and tested with both `g++` (13.2.1)
-and `clang++` (16.0.6). When successfully completed, the
-output of this command should have the form
+The compilation options specified here should match those
+given when building the library. The default compiler is
+`g++`, and the library has been successfully built and
+tested with both `g++` (13.2.1) and `clang++` (16.0.6).
+When successfully completed, the output of this command
+should have the form
 
 ```
 <compilation logs>

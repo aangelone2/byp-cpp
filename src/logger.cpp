@@ -33,7 +33,7 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
-byp::logger::logger()
+void byp::logger::reset_formatting()
 {
   set_scientific();
   set_precision();
