@@ -55,11 +55,20 @@ $ make clean
 
 resets the build environment.
 
-Use the `-std=c++17` flag when compiling the calling code
-with `g++` or `clang++`. If the generated library is
-dynamic, remember to compile the calling code with the
-flag `-Wl,-rpath=<path>`, where `<path>` is the absolute
-path to the `libbyp-cpp.so` file.
+When compiling the calling code,
+
+- Use the `-std=c++17` flag when using `g++` or
+  `clang++`.
+
+- If the generated library is dynamic, either:
+
+    + Compile the calling code with `-Wl,-rpath=<path>`,
+      where `<path>` is the absolute path to the
+      `libbyp-cpp.so` file, or
+
+    + Run the calling executable prepended with the
+      `LD_LIBRARY_PATH=<path>` instruction, where
+      `<path>` is the same as above.
 
 
 
