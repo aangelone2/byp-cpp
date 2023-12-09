@@ -26,19 +26,15 @@ using iva = std::invalid_argument;
 using byp::logger;
 using byp::parser;
 
-const string sep = ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-                   ">>>>>>>>>>>>>>>>> ";
+const string sep = ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ";
 
-void close_test()
+inline void close_test()
 {
-  cout << sep << "Test completed successfully" << endl
-       << endl;
+  cout << sep << "Test completed successfully" << endl << endl;
 }
 
 template <typename EXC>
-void assert_fail_build(
-    const string& filename, const string& message
-)
+void assert_fail_build(const string& filename, const string& message)
 {
   try
   {
@@ -52,11 +48,7 @@ void assert_fail_build(
 }
 
 template <typename T, typename EXC>
-void assert_fail_get(
-    const string& key,
-    const string& message,
-    parser& parser
-)
+void assert_fail_get(const string& key, const string& message, parser& parser)
 {
   try
   {

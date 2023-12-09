@@ -48,30 +48,22 @@ int main()
   const i1t ivec2 = i1t({1});
   assert(lgr.format(ivec2) == "[1]");
 
-  cout << "  Testing vector<double> formatting..."
-       << endl;
-  const d1t dvec
-      = d1t({7.000006, 8.000003e-8, 1.000005e-4, 9});
+  cout << "  Testing vector<double> formatting..." << endl;
+  const d1t dvec = d1t({7.000006, 8.000003e-8, 1.000005e-4, 9});
   assert(
       lgr.format(dvec)
-      == "[7.00001e+00, 8.00000e-08, 1.00000e-04, "
-         "9.00000e+00]"
+      == "[7.00001e+00, 8.00000e-08, 1.00000e-04, 9.00000e+00]"
   );
 
-  cout << "  Testing vector<string> formatting..."
-       << endl;
+  cout << "  Testing vector<string> formatting..." << endl;
   const s1t svec = s1t({"abc", "def hgi", "jhy jjj "});
   assert(lgr.format(svec) == "[abc, def hgi, jhy jjj ]");
 
-  cout << "  Testing vector<vector<int>> formatting..."
-       << endl;
+  cout << "  Testing vector<vector<int>> formatting..." << endl;
   const i2t itab1 = i2t({{1, 2, 3, 4}, {5, 6, 7, 8}});
-  assert(
-      lgr.format(itab1) == "[[1, 2, 3, 4], [5, 6, 7, 8]]"
-  );
+  assert(lgr.format(itab1) == "[[1, 2, 3, 4], [5, 6, 7, 8]]");
 
-  cout << "  Testing 1-component vector<vector<int>>..."
-       << endl;
+  cout << "  Testing 1-component vector<vector<int>>..." << endl;
   const i2t itab2 = i2t({{1, 2, 3, 4}});
   assert(lgr.format(itab2) == "[[1, 2, 3, 4]]");
 

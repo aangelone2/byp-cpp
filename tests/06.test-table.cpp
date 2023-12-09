@@ -6,60 +6,35 @@ int main()
   parser prs(filename);
 
   cout << "  Testing vector<vector<int>>..." << endl;
-  assert(
-      prs.get<i2t>("i2t") == i2t({{1, -2, 3}, {4, 5, 6}})
+  assert(prs.get<i2t>("i2t") == i2t({{1, -2, 3}, {4, 5, 6}}));
+
+  cout << "  Testing float input for vector<vector<int>>..." << endl;
+  assert_fail_get<i2t, iva>(
+      "float_i2t", "read '-4.1' while expecting integral", prs
   );
 
-  cout << "  Testing float input for "
-          "vector<vector<int>>..."
-       << endl;
+  cout << "  Testing invalid input for vector<vector<int>>..." << endl;
   assert_fail_get<i2t, iva>(
-      "float_i2t",
-      "read '-4.1' while expecting integral",
-      prs
+      "invalid_i2t", "read 'a' while expecting integral", prs
   );
 
-  cout << "  Testing invalid input for "
-          "vector<vector<int>>..."
-       << endl;
+  cout << "  Testing empty component for vector<vector<int>>..." << endl;
   assert_fail_get<i2t, iva>(
-      "invalid_i2t",
-      "read 'a' while expecting integral",
-      prs
-  );
-
-  cout << "  Testing empty component for "
-          "vector<vector<int>>..."
-       << endl;
-  assert_fail_get<i2t, iva>(
-      "empty_i2t",
-      "read '' while expecting integral",
-      prs
+      "empty_i2t", "read '' while expecting integral", prs
   );
 
   cout << "  Testing vector<vector<size_t>>..." << endl;
-  assert(
-      prs.get<z2t>("z2t") == z2t({{4, 5, 6}, {7, 8, 9}})
-  );
+  assert(prs.get<z2t>("z2t") == z2t({{4, 5, 6}, {7, 8, 9}}));
 
   cout << "  Testing vector<vector<double>>..." << endl;
-  assert(
-      prs.get<d2t>("d2t")
-      == d2t({{7.0, 8.1, 9.4}, {1.0, 2.0, 4.1}})
-  );
+  assert(prs.get<d2t>("d2t") == d2t({{7.0, 8.1, 9.4}, {1.0, 2.0, 4.1}}));
 
-  cout << "  Testing invalid input for "
-          "vector<vector<double>>..."
-       << endl;
+  cout << "  Testing invalid input for vector<vector<double>>..." << endl;
   assert_fail_get<d2t, iva>(
-      "invalid_d2t",
-      "read 'a' while expecting floating-point",
-      prs
+      "invalid_d2t", "read 'a' while expecting floating-point", prs
   );
 
-  cout << "  Testing bracket inside "
-          "vector<vector<double>>..."
-       << endl;
+  cout << "  Testing bracket inside vector<vector<double>>..." << endl;
   assert_fail_get<d2t, iva>(
       "bracket_inside_d2t",
       "read '[[7.0, [8.1, 2.0], [1.0, 2.0, 3.0]]' while "
@@ -68,18 +43,10 @@ int main()
   );
 
   cout << "  Testing vector<vector<string>>..." << endl;
-  assert(
-      prs.get<s2t>("s2t")
-      == s2t({{"abc", "def"}, {"ghi lkm", "ejg"}})
-  );
+  assert(prs.get<s2t>("s2t") == s2t({{"abc", "def"}, {"ghi lkm", "ejg"}}));
 
-  cout << "  Testing single-component "
-          "vector<vector<int>>..."
-       << endl;
-  assert(
-      prs.get<i2t>("single_component_ok")
-      == i2t({{4, 5, 6}})
-  );
+  cout << "  Testing single-component vector<vector<int>>..." << endl;
+  assert(prs.get<i2t>("single_component_ok") == i2t({{4, 5, 6}}));
   assert_fail_get<i2t, iva>(
       "single_component_wrong",
       "read '[1,2,3]' while expecting vector<vector<>>",
@@ -87,10 +54,7 @@ int main()
   );
 
   cout << "  Testing trailing comma..." << endl;
-  assert(
-      prs.get<i2t>("trailing_comma")
-      == i2t({{1, 2}, {3, 4}, {5, 6}})
-  );
+  assert(prs.get<i2t>("trailing_comma") == i2t({{1, 2}, {3, 4}, {5, 6}}));
 
   cout << "  Testing incomplete table..." << endl;
   assert_fail_get<i2t, iva>(

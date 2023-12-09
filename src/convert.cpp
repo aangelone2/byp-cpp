@@ -1,28 +1,23 @@
 /* Copyright (c) 2023 Adriano Angelone
  *
- * The above copyright notice and this permission notice
- * shall be included in all copies or substantial
- * portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * This file is part of byp-cpp.
  *
- * This file may be used under the terms of the GNU
- * General Public License version 3.0 as published by the
- * Free Software Foundation and appearing in the file
- * LICENSE included in the packaging of this file. Please
- * review the following information to ensure the GNU
- * General Public License version 3.0 requirements will
- * be met: http://www.gnu.org/copyleft/gpl.html.
+ * This file may be used under the terms of the GNU General Public License
+ * version 3.0 as published by the Free Software Foundation and appearing in
+ * the file LICENSE included in the packaging of this file. Please review the
+ * following information to ensure the GNU General Public License version 3.0
+ * requirements will be met: http://www.gnu.org/copyleft/gpl.html.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
- * ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
- * LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
- * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
- * EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
- * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
- * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
- * USE OR OTHER DEALINGS IN THE SOFTWARE. */
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE. */
 
 #include "byp-cpp/common/regex.hpp"
 #include "byp-cpp/common/traits.hpp"
@@ -46,8 +41,7 @@ bool convert_bool(const string& val)
 }
 
 // Converts string -> vector<...>
-// Does not need instantiation (done when compiling
-// convert<T>)
+// Does not need instantiation (done when compiling convert<T>)
 template <typename T> T convert_vector(const string& val)
 {
   typedef typename T::value_type element_type;
@@ -56,15 +50,13 @@ template <typename T> T convert_vector(const string& val)
   const string vregex = "[^\\[\\]]*";
 
   // Filtering bounding [], not allowed in content
-  // Exceptions need not be caught here, they may only be
-  // raised by lower-level convert() calls.
-  const auto vec_string
-      = get_groups(val, "^\\[(" + vregex + ")\\]$");
+  // Exceptions need not be caught here, they may only be raised by lower-level
+  // convert() calls.
+  const auto vec_string = get_groups(val, "^\\[(" + vregex + ")\\]$");
 
   if (vec_string.has_value())
   {
-    // Simpler than using sregex_iterator,
-    // allows trailing comma
+    // Simpler than using sregex_iterator, allows trailing comma
     stringstream ss(vec_string.value()[0]);
     string token;
 
@@ -75,14 +67,11 @@ template <typename T> T convert_vector(const string& val)
     return res;
   }
   else
-    throw iva(
-        "read '" + val + "' while expecting vector<>"
-    );
+    throw iva("read '" + val + "' while expecting vector<>");
 }
 
 // Converts string -> vector<vector<...>>
-// Does not need instantiation (done when compiling
-// convert<T>)
+// Does not need instantiation (done when compiling convert<T>)
 template <typename T> T convert_table(const string& val)
 {
   typedef typename T::value_type row_type;
@@ -91,32 +80,23 @@ template <typename T> T convert_table(const string& val)
   const string bvregex = "\\[[^\\[\\]]*\\]";
 
   // Filtering bounding [], allowed in content (vectors)
-  // Exceptions need not be caught here, they may only be
-  // raised by lower-level convert() calls.
-  // Non-capturing groups to avoid duplication issues
+  // Exceptions need not be caught here, they may only be raised by lower-level
+  // convert() calls. Non-capturing groups to avoid duplication issues
   // Trailing comma is allowed.
-  const string global = "\\[(?:\\s*" + bvregex
-                        + "\\s*,)*(?:\\s*" + bvregex
-                        + "\\s*,?\\s*)\\]";
+  const string global
+      = "\\[(?:\\s*" + bvregex + "\\s*,)*(?:\\s*" + bvregex + "\\s*,?\\s*)\\]";
 
   if (!match(val, global))
-    throw iva(
-        "read '" + val
-        + "' while expecting vector<vector<>>"
-    );
+    throw iva("read '" + val + "' while expecting vector<vector<>>");
 
   // Match cannot fail (the one above succeeded)
-  // Cannot join with previous command, using
-  // get_groups() to extract the single components, due
-  // to general repeated capture group issues in regexs.
-  const string table_str
-      = get_groups(val, "^\\[(.*)\\]$").value()[0];
+  // Cannot join with previous command, using get_groups() to extract the
+  // single components, due to general repeated capture group issues in regexs.
+  const string table_str = get_groups(val, "^\\[(.*)\\]$").value()[0];
 
   // Iterating over matches (subvectors)
-  // Will ignore trailing comma and leading/trailing
-  // spaces
-  const vector<string> elements
-      = get_repeating_group(table_str, bvregex);
+  // Will ignore trailing comma and leading/trailing spaces
+  const vector<string> elements = get_repeating_group(table_str, bvregex);
 
   T res;
   for (const auto& el : elements)
@@ -126,8 +106,7 @@ template <typename T> T convert_table(const string& val)
 }
 
 // Converts string -> arithmetic type
-template <typename T>
-T convert_numeric(const string& val)
+template <typename T> T convert_numeric(const string& val)
 {
   string type, pattern;
 
@@ -139,15 +118,13 @@ T convert_numeric(const string& val)
   }
   else if constexpr (std::is_unsigned<T>::value)
   {
-    // stoul() accepts floats and negatives, stricter
-    // filtering
+    // stoul() accepts floats and negatives, stricter filtering
     pattern = "^[0-9]+$";
     type = "unsigned";
   }
   else // if constexpr(std::is_floating_point<T>::value)
   {
-    // Essentially same filters as in stod(), but 1.
-    // disallowed
+    // Essentially same filters as in stod(), but 1. disallowed
     pattern = "^[\\+\\-]?[0-9]+"
               "(?:\\.[0-9]+)?"
               "(?:[Ee][\\+\\-]?[0-9]+)?$";
@@ -155,9 +132,7 @@ T convert_numeric(const string& val)
   }
 
   if (!match(val, pattern))
-    throw iva(
-        "read '" + val + "' while expecting " + type
-    );
+    throw iva("read '" + val + "' while expecting " + type);
 
   // Default, type-unaware conversion
   stringstream ss(val);
@@ -182,8 +157,6 @@ template <typename T> T byp::convert(const string& val)
   else // only numeric types left among the instantiated
     return convert_numeric<T>(buffer);
 }
-
-/* clang-format off */
 
 template bool byp::convert(const string& val);
 template short byp::convert(const string& val);
@@ -224,5 +197,3 @@ template vector<vector<float>> byp::convert(const string& val);
 template vector<vector<double>> byp::convert(const string& val);
 template vector<vector<long double>> byp::convert(const string& val);
 template vector<vector<string>> byp::convert(const string& val);
-
-/* clang-format on */

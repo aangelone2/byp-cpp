@@ -23,20 +23,14 @@ int main()
   cout << "  Testing vector<int> parsing..." << endl;
   assert(prs.get<i1t>("i1t_p") == i1t({1, -2, 3}));
 
-  cout << "  Testing vector<int> parsing, single "
-          "component..."
-       << endl;
+  cout << "  Testing vector<int> parsing, single component..." << endl;
   assert(prs.get<i1t>("i1t_p1") == i1t({1}));
 
   cout << "  Testing vector<double> parsing..." << endl;
   assert(prs.get<d1t>("d1t_p") == d1t({1.0, -2.45, 77}));
 
-  cout << "  Testing vector<vector<double>> parsing..."
-       << endl;
-  assert(
-      prs.get<d2t>("d2t_p")
-      == d2t({{1.0, 2.0}, {3.0, 4.0}})
-  );
+  cout << "  Testing vector<vector<double>> parsing..." << endl;
+  assert(prs.get<d2t>("d2t_p") == d2t({{1.0, 2.0}, {3.0, 4.0}}));
 
   close_test();
 }
