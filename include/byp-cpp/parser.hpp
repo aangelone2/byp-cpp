@@ -45,8 +45,8 @@ namespace byp
        *
        * @param filename The path to the filename to parse.
        *
-       * @throws invalid_argument If file does not exist or invalid key and/or
-       * value found.
+       * @throws invalid_argument If file does not exist, or invalid
+       * row/key/duplicate key found (from `populate_values()`).
        */
       parser(const std::string& filename);
 
@@ -75,7 +75,8 @@ namespace byp
        *
        * @return The parsed value of the specified type.
        *
-       * @throws invalid_argument If key not found.
+       * @throws invalid_argument If key not found or invalid value for
+       * conversion (from `convert()`).
        */
       template <typename T> inline T get(const std::string& key)
       {
