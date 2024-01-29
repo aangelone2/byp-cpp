@@ -14,8 +14,7 @@ MAKEFLAGS += --no-builtin-rules
 
 
 
-# Targets which are not supposed to generate
-# a file with the same name
+# Targets which are not supposed to generate a file with the same name
 .PHONY: docs
 
 LIBTYPE := static
@@ -43,8 +42,7 @@ LIB := -L$(bdir) -lbyp-cpp
 LDFLAGS := -Wl,-rpath='$$ORIGIN'
 
 
-
-
+# Target which executes the rule to build the test executables
 test: $(tobjects)
 	@echo ''
 	@echo 'Beginning testing'
@@ -63,12 +61,12 @@ test: $(tobjects)
 	@echo 'All tests completed successfully'
 
 
-# Rule to build test object files
+# Rule to build test executables
 $(tobjects): $(bdir)/%: $(tdir)/%.cpp $(theaders) lib
 	$(CC) $(CXXFLAGS) $(INC) $< -o $@ $(LIB) $(LDFLAGS)
 
 
-# Target, which executes the rule to build the library
+# Target which builds the library
 build: lib
 
 
