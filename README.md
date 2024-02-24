@@ -6,8 +6,7 @@
 
 
 `byp-cpp` (Basic Yaml Parser for C++) is a parser for a
-simplified [dialect](@ref BasicYAML) of the YAML markup
-language.
+simplified dialect of the YAML markup language.
 
 The library is designed to be lightweight and easy to
 install, manage and use, while providing a reasonably
@@ -258,9 +257,9 @@ $ make docs
 ```
 
 re-generates the documentation in html format in the
-`html/` directory. [index.html](html/index.html) is the
-corresponding main page.
+`html/` directory, which can be accessed by opening in a
+web browser the `html/index.html` page.
 
-The [dialect](@ref BasicYAML) page contains information
-on the specifications of the YAML dialect parsed by the
+The `dialect` page contains information on the
+specifications of the YAML dialect parsed by the
 library.

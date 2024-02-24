@@ -258,8 +258,8 @@ $ make docs
 ```
 
 re-generates the documentation in html format in the
-`html/` directory. [index.html](html/index.html) is the
-corresponding main page.
+`html/` directory, which can be accessed by opening in a
+web browser the `html/index.html` page.
 
 The [dialect](@ref BasicYAML) page contains information
 on the specifications of the YAML dialect parsed by the
