@@ -197,10 +197,3 @@ be any of the types above (excluded `bool`).
   # valid as vector<vector<int>>, spaces and trailing comma
   flag_2: [[1,2,3] , [4  ,5 ,6],]
   ```
-
-
-## Parser specifications
-
-When parsing, the *first* value (from the top to the bottom of
-the file) associated to the specified key will be parsed. This
-is relevant in case duplicate keys are present.

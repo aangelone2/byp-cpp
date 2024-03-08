@@ -263,3 +263,8 @@ web browser the `html/index.html` page.
 The `dialect` page contains information on the
 specifications of the YAML dialect parsed by the
 library.
+
+Additional documentation (e.g., the YAML dialect
+specifications for the parser) can be consulted on the
+[github
+wiki](http://github.com/aangelone2/byp-cpp/wiki/).
