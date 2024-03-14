@@ -45,8 +45,7 @@ bool match(const std::string& input, const std::string& pattern);
 std::optional<std::vector<std::string>>
 get_groups(const std::string& input, const std::string& pattern);
 
-// Extract all repeated instances of a group from a
-// string.
+// Extract all repeated instances of a group from a string.
 /*
  * If no matches, an empty vector will be returned.
  *
@@ -61,6 +60,8 @@ get_repeating_group(const std::string& input, const std::string& pattern);
 
 // Removes trailing comments, then leading and trailing spaces.
 /*
+ * May return `""` (if no eligible characters remain).
+ *
  * @param input The string to de-commented and trim.
  *
  * @return The treated string.

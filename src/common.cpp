@@ -71,7 +71,9 @@ string clean(const string& input)
   // Cannot fail (may return "", expected).
 
   // Greedy match to leave no pre-commented chars.
+  // Given the `[^#]*`, an empty string is returned if no eligible chars.
   const string buffer = get_groups(input, "^([^#]*).*$").value()[0];
   // Non-greedy match to leave all trailing spaces.
+  // Same as above for no eligible characters remaining.
   return get_groups(buffer, "^\\s*(.*?)\\s*$").value()[0];
 }
